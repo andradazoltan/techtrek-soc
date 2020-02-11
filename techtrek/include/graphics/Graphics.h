@@ -39,4 +39,12 @@ void Triangle(int x1, int y1, int x2, int y2, int x3, int y3, int Colour);
 void Circle(int x1, int y1, int radius, int Colour);
 void FillCircle(int x1, int y1, int radius, int Colour);
 
+// Fill.cpp Definitions
+typedef struct { int x,y;} XYPixel ;    // data structure to store a coordinate
+int PushPixel(XYPixel p1);
+int PopPixel(XYPixel *theXYPixel);
+int IsStackEmpty(void);
+void Fill(int _x, int _y, int _FillColour, int _BoundaryColour);
+
+
 #endif /* GRAPHICS_H_ */
