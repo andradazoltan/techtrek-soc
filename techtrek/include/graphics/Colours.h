@@ -1,5 +1,5 @@
 /*
- * Colours.h
+ *  Colours.h
  *
  *  Created on: Apr 12, 2015
  *  Author: Paul Davies
@@ -11,9 +11,11 @@
 // the actual RGB values are set up in the FPGA Rom, so the name BLACK for example, refer to colour
 // palette number 0 whose 24 bit RGB value is 0x000000, WHITE is palette number 1 = RGB value 0xFFFFFF etc
 //
-// See the ColourPalette.c source file
+// See the ColourPalette.cpp source file
 #ifndef COLOURS_H_
 #define COLOURS_H_
+
+extern const unsigned int ColourPalletteData[256];  // constants for each pallette number
 
 // create a set of symbolic constants representing colour name e.g. BLACK, WHITE, RED = {0, 1, 2...} etc and a new data type called Colour (see bottom)
 typedef enum  {
