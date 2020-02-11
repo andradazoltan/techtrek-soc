@@ -1,8 +1,8 @@
 /*
  *  Fill.cpp
  * 
- *  Created on: February 11, 2020
- *  Author: CPEN 391 Staff
+ *  Created on: ? (Copied on February 11, 2020)
+ *  Author: Paul Davies
  */
 
 #include "Graphics.h"
