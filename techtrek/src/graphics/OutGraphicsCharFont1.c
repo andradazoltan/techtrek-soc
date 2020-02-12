@@ -1,5 +1,5 @@
 /*
- *  OutGraphicsCharFont1.cpp
+ *  OutGraphicsCharFont1.c
  *
  *  Created on: ?
  *  Author: Paul Davies

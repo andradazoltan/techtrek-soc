@@ -8,6 +8,7 @@
 
 #include "TouchScreen.h"
 #include "RegisterDefs.h"
+#include "Screens.h"
 
 // Local Function Prototypes
 static int putcharTS(int c);
@@ -30,6 +31,30 @@ void InitTouch(void)
     putcharTS(0x55);
     putcharTS(0x01);
     putcharTS(0x12);
+}
+
+/*****************************************************************************
+** Touch screen thread
+*****************************************************************************/
+void ReadTouchScreen(void) {
+    while (1) {
+        // Wait for screen to be touched and released
+        WaitForTouch();
+        WaitForRelease();
+
+        Point p = GetRelease();
+
+        switch (currScreen) {
+        case MAIN_SCREEN:
+            for (int i = 0; i < 5; i++) {
+                if (IsObjectPressed(p.x, p.y, mainScreen[i])) {
+                    if (mainScreen[i].func != NULL) {
+                        mainScreen[i].func();
+                    }
+                }
+            }
+        }
+    }
 }
 
 /*****************************************************************************
@@ -148,9 +173,9 @@ static int TS_TestForReceivedData(void)
 {
     // Check if any character has been received and return TRUE if so
     if ((TouchScreen_LineStatusReg & 0x1) == 0x1) {
-	    return true;
+	    return 1;
 	} else {
-	    return false;
+	    return 0;
 	}
 }
 

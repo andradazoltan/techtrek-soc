@@ -1,5 +1,5 @@
 ﻿/*
- *  Serial.cpp
+ *  Serial.c
  *  Drives UART RS232
  *
  *  Created on: Jan 23, 2020
@@ -47,9 +47,9 @@ int RS232TestForReceivedData(void)
 {
     // Check if any character has been received and return TRUE if so
 	if ((RS232_LineStatusReg & 0x1) == 0x1) {
-		return true;
+		return 1;
 	} else {
-		return false;
+		return 0;
 	}
 }
 

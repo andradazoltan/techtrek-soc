@@ -1,74 +1,15 @@
 /*
- *  WiFi.cpp
+ *  WiFi.c
  *  Drives UART using UART
  *
  *  Created on: Jan 30, 2020
- *  Author: Connor Fong
+ *  Author: Connor Fong & Ash Tan
  */
 
-#define WIFI_ReceiverFifo (*(volatile unsigned char *)(0xFF210200))
-#define WIFI_TransmitterFifo (*(volatile unsigned char *)(0xFF210200))
-#define WIFI_InterruptEnableReg (*(volatile unsigned char *)(0xFF210202))
-#define WIFI_InterruptIdentificationReg (*(volatile unsigned char *)(0xFF210204))
-#define WIFI_FifoControlReg (*(volatile unsigned char *)(0xFF210204))
-#define WIFI_LineControlReg (*(volatile unsigned char *)(0xFF210206))
-#define WIFI_ModemControlReg (*(volatile unsigned char *)(0xFF210208))
-#define WIFI_LineStatusReg (*(volatile unsigned char *)(0xFF21020A))
-#define WIFI_ModemStatusReg (*(volatile unsigned char *)(0xFF21020C))
-#define WIFI_ScratchReg (*(volatile unsigned char *)(0xFF21020E))
-#define WIFI_DivisorLatchLSB (*(volatile unsigned char *)(0xFF210200))
-#define WIFI_DivisorLatchMSB (*(volatile unsigned char *)(0xFF210202))
-
-
-
-#define TRUE 1
-#define FALSE 0
-
+#include "Wifi.h"
+#include "RegisterDefs.h"
 #include <stdio.h>
 #include <string.h>
-
-/* -----------Function Definitions ------------*/ 
-void Init_WIFI(void);
-int putcharWIFI(int c);
-int getcharWIFI( void );
-int WIFITestForReceivedData(void);
-void WIFI_Flush(void);
-void lua_dofile(void);
-
-void lua_doServerFile();
-void lua_postGPS(int latitude, int longitude);
-char[] lua_getWeather();
-
-void lua_checkwifi();
-
-//Test GPS Coordinates
-    // Mt Baker 48.777342,-121.813200
-    // Whistler 50.116322,-122.957359
-    // La Foret 48.777342,-122.995400
-
-/* ----------- Main Function -----------------*/
-int main (void) {
-    Init_WIFI();				// Initialize the port
-	WIFI_Flush();
-    // lua_dofile();
-    // lua_checkwifi();
-
-    lua_doServerFile();
-    
-    lua_postGPS(50.116322,-122.957359); 
-    lua_get_weather();
-
-    while(1) {
-        char data;
-        if (WIFITestForReceivedData()) {
-            data = (char) getcharWIFI();
-            printf("%c", data);
-        }
-    }
-}
-
-
-
 
 /**************************************************************************
 ** Subroutine to initialise the WIFI Port by writing some data
@@ -109,7 +50,9 @@ void lua_doServerFile() {
 
 void lua_postGPS(int latitude, int longitude) {
     int counter = 0;
-    char cmd[50] = snprintf(cmd, sizeof(cmd), "post_GPS(%.6f, %.6f)\r\n", latitude, longitude);
+    char cmd[50];
+
+    snprintf(cmd, sizeof(cmd), "post_GPS(%.6d, %.6d)\r\n", latitude, longitude);
 
     while (cmd[counter] != '\0') {          //Put message onto buffer
             putcharWIFI(cmd[counter]) ;
@@ -117,10 +60,9 @@ void lua_postGPS(int latitude, int longitude) {
     }
 }
 
-char[] lua_getWeather() {
+void lua_getWeather(char *response) {
     int counter = 0;
     char cmd[] = "get_weather()\r\n";
-    char response[100] = "";
 
     while (cmd[counter] != '\0') {          //Put message onto buffer for wifi to receive
             putcharWIFI(cmd[counter]) ;
@@ -129,14 +71,12 @@ char[] lua_getWeather() {
 
     for(int i = 0; i < 100000 /* Timeout */; i++) { //Get response 
         if (WIFITestForReceivedData()) {
-            strcat(response, getcharWIFI());        //Add character to response string
+            char data = (char)getcharWIFI();
+            strcat(response, &data);        //Add character to response string
 			i = 0;
         }
     }
-
-    return response;
 }
-
 
 
 void lua_checkwifi(void)
@@ -177,9 +117,9 @@ int WIFITestForReceivedData(void)
 {
     // Check if any character has been received and return TRUE if so
     if ((WIFI_LineStatusReg & 0x1) == 0x1) {
-	    return true;
+	    return 1;
 	} else {
-	    return false;
+	    return 0;
 	}
 }
 

@@ -10,11 +10,15 @@
 
 // Function Definitions
 void InitWIFI(void);
-void lua_dofile(void);
-void lua_checkwifi(void);
 int putcharWIFI(int c);
 int getcharWIFI(void);
 int WIFITestForReceivedData(void);
 void WIFI_Flush(void);
+
+void lua_doServerFile();
+void lua_postGPS(int latitude, int longitude);
+void lua_getWeather(char *response);
+
+void lua_checkwifi(void);
 
 #endif /* WIFI_H_ */

@@ -1,5 +1,5 @@
 /*
- *  OutGraphicsCharFont2.cpp
+ *  OutGraphicsCharFont2.c
  *
  *  Created on: ?
  *  Author: Paul Davies
@@ -23,7 +23,6 @@ void OutGraphicsCharFont2(int x, int y, int colour, int backgroundcolour, int c,
 	register char 	theColour = colour  ;
 	register int 	BitMask,
 					theCharacter = c,
-					j,
 					theRow, theColumn;
 
 
@@ -42,7 +41,7 @@ void OutGraphicsCharFont2(int x, int y, int colour, int backgroundcolour, int c,
 				if((pixels & BitMask))														// if valid pixel, then write it
 					WriteAPixel(theX+column, theY+row, theColour) ;
 				else {																		// if not a valid pixel, do we erase or leave it along (no erase)
-					if(Erase == true)
+					if(Erase == 1)
 						WriteAPixel(theX+column, theY+row, backgroundcolour) ;
 					// else leave it alone
 				}
