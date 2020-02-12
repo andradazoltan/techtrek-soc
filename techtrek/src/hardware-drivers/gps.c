@@ -152,36 +152,6 @@ void gps_uart_init(void) {
                        0x06; // Now Clear all bits in the FiFo control registers
 }
 
-int swap_endian(char *s) {
-  register int val;
-  val = strtoul(s, NULL, 16); // convert to 4 byte int form in base 16
-  val = ((val << 8) & 0xFF00FF00) | ((val >> 8) & 0xFF00FF);
-  val = (val << 16) | ((val >> 16) & 0xFFFF);
-  return val;
-}
-
-// thesetwo functions takea 4 byte IEEE-754 format float
-// (passed as a 4 byte int representing latitude and longitude values)
-// in big endian formatand converts it to an ASCII decimal string
-// which it returns with decimal point in the string.
-char *float_to_lat(int x) // output format is xx.yyyy
-{
-  static char buff[100];
-  float *ptr = (float *)(&x); // cast int to float
-  float f = *ptr;             // get the float
-  sprintf(buff, "%2.4f", f);  // write in string to an arrayreturnbuff ;
-  return buff;
-}
-
-char *float_to_lon(int x) // output format is (-)xxx.yyyy
-{
-  static char buff[100];
-  float *ptr = (float *)(&x);
-  float f = *ptr;
-  sprintf(buff, "%3.4f", f);
-  return buff;
-}
-
 int gps_uart_putchar(int c) {
   while ((GPS_LineStatusReg & 0x20) !=
          0x20) { // wait for Transmitter Holding Register bit (5) of line status
@@ -231,4 +201,34 @@ void gps_uart_flush(void) {
   // while bit 0 of Line Status Register == ‘1’
   // read unwanted char out of fifo receiver buffer
   // return; // no more characters so return
+}
+
+int swap_endian(char *s) {
+  register int val;
+  val = strtoul(s, NULL, 16); // convert to 4 byte int form in base 16
+  val = ((val << 8) & 0xFF00FF00) | ((val >> 8) & 0xFF00FF);
+  val = (val << 16) | ((val >> 16) & 0xFFFF);
+  return val;
+}
+
+// thesetwo functions takea 4 byte IEEE-754 format float
+// (passed as a 4 byte int representing latitude and longitude values)
+// in big endian formatand converts it to an ASCII decimal string
+// which it returns with decimal point in the string.
+char *float_to_lat(int x) // output format is xx.yyyy
+{
+  static char buff[100];
+  float *ptr = (float *)(&x); // cast int to float
+  float f = *ptr;             // get the float
+  sprintf(buff, "%2.4f", f);  // write in string to an arrayreturnbuff ;
+  return buff;
+}
+
+char *float_to_lon(int x) // output format is (-)xxx.yyyy
+{
+  static char buff[100];
+  float *ptr = (float *)(&x);
+  float f = *ptr;
+  sprintf(buff, "%3.4f", f);
+  return buff;
 }
