@@ -7,6 +7,7 @@
 
 #include "Screens.h"
 #include "Graphics.h"
+#include "Wifi.h"
 
 int currScreen = MAIN_SCREEN;
 
@@ -68,7 +69,7 @@ object_t mainScreen[] = {
         .type = RECT,
         .colour = RED,
         .text = "HELP",
-        .func = NULL,
+        .func = &lua_postHelp,
         .rect = {
             .topLeftXCoord = 565,
             .topLeftYCoord = 387,

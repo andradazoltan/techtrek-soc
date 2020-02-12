@@ -78,6 +78,10 @@ void lua_getWeather(char *response) {
     }
 }
 
+void lua_postHelp(void) {
+
+}
+
 
 void lua_checkwifi(void)
 {

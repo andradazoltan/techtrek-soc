@@ -18,6 +18,7 @@ void WIFI_Flush(void);
 void lua_doServerFile();
 void lua_postGPS(int latitude, int longitude);
 void lua_getWeather(char *response);
+void lua_postHelp(void);
 
 void lua_checkwifi(void);
 
