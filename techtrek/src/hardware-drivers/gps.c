@@ -77,6 +77,41 @@ int parse_gga(char *sentence_buf, struct gga *sentence) {
   return 0;
 }
 
+// Read the next sentence from the GPS and store it in the provided buffer, and
+// return the type of the sentence. Returns SENTENCE_TYPE_INVALID if the
+// sentence is longer than 128 characters.
+int read_sentence(char *raw_sentence) {
+  int length = 0;
+
+  while (*raw_sentence != '$') {
+    *raw_sentence = (char)gps_uart_getchar();
+  }
+
+  while (raw_sentence[length] != '\r' && length < 128) {
+    length++;
+    raw_sentence[length] = (char)gps_uart_getchar();
+  }
+
+  if (raw_sentence[length] != '\r') {
+    raw_sentence[length] = '\0';
+    return SENTENCE_TYPE_INVALID;
+  }
+
+  raw_sentence[length] = '\0';
+  return get_sentence_type(raw_sentence);
+}
+
+// Read and parse the next GGA sentence received from the GPS, discarding
+// sentences of other types
+void read_gga(struct gga *sentence) {
+  char raw_sentence[128];
+
+  while (read_sentence(raw_sentence) != SENTENCE_TYPE_GGA) {
+  }
+
+  parse_gga(raw_sentence, sentence);
+}
+
 void display(long long digits) {
   *HEX0_1 = digits & 0xFFFF;
   *HEX2_3 = (digits >> 8) & 0xFFFF;

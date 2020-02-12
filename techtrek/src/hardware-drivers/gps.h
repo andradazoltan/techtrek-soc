@@ -48,6 +48,12 @@ int gps_uart_data_available(void);
 void gps_uart_flush(void);
 
 /*
+ * Block until the GPS sends a GGA sentence, then parse that sentence and store
+ * the result in the struct pointed to by sentence
+ */
+void read_gga(struct gga *sentence);
+
+/*
  * Given a char array containing a valid GGA sentence, parses the sentence and
  * stores its contents in the struct gga *sentence.
  */
