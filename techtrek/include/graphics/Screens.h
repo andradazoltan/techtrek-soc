@@ -11,12 +11,14 @@
 #include <stdint.h>
 #include <stdio.h>
 #include "Colours.h"
+#include "Fonts.h"
 
 /*
  * List of screens
  */
 enum screens{
-    MAIN_SCREEN
+    MAIN_SCREEN,
+    HELP_SCREEN
 };
 
 /*
@@ -60,10 +62,12 @@ typedef struct
 // External Variables
 extern int currScreen;
 extern object_t mainScreen[5]; // Main Screen Objects
+extern object_t helpScreen[6]; // Help Screen Objects
 
 // Function Definitions
 void initColours(void);
 void drawMainScreen(void);
+void drawHelpScreen(void);
 int IsObjectPressed(int x, int y, object_t obj);
 
 #endif /* SCREENS_H_ */

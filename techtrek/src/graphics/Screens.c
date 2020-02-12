@@ -8,7 +8,6 @@
 #include "Screens.h"
 #include "Graphics.h"
 #include "Wifi.h"
-#include "Fonts.h"
 
 int currScreen = MAIN_SCREEN;
 
@@ -75,7 +74,7 @@ object_t mainScreen[] = {
         .colour = RED,
         .text = "HELP",
         .textXCoord = 630,
-        .func = &lua_postHelp,
+        .func = &drawHelpScreen,
         .rect = {
             .topLeftXCoord = 565,
             .topLeftYCoord = 387,
@@ -85,8 +84,88 @@ object_t mainScreen[] = {
     }
 };
 
+object_t helpScreen[] = {
+    { //  Button
+        .type = RECT,
+        .colour = MAROON,
+        .text = "Unconscious",
+        .textXCoord = 90,
+        .func = &lua_postHelp,
+        .rect = {
+            .topLeftXCoord = 70,
+            .topLeftYCoord = 150,
+            .bottomRightXCoord = 275,
+            .bottomRightYCoord = 228
+        }
+    },
+    { //  Button
+        .type = RECT,
+        .colour = MAROON,
+        .text = "Broken Bone",
+        .textXCoord = 320,
+        .func = &lua_postHelp,
+        .rect = {
+            .topLeftXCoord = 300,
+            .topLeftYCoord = 150,
+            .bottomRightXCoord = 505,
+            .bottomRightYCoord = 228
+        }
+    },
+    { //  Button
+        .type = RECT,
+        .colour = MAROON,
+        .text = "Major Cut",
+        .textXCoord = 565,
+        .func = &lua_postHelp,
+        .rect = {
+            .topLeftXCoord = 530,
+            .topLeftYCoord = 150,
+            .bottomRightXCoord = 735,
+            .bottomRightYCoord = 228
+        }
+    },
+    { //  Button
+        .type = RECT,
+        .colour = MAROON,
+        .text = "Too Dark",
+        .textXCoord = 110,
+        .func = &lua_postHelp,
+        .rect = {
+            .topLeftXCoord = 70,
+            .topLeftYCoord = 265,
+            .bottomRightXCoord = 275,
+            .bottomRightYCoord = 343
+        }
+    },
+    { //  Button
+        .type = RECT,
+        .colour = MAROON,
+        .text = "Exhaustion",
+        .textXCoord = 325,
+        .func = &lua_postHelp,
+        .rect = {
+            .topLeftXCoord = 300,
+            .topLeftYCoord = 265,
+            .bottomRightXCoord = 505,
+            .bottomRightYCoord = 343
+        }
+    },
+    { // Other Button
+        .type = RECT,
+        .colour = MAROON,
+        .text = "Other",
+        .textXCoord = 595,
+        .func = &lua_postHelp,
+        .rect = {
+            .topLeftXCoord = 530,
+            .topLeftYCoord = 265,
+            .bottomRightXCoord = 735,
+            .bottomRightYCoord = 343
+        }
+    }
+};
 
-
+/************************* Functions ***************************/
 void initColours(void) {
     ProgramPalette(CHOCOLATE, 0x00683707);
     ProgramPalette(DARK_GREEN, 0x00005800);
@@ -94,12 +173,13 @@ void initColours(void) {
 }
 
 void drawMainScreen(void) {
+    currScreen = MAIN_SCREEN;
+
     // Fill the screen with a solid green colour
     FillScreen(GREEN);
 
     // Create a panel on the right of the screen
     FillRect(550, 0, XRES, YRES, DARK_GREEN);
-
 
     // Create five buttons, these need to be tracked
     createObjects(mainScreen, 5);
@@ -111,6 +191,19 @@ void drawMainScreen(void) {
     // Draw a tree
 
     // Print weather at the bottom
+}
+
+void drawHelpScreen(void) {
+    currScreen = HELP_SCREEN;
+
+    // Fill the screen with a solid red colour
+    FillScreen(RED);
+
+    // Title
+    OutGraphicsCharFont3(240, 20, WHITE, RED, "What is your emergency?", 0);
+
+    // Create 6 buttons
+    createObjects(helpScreen, 6);
 }
 
 void createObjects(object_t objs[], int numObjs) {

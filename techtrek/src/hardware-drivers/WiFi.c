@@ -8,8 +8,10 @@
 
 #include "Wifi.h"
 #include "RegisterDefs.h"
+#include "Screens.h"
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 
 /**************************************************************************
 ** Subroutine to initialise the WIFI Port by writing some data
@@ -79,7 +81,23 @@ void lua_getWeather(char *response) {
 }
 
 void lua_postHelp(void) {
+    // WIFI STUFF
 
+
+    // Blink help message a few times
+    for (int i = 0; i < 3; i++) {
+        OutGraphicsCharFont5(65, 400, WHITE, RED, "HELP IS ON THE WAY!", 0);
+        usleep(500 * 1000);
+        OutGraphicsCharFont5(65, 400, WHITE, RED, "HELP IS ON THE WAY!", 1);
+        usleep(500 * 1000);
+    }
+    OutGraphicsCharFont5(65, 400, WHITE, RED, "HELP IS ON THE WAY!", 0);
+
+    // Wait a few seconds before going back to main screen
+    sleep(3);
+
+    // Transition back to main screen
+    drawMainScreen();
 }
 
 
