@@ -16,6 +16,7 @@ c5_pin_model_dump.txt
 *.spd
 *.sip
 *.axf*
+*.sw[a-z]
 work/
 db/
 incremental_db/
