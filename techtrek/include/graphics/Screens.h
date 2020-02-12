@@ -38,6 +38,7 @@ typedef struct
     object_type_t type;
     int colour;
     const char *text;
+    int textXCoord;
     void (*const func)(void); // Pointer to function that is called when the object is pressed
 
     struct rect

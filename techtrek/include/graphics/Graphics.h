@@ -10,6 +10,10 @@
 
 #include "Colours.h"
 
+// Screen resolution
+#define XRES 800    // column pixel count
+#define YRES 480    // row pixel count
+
 // This macro pauses until the graphics chip status register indicates that it is idle
 #define WAIT_FOR_GRAPHICS       while((GraphicsStatusReg & 0x0001) != 0x0001);
 
@@ -47,17 +51,5 @@ int PopPixel(XYPixel *theXYPixel);
 int IsStackEmpty(void);
 
 void Fill(int _x, int _y, int _FillColour, int _BoundaryColour);
-
-// font Definitions
-#define XRES 800    // column pixel count
-#define YRES 480    // row pixel count
-#define FONT2_XPIXELS	10				// width of Font2 characters in pixels (no spacing)
-#define FONT2_YPIXELS	14				// height of Font2 characters in pixels (no spacing)
-
-extern const unsigned char Font5x7[][7];
-extern const unsigned short int Font10x14[][14];
-
-void OutGraphicsCharFont2(int x, int y, int colour, int backgroundcolour, int c, int Erase);
-void OutGraphicsCharFont1(int x, int y, int fontcolour, int backgroundcolour, int c, int Erase);
 
 #endif /* GRAPHICS_H_ */

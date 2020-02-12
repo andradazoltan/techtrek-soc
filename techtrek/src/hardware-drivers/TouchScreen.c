@@ -48,6 +48,7 @@ void ReadTouchScreen(void) {
         case MAIN_SCREEN:
             for (int i = 0; i < 5; i++) {
                 if (IsObjectPressed(p.x, p.y, mainScreen[i])) {
+                    printf("%d\n", i);
                     if (mainScreen[i].func != NULL) {
                         mainScreen[i].func();
                     }

@@ -8,6 +8,7 @@
 #include "Screens.h"
 #include "Graphics.h"
 #include "Wifi.h"
+#include "Fonts.h"
 
 int currScreen = MAIN_SCREEN;
 
@@ -21,6 +22,7 @@ object_t mainScreen[] = {
         .type = RECT,
         .colour = CHOCOLATE,
         .text = "INFO",
+        .textXCoord = 630,
         .func = NULL,
         .rect = {
             .topLeftXCoord = 565,
@@ -33,6 +35,7 @@ object_t mainScreen[] = {
         .type = RECT,
         .colour = CHOCOLATE,
         .text = "WARNINGS",
+        .textXCoord = 610,
         .func = NULL,
         .rect = {
             .topLeftXCoord = 565,
@@ -45,6 +48,7 @@ object_t mainScreen[] = {
         .type = RECT,
         .colour = CHOCOLATE,
         .text = "MAP",
+        .textXCoord = 635,
         .func = NULL,
         .rect = {
             .topLeftXCoord = 565,
@@ -57,6 +61,7 @@ object_t mainScreen[] = {
         .type = RECT,
         .colour = RED,
         .text = "REPORT HAZARD",
+        .textXCoord = 570,
         .func = NULL,
         .rect = {
             .topLeftXCoord = 565,
@@ -69,6 +74,7 @@ object_t mainScreen[] = {
         .type = RECT,
         .colour = RED,
         .text = "HELP",
+        .textXCoord = 630,
         .func = &lua_postHelp,
         .rect = {
             .topLeftXCoord = 565,
@@ -78,6 +84,8 @@ object_t mainScreen[] = {
         }
     }
 };
+
+
 
 void initColours(void) {
     ProgramPalette(CHOCOLATE, 0x00683707);
@@ -97,6 +105,12 @@ void drawMainScreen(void) {
     createObjects(mainScreen, 5);
 
     // Print trail name
+    OutGraphicsCharFont4(140, 40, WHITE, GREEN, "Pacific Spirit", 0);
+    OutGraphicsCharFont4(100, 90, WHITE, GREEN, "Regional Park Trail", 0);
+
+    // Draw a tree
+
+    // Print weather at the bottom
 }
 
 void createObjects(object_t objs[], int numObjs) {
@@ -107,10 +121,8 @@ void createObjects(object_t objs[], int numObjs) {
             FillRect(temp.rect.topLeftXCoord, temp.rect.topLeftYCoord,
                     temp.rect.bottomRightXCoord, temp.rect.bottomRightYCoord, temp.colour);
 
-            int yCoord = (temp.rect.topLeftYCoord + temp.rect.bottomRightYCoord) / 2;
-            for (int j = 0; temp.text[j] != '\0'; j++) {
-                OutGraphicsCharFont2(temp.rect.topLeftXCoord + 10 + j*10, yCoord, WHITE, temp.colour, temp.text[j], 0);
-            }
+            int yCoord = (temp.rect.topLeftYCoord + temp.rect.bottomRightYCoord) / 2 - (FONT3_YPIXELS / 2);
+            OutGraphicsCharFont3(temp.textXCoord, yCoord, WHITE, temp.colour, temp.text, 0);
         }
         else if (temp.type == CIRCLE) {
             FillCircle(temp.circle.centerXCoord, temp.circle.centerYCoord, temp.circle.radius, temp.colour);
