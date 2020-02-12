@@ -59,6 +59,12 @@ void read_gga(struct gga *sentence);
  */
 int parse_gga(char *raw_sentence, struct gga *sentence);
 
+/*
+ * Returns true if the given struct gga represents a valid fix and false
+ * otherwise
+ */
+int gga_fix_is_valid(struct gga sentence);
+
 // The display functions here are not strictly GPS-related (they were useful in
 // the demo for the exercise), and may be better moved to their own library or
 // deleted.

@@ -112,6 +112,14 @@ void read_gga(struct gga *sentence) {
   parse_gga(raw_sentence, sentence);
 }
 
+int gga_fix_is_valid(struct gga sentence) {
+  if (sentence.gga_fix > 0 && sentence.gga_fix < 6) {
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
 void display(long long digits) {
   *HEX0_1 = digits & 0xFFFF;
   *HEX2_3 = (digits >> 8) & 0xFFFF;
