@@ -1,6 +1,6 @@
 
-#ifndef __gps_h
-#define __gps_h
+#ifndef GPS_H_
+#define GPS_H_
 
 #define GPS_ReceiverFifo (*(volatile unsigned char *)(0xFF210210))
 #define GPS_TransmitterFifo (*(volatile unsigned char *)(0xFF210210))
@@ -81,4 +81,4 @@ int swap_endian(char *s);
 char *float_to_lat(int x);
 char *float_to_lon(int x);
 
-#endif
+#endif /* GPS_H_ */
