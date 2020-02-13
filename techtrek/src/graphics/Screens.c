@@ -76,6 +76,7 @@ object_t mainScreen[] = {
         .type = RECT,
         .colour = RED,
         .text = "HELP",
+        .textXCoord= 630,
         .func = &drawHelpScreen,
         .rect = {
             .topLeftXCoord = 565,
@@ -179,21 +180,21 @@ object_t mapScreen[] = {
             .bottomRightYCoord = 175,
             .percent = &graphPercent
         }
-    }
+    },
     { // Back Button
         .type = RECT,
-        .colour = POWDER_BLUE,
+        .colour = CADET_BLUE,
         .text = "<- BACK",
-        .textXCoord = 670,
+        .textXCoord = 660,
         .func = &drawMainScreen,
         .rect = {
-            .topLeftXCoord = 665,
-            .topLeftYCoord = 1,
+            .topLeftXCoord = 630,
+            .topLeftYCoord = 0,
             .bottomRightXCoord = 780,
-            .bottomRightYCoord = 34
+            .bottomRightYCoord = 50
         }
-    }
-    { // increment button
+    },
+    { // decrement button
         .type = RECT,
         .colour = BLACK,
         .text = "Worse",
@@ -205,10 +206,10 @@ object_t mapScreen[] = {
             .bottomRightXCoord = 190,
             .bottomRightYCoord = 278
         }
-    }
-    { // Back Button
+    },
+    { // increment Button
         .type = RECT,
-        .colour = BACK,
+        .colour = BLACK,
         .text = "Better",
         .textXCoord = 220,
         .func = &shiftGraphRight,
@@ -219,7 +220,7 @@ object_t mapScreen[] = {
             .bottomRightYCoord = 278
         }
     }
-}
+};
 
 /************************* Functions ***************************/
 void initColours(void) {
@@ -272,20 +273,21 @@ void drawMapScreen(void) {
     FillScreen(WHITE_SMOKE);
 
     // Header
-    FillRect(0, 0, XRES, 35, CADET_BLUE);
-    OutGraphicsCharFont3(10, 3, WHITE, POWDER_BLUE, "Trail Map", 0);
+    FillRect(0, 0, XRES, 50, CADET_BLUE);
+    OutGraphicsCharFont3(50, 12, WHITE, POWDER_BLUE, "Trail Map", 0);
 
     // Draw fake map (for now)
-    FillRect(400, 60, 770, 450, PALE_GREEN);
+    FillRect(400, 60, 770, 450, GREEN);
     Line(400, 60, 770, 300, CHOCOLATE);
     Line(400, 400, 770, 350, BROWN);
+    Line(550, 450, 720, 60, CHOCOLATE);
     Circle(650, 100, 20, CHOCOLATE);
     FillCircle(450, 200, 30, BLUE);
-    OutGraphicsCharFont5(590, 220, WHITE, BLACK, "MAP", 0);
+    OutGraphicsCharFont5(520, 220, WHITE, BLACK, "MAP", 0);
 
     // text over graph
-    OutGraphicsCharFont2(100, 80, BLACK, WHITE_SMOKE, "How are trail conditions?", 0);
-
+    OutGraphicsCharFont3(50, 60, BLACK, WHITE_SMOKE, "How is the trail today?", 0);
+    
     // Create buttons and graphs
     createObjects(mapScreen, 4);
 }
