@@ -52,4 +52,10 @@ int IsStackEmpty(void);
 
 void Fill(int _x, int _y, int _FillColour, int _BoundaryColour);
 
+// GraphData.c Definitions
+void barGraphHor(int topLeftX, int topLeftY, int botRightX, int botRightY,
+                    int dataColour, int bgColour, int percent);
+void barGraphVert(int topLeftX, int topLeftY, int botRightX, int botRightY,
+                    int dataColour, int bgColour, int percent);
+                    
 #endif /* GRAPHICS_H_ */
