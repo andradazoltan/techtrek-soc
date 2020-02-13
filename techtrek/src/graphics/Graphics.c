@@ -203,6 +203,8 @@ void Circle(int x1, int y1, int radius, int Colour)
     GraphicsCommandReg = DrawCircle; // Send "draw circle" command to graphics controller
 }
 
+// NOTE: DOES NOT WORK AS WELL AS Circle() FOLLOWED BY Fill()
+// Draws concentric circles with decreasing radii
 void FillCircle(int x1, int y1, int radius, int Colour)
 {
     for (int i = radius; i > 0; i--) {

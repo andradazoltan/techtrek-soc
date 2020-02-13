@@ -57,6 +57,7 @@ typedef struct
         int16_t centerYCoord;
         int16_t radius;
     } circle;
+    
 } object_t;
 
 // External Variables
@@ -69,5 +70,6 @@ void initColours(void);
 void drawMainScreen(void);
 void drawHelpScreen(void);
 int IsObjectPressed(int x, int y, object_t obj);
+void helpCaller(void);
 
 #endif /* SCREENS_H_ */

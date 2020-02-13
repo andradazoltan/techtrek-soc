@@ -73,8 +73,7 @@ object_t mainScreen[] = {
         .type = RECT,
         .colour = RED,
         .text = "HELP",
-        .textXCoord = 630,
-        .func = &drawHelpScreen,
+        .func = &helpCaller,
         .rect = {
             .topLeftXCoord = 565,
             .topLeftYCoord = 387,
@@ -218,7 +217,9 @@ void createObjects(object_t objs[], int numObjs) {
             OutGraphicsCharFont3(temp.textXCoord, yCoord, WHITE, temp.colour, temp.text, 0);
         }
         else if (temp.type == CIRCLE) {
-            FillCircle(temp.circle.centerXCoord, temp.circle.centerYCoord, temp.circle.radius, temp.colour);
+            // Don't use FillCircle() unless you want a trippy concentric circle
+            Circle(temp.circle.centerXCoord, temp.circle.centerYCoord, temp.circle.radius, temp.colour);
+            Fill(temp.circle.centerXCoord, temp.circle.centerYCoord, temp.circle.radius, temp.colour);
         }
     }
 }
