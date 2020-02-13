@@ -11,6 +11,9 @@
 
 int currScreen = MAIN_SCREEN;
 
+// to be used by pointer
+int graphPercent = 50;
+
 void createObjects(object_t objs[], int numObjs);
 
 /*
@@ -48,7 +51,7 @@ object_t mainScreen[] = {
         .colour = CHOCOLATE,
         .text = "MAP",
         .textXCoord = 635,
-        .func = NULL,
+        .func = &drawMapScreen,
         .rect = {
             .topLeftXCoord = 565,
             .topLeftYCoord = 201,
@@ -164,11 +167,68 @@ object_t helpScreen[] = {
     }
 };
 
+object_t mapScreen[] = {
+    { // horizontal bar graph
+        .type = GRAPH_HOR,
+        .colour = ORANGE,
+        .func = NULL,
+        .graph_hor = {
+            .topLeftXCoord = 50,
+            .topLeftYCoord = 100,
+            .bottomRightXCoord = 350,
+            .bottomRightYCoord = 175,
+            .percent = &graphPercent
+        }
+    }
+    { // Back Button
+        .type = RECT,
+        .colour = POWDER_BLUE,
+        .text = "<- BACK",
+        .textXCoord = 670,
+        .func = &drawMainScreen,
+        .rect = {
+            .topLeftXCoord = 665,
+            .topLeftYCoord = 1,
+            .bottomRightXCoord = 780,
+            .bottomRightYCoord = 34
+        }
+    }
+    { // increment button
+        .type = RECT,
+        .colour = BLACK,
+        .text = "Worse",
+        .textXCoord = 60,
+        .func = &shiftGraphLeft,
+        .rect = {
+            .topLeftXCoord = 50,
+            .topLeftYCoord = 200,
+            .bottomRightXCoord = 190,
+            .bottomRightYCoord = 278
+        }
+    }
+    { // Back Button
+        .type = RECT,
+        .colour = BACK,
+        .text = "Better",
+        .textXCoord = 220,
+        .func = &shiftGraphRight,
+        .rect = {
+            .topLeftXCoord = 210,
+            .topLeftYCoord = 200,
+            .bottomRightXCoord = 350,
+            .bottomRightYCoord = 278
+        }
+    }
+}
+
 /************************* Functions ***************************/
 void initColours(void) {
     ProgramPalette(CHOCOLATE, 0x00683707);
     ProgramPalette(DARK_GREEN, 0x00005800);
     ProgramPalette(RED, 0x00FF0000);
+    ProgramPalette(CADET_BLUE, 0x005F9EA0);
+    ProgramPalette(WHITE_SMOKE, 0x00F5F5F5);
+    ProgramPalette(PALE_GREEN, 0x0098FB98);
 }
 
 void drawMainScreen(void) {
@@ -205,6 +265,41 @@ void drawHelpScreen(void) {
     createObjects(helpScreen, 6);
 }
 
+void drawMapScreen(void) {
+    currScreen = MAP_SCREEN;
+
+    // Fill the screen with a solid "white smoke" colour
+    FillScreen(WHITE_SMOKE);
+
+    // Header
+    FillRect(0, 0, XRES, 35, CADET_BLUE);
+    OutGraphicsCharFont3(10, 3, WHITE, POWDER_BLUE, "Trail Map", 0);
+
+    // Draw fake map (for now)
+    FillRect(400, 60, 770, 450, PALE_GREEN);
+    Line(400, 60, 770, 300, CHOCOLATE);
+    Line(400, 400, 770, 350, BROWN);
+    Circle(650, 100, 20, CHOCOLATE);
+    FillCircle(450, 200, 30, BLUE);
+    OutGraphicsCharFont5(590, 220, WHITE, BLACK, "MAP", 0);
+
+    // text over graph
+    OutGraphicsCharFont2(100, 80, BLACK, WHITE_SMOKE, "How are trail conditions?", 0);
+
+    // Create buttons and graphs
+    createObjects(mapScreen, 4);
+}
+
+void shiftGraphLeft(void) {
+    graphPercent = graphPercent - 10;
+    createObjects(mapScreen, 4);
+}
+
+void shiftGraphRight(void) {
+    graphPercent = graphPercent + 10;
+    createObjects(mapScreen, 4);
+}
+
 void createObjects(object_t objs[], int numObjs) {
     for (int i = 0; i < numObjs; i++) {
         object_t temp = objs[i];
@@ -220,6 +315,11 @@ void createObjects(object_t objs[], int numObjs) {
             // Don't use FillCircle() unless you want a trippy concentric circle
             Circle(temp.circle.centerXCoord, temp.circle.centerYCoord, temp.circle.radius, temp.colour);
             Fill(temp.circle.centerXCoord, temp.circle.centerYCoord, temp.circle.radius, temp.colour);
+        }
+        else if (temp.type == GRAPH_HOR) {
+            barGraphHor(temp.graph_hor.topLeftXCoord, temp.graph_hor.topLeftYCoord,
+                    temp.graph_hor.bottomRightXCoord, temp.graph_hor.bottomRightYCoord,
+                    temp.colour, WHITE, *temp.graph_hor.percent);
         }
     }
 }

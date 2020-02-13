@@ -55,6 +55,10 @@ void ReadTouchScreen(void) {
             objs = helpScreen;
             numObjects = 6;
             break;
+        case MAP_SCREEN:
+            objs = mapScreen;
+            numObjects = 4;
+            break;
         }
 
         for (int i = 0; i < numObjects; i++) {

@@ -18,7 +18,7 @@ void barGraphHor(int topLeftX, int topLeftY, int botRightX, int botRightY, int d
     // check dimension requirement
     if ( (abs(topLeftX - botRightX) < 2) || (abs(topLeftY - botRightY) < 2) ) return;
     
-    int lengthToGraph = ((botRightX-1) - (topLeftX+1)) * (percent/100.0);
+    int lengthToGraph = ((botRightX-1) - (topLeftX+1)) * ((percent % 101)/100.0);
     FillRect(topLeftX, topLeftY, botRightX, botRightY, bgColour);
     FillRect(topLeftX+1, topLeftY+1, topLeftX+1+lengthToGraph, botRightY-1, dataColour);
 }
@@ -33,7 +33,7 @@ void barGraphVert(int topLeftX, int topLeftY, int botRightX, int botRightY, int 
     // check dimension requirement
     if ( (abs(topLeftX - botRightX) < 2) || (abs(topLeftY - botRightY) < 2) ) return;
     
-    int lengthToGraph = ((botRightY-1) - (topLeftY+1)) * (percent/100.0);
+    int lengthToGraph = ((botRightY-1) - (topLeftY+1)) * ((percent % 101)/100.0);
     FillRect(topLeftX, topLeftY, botRightX, botRightY, bgColour);
     FillRect(topLeftX+1, botRightY-1-lengthToGraph, botRightX-1, botRightY-1, dataColour);
 }
