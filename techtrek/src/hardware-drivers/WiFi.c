@@ -33,56 +33,72 @@ void InitWIFI(void)
 
 /************ TECHTREK FUNCTIONS ******************/
 void lua_doServerFile() {
+    printf("In Lua do file\n");
     int counter = 0;
-    char cmd[] = "dofile(\"server.lua\")\r\n";
+    int i;
+    char* cmd = "dofile(\"server.lua\")\r\n";
 
-    while (cmd[counter] != '\0') {          //Put message onto buffer
-            putcharWIFI(cmd[counter]) ;
-            counter++;
-    }
+    printf("Putting Message into Buffer\n");
+    sendCommand(cmd);
 
-    for(int i = 0; i < 100000 /* Timeout */; i++) {
+    printf("Done putting message\n");
+    for(i = 0; i < 100000 /* Timeout */; i++) {
         if (WIFITestForReceivedData()) {
             (void)getcharWIFI();
-			i = 0;
+            i = 0;
         }
     }
-
 }
 
-void lua_postGPS(int latitude, int longitude) {
-    int counter = 0;
+void lua_postGPS(double latitude, double longitude) {
+    int i = 0;
     char cmd[50];
 
-    snprintf(cmd, sizeof(cmd), "post_GPS(%.6d, %.6d)\r\n", latitude, longitude);
+    printf("HELLLLLO %d", (int)latitude*1000000);
 
-    while (cmd[counter] != '\0') {          //Put message onto buffer
-            putcharWIFI(cmd[counter]) ;
-            counter++;
+    snprintf(cmd, sizeof(cmd), "post_gps(%d, %d)\r\n", (int)(latitude*1000000), (int)(longitude*1000000));
+
+    printf(cmd);
+    sendCommand(cmd);
+
+    for(i = 0; i < 100000 /* Timeout */; i++) {
+        if (WIFITestForReceivedData()) {
+            char curr = (char) getcharWIFI();
+            i = 0;
+        }
     }
 }
 
 void lua_getWeather(char *response) {
     int counter = 0;
+    int i;
     char cmd[] = "get_weather()\r\n";
 
-    while (cmd[counter] != '\0') {          //Put message onto buffer for wifi to receive
-            putcharWIFI(cmd[counter]) ;
-            counter++;
-    }
+    sendCommand(cmd);
 
-    for(int i = 0; i < 100000 /* Timeout */; i++) { //Get response 
+    printf("In get weather\n");
+
+    for(i = 0; i < 400000 /* Timeout */; i++) { //Get response
         if (WIFITestForReceivedData()) {
-            char data = (char)getcharWIFI();
-            strcat(response, &data);        //Add character to response string
-			i = 0;
+            strcat(response, (char*)getcharWIFI());        //Add character to response string
+            i = 0;
         }
     }
+    printf(response);
 }
 
 void lua_postHelp(void) {
-    // WIFI STUFF
+    char cmd[] = "post_help()\r\n";
 
+    printf(cmd);
+    sendCommand(cmd);
+
+    for(int i = 0; i < 100000 /* Timeout */; i++) {
+        if (WIFITestForReceivedData()) {
+            char curr = (char) getcharWIFI();
+            i = 0;
+        }
+    }
 
     // Blink help message a few times
     for (int i = 0; i < 3; i++) {
@@ -100,20 +116,12 @@ void lua_postHelp(void) {
     drawMainScreen();
 }
 
-
-void lua_checkwifi(void)
+void sendCommand(char *command)
 {
-    char cmd[] = "check_wifi()\r\n";
-
-    for (int i = 0; i < 14; i++) {
-        putcharWIFI(cmd[i]);
-    } 
-
-	for(int i = 0; i < 100000 /* Timeout */; i++) {
-        if (WIFITestForReceivedData()) {
-			(void)getcharWIFI();
-			i = 0;
-        }
+    int i;
+    for (i = 0; i < strlen(command); i++)
+    {
+        putcharWIFI(command[i]);
     }
 }
 

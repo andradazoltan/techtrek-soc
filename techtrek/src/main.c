@@ -43,6 +43,9 @@ int main (void) {
     InitWIFI();
     InitTouch();
 
+    // Init wifi
+    lua_doServerFile();
+
     // Initialize the main screen
     initColours();
     drawMainScreen();

@@ -16,10 +16,11 @@ int WIFITestForReceivedData(void);
 void WIFI_Flush(void);
 
 void lua_doServerFile();
-void lua_postGPS(int latitude, int longitude);
+void lua_postGPS(double latitude, double longitude);
 void lua_getWeather(char *response);
 void lua_postHelp(void);
 
 void lua_checkwifi(void);
+void sendCommand(char *command);
 
 #endif /* WIFI_H_ */
