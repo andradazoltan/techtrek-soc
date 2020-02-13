@@ -70,6 +70,5 @@ void initColours(void);
 void drawMainScreen(void);
 void drawHelpScreen(void);
 int IsObjectPressed(int x, int y, object_t obj);
-void helpCaller(void);
 
 #endif /* SCREENS_H_ */

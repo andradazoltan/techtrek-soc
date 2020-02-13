@@ -62,14 +62,8 @@ void ReadTouchScreen(void) {
                 if (objs[i].func != NULL) {
                     objs[i].func();
                 }
-                break;
-            
-            case HELP_SCREEN:
-
-                break;
-
+            }
         }
-
     }
 }
 
