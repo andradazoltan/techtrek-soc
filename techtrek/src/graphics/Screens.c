@@ -188,10 +188,10 @@ object_t mapScreen[] = {
         .textXCoord = 660,
         .func = &drawMainScreen,
         .rect = {
-            .topLeftXCoord = 630,
+            .topLeftXCoord = 580,
             .topLeftYCoord = 0,
             .bottomRightXCoord = 780,
-            .bottomRightYCoord = 50
+            .bottomRightYCoord = 55
         }
     },
     { // decrement button
@@ -248,7 +248,21 @@ void drawMainScreen(void) {
     OutGraphicsCharFont4(140, 40, WHITE, GREEN, "Pacific Spirit", 0);
     OutGraphicsCharFont4(100, 90, WHITE, GREEN, "Regional Park Trail", 0);
 
-    // Draw a tree
+    // Draw a map logo
+    /*
+    Line(190,390,240,310,CADET_BLUE);
+    Line(390,390,340,310,CADET_BLUE);
+    HLine(190,390,200,CADET_BLUE);
+    HLine(240,310,100,CADET_BLUE);
+    Fill(290,350,CADET_BLUE,CADET_BLUE);
+
+    Triangle(290,350, 240,250, 340,250, RED);
+    Fill(290,330,RED,RED);
+    Circle(290,250,50,RED);
+    Fill(290,250,RED,RED);
+    Circle(290,250,10,WHITE);
+    Fill(290,250,WHITE,WHITE);
+    */
 
     // Print weather at the bottom
 }
@@ -273,8 +287,8 @@ void drawMapScreen(void) {
     FillScreen(WHITE_SMOKE);
 
     // Header
-    FillRect(0, 0, XRES, 50, CADET_BLUE);
-    OutGraphicsCharFont3(50, 12, WHITE, POWDER_BLUE, "Trail Map", 0);
+    FillRect(0, 0, XRES, 55, CADET_BLUE);
+    OutGraphicsCharFont3(50, 14, WHITE, POWDER_BLUE, "Trail Map", 0);
 
     // Draw fake map (for now)
     FillRect(400, 60, 770, 450, GREEN);
@@ -316,7 +330,7 @@ void createObjects(object_t objs[], int numObjs) {
         else if (temp.type == CIRCLE) {
             // Don't use FillCircle() unless you want a trippy concentric circle
             Circle(temp.circle.centerXCoord, temp.circle.centerYCoord, temp.circle.radius, temp.colour);
-            Fill(temp.circle.centerXCoord, temp.circle.centerYCoord, temp.circle.radius, temp.colour);
+            Fill(temp.circle.centerXCoord, temp.circle.centerYCoord, temp.colour, temp.colour);
         }
         else if (temp.type == GRAPH_HOR) {
             barGraphHor(temp.graph_hor.topLeftXCoord, temp.graph_hor.topLeftYCoord,
