@@ -1,6 +1,6 @@
 /*
  *  WiFi.c
- *  Drives UART using UART
+ *  Drives WiFi using UART
  *
  *  Created on: Jan 30, 2020
  *  Author: Connor Fong & Ash Tan
@@ -12,6 +12,12 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+
+static int putcharWIFI(int c);
+static int getcharWIFI(void);
+static char* WIFI_SaveFlush(void);
+static void sendCommand(char *command);
+static void WIFI_wait(int cycles);
 
 /**************************************************************************
 ** Subroutine to initialise the WIFI Port by writing some data
@@ -33,16 +39,12 @@ void InitWIFI(void)
 
 /************ TECHTREK FUNCTIONS ******************/
 void lua_doServerFile() {
-    printf("In Lua do file\n");
-    int counter = 0;
     int i;
     char* cmd = "dofile(\"server.lua\")\r\n";
 
-    printf("Putting Message into Buffer\n");
     sendCommand(cmd);
 
-    printf("Done putting message\n");
-    for(i = 0; i < 100000 /* Timeout */; i++) {
+    for(i = 0; i < 400000 /* Timeout */; i++) {
         if (WIFITestForReceivedData()) {
             (void)getcharWIFI();
             i = 0;
@@ -50,55 +52,61 @@ void lua_doServerFile() {
     }
 }
 
-void lua_postGPS(double latitude, double longitude) {
-    int i = 0;
+char* lua_postGPS(float latitude, float longitude) {
     char cmd[50];
+    char *flushbuf = "";
 
-    printf("HELLLLLO %d", (int)latitude*1000000);
-
+    //Multiply by 1000000 to avoid passing a float
     snprintf(cmd, sizeof(cmd), "post_gps(%d, %d)\r\n", (int)(latitude*1000000), (int)(longitude*1000000));
 
     printf(cmd);
     sendCommand(cmd);
 
-    for(i = 0; i < 100000 /* Timeout */; i++) {
-        if (WIFITestForReceivedData()) {
-            char curr = (char) getcharWIFI();
-            i = 0;
-        }
-    }
+    flushbuf = WIFI_SaveFlush(); // This saves the response from the WIFI chip (Important!)
+
+    return flushbuf;
 }
 
-void lua_getWeather(char *response) {
-    int counter = 0;
-    int i;
+
+char* lua_getWeather() {
     char cmd[] = "get_weather()\r\n";
+    char *flushbuf = "";
 
     sendCommand(cmd);
+    flushbuf = WIFI_SaveFlush(); // This saves the response from the WIFI chip (Important!)
 
-    printf("In get weather\n");
+    return flushbuf;
 
-    for(i = 0; i < 400000 /* Timeout */; i++) { //Get response
-        if (WIFITestForReceivedData()) {
-            strcat(response, (char*)getcharWIFI());        //Add character to response string
-            i = 0;
-        }
-    }
-    printf(response);
 }
 
-void lua_postHelp(void) {
+char* lua_getPopulation() {
+    char cmd[] = "get_population()\r\n";
+    char *flushbuf = "";
+
+    sendCommand(cmd);
+    flushbuf = WIFI_SaveFlush(); // This saves the response from the WIFI chip (Important!)
+
+    return flushbuf;
+}
+
+char* lua_getWarnings() {
+    char cmd[] = "get_warnings()\r\n";
+    char *flushbuf = "";
+
+    sendCommand(cmd);
+    flushbuf = WIFI_SaveFlush(); // This saves the response from the WIFI chip (Important!)
+
+    return flushbuf;
+}
+
+char* lua_postHelp(void) {
     char cmd[] = "post_help()\r\n";
+    char *flushbuf = "";
 
     printf(cmd);
     sendCommand(cmd);
 
-    for(int i = 0; i < 100000 /* Timeout */; i++) {
-        if (WIFITestForReceivedData()) {
-            char curr = (char) getcharWIFI();
-            i = 0;
-        }
-    }
+    flushbuf = WIFI_SaveFlush(); // This saves the response from the WIFI chip (Important!)
 
     // Blink help message a few times
     for (int i = 0; i < 3; i++) {
@@ -114,19 +122,62 @@ void lua_postHelp(void) {
 
     // Transition back to main screen
     drawMainScreen();
+
+    return flushbuf;
 }
 
-void sendCommand(char *command)
+/************************** NOT IMPLEMENTED YET ********************/
+char* lua_postWarning(float latitude, float longitude) {
+    char cmd[50];
+    char *flushbuf = "";
+
+    //Multiply by 1000000 to avoid passing a float
+    snprintf(cmd, sizeof(cmd), "post_gps(%d, %d)\r\n", (int)(latitude*1000000), (int)(longitude*1000000));
+
+    printf(cmd);
+    sendCommand(cmd);
+
+    flushbuf = WIFI_SaveFlush(); // This saves the response from the WIFI chip (Important!)
+
+    return flushbuf;
+}
+
+/************ HELPER FUNCTIONS ******************/
+static void sendCommand(char *command)
 {
-    int i;
+    int i,j;
     for (i = 0; i < strlen(command); i++)
     {
+        for(j = 0; j < 1000; j++) {;} //Give time to send signal
         putcharWIFI(command[i]);
     }
 }
 
+static void WIFI_wait(int cycles)
+{
+    for (int i = 0; !WIFITestForReceivedData() && i < cycles; i++);
+}
+
+/*----------- SAVE CHARACTER STREAM FROM WIFI CHIP ------------------*/
+static char* WIFI_SaveFlush()
+{
+    int i;
+    int bytes_received = 0;
+    char buf[1024] = "";  // Increase size of buffer if you need to save more!!!
+
+    for(i = 0; i < 10000000 ; i++) { /* Timeout */
+        if (WIFITestForReceivedData() == 1) {
+            buf[bytes_received++] = (char) getcharWIFI();
+            i = 0;
+        }
+    }
+    printf("Got %u bytes \n", bytes_received);
+    buf[bytes_received] = '\0';
+    return buf;
+}
+
 /*------------------ Serial Port Functions for WIFI -----------------*/
-int putcharWIFI(int c)
+static int putcharWIFI(int c)
 {
     // Do nothing while waiting for Transmitter Holding Register bit to change
     while((WIFI_LineStatusReg & 0x20) != 0x20);
@@ -135,7 +186,7 @@ int putcharWIFI(int c)
 	return c;
 }
 
-int getcharWIFI(void)
+static int getcharWIFI(void)
 {
     // Do nothing while waiting for the Data Ready bit to change
     while((WIFI_LineStatusReg & 0x1) != 0x01);

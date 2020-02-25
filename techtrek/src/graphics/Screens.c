@@ -1,18 +1,21 @@
 /*
  * Screens.c
  *
- *  Created on: Feb 11, 2020
- *  Author: Andrada Zoltan
+ * Creates different screens for the GUI
+ *
+ * Created on: Feb 11, 2020
+ * Author: Andrada Zoltan
  */
 
 #include "Screens.h"
 #include "Graphics.h"
 #include "Wifi.h"
+#include "Keyboard.h"
 
 int currScreen = MAIN_SCREEN;
 
 // to be used by pointer
-int graphPercent = 50;
+int16_t graphPercent = 50;
 
 void createObjects(object_t objs[], int numObjs);
 
@@ -64,7 +67,7 @@ object_t mainScreen[] = {
         .colour = RED,
         .text = "REPORT HAZARD",
         .textXCoord = 570,
-        .func = NULL,
+        .func = &drawHazardScreen,
         .rect = {
             .topLeftXCoord = 565,
             .topLeftYCoord = 294,
@@ -93,7 +96,7 @@ object_t helpScreen[] = {
         .colour = MAROON,
         .text = "Unconscious",
         .textXCoord = 90,
-        .func = &lua_postHelp,
+        .func = (void*)&lua_postHelp,
         .rect = {
             .topLeftXCoord = 70,
             .topLeftYCoord = 150,
@@ -106,7 +109,7 @@ object_t helpScreen[] = {
         .colour = MAROON,
         .text = "Broken Bone",
         .textXCoord = 320,
-        .func = &lua_postHelp,
+        .func = (void*)&lua_postHelp,
         .rect = {
             .topLeftXCoord = 300,
             .topLeftYCoord = 150,
@@ -119,7 +122,7 @@ object_t helpScreen[] = {
         .colour = MAROON,
         .text = "Major Cut",
         .textXCoord = 565,
-        .func = &lua_postHelp,
+        .func = (void*)&lua_postHelp,
         .rect = {
             .topLeftXCoord = 530,
             .topLeftYCoord = 150,
@@ -132,7 +135,7 @@ object_t helpScreen[] = {
         .colour = MAROON,
         .text = "Too Dark",
         .textXCoord = 110,
-        .func = &lua_postHelp,
+        .func = (void*)&lua_postHelp,
         .rect = {
             .topLeftXCoord = 70,
             .topLeftYCoord = 265,
@@ -145,7 +148,7 @@ object_t helpScreen[] = {
         .colour = MAROON,
         .text = "Exhaustion",
         .textXCoord = 325,
-        .func = &lua_postHelp,
+        .func = (void*)&lua_postHelp,
         .rect = {
             .topLeftXCoord = 300,
             .topLeftYCoord = 265,
@@ -158,7 +161,7 @@ object_t helpScreen[] = {
         .colour = MAROON,
         .text = "Other",
         .textXCoord = 595,
-        .func = &lua_postHelp,
+        .func = (void*)&lua_postHelp,
         .rect = {
             .topLeftXCoord = 530,
             .topLeftYCoord = 265,
@@ -175,9 +178,9 @@ object_t mapScreen[] = {
         .func = NULL,
         .graph_hor = {
             .topLeftXCoord = 50,
-            .topLeftYCoord = 100,
+            .topLeftYCoord = 120,
             .bottomRightXCoord = 350,
-            .bottomRightYCoord = 175,
+            .bottomRightYCoord = 195,
             .percent = &graphPercent
         }
     },
@@ -191,7 +194,7 @@ object_t mapScreen[] = {
             .topLeftXCoord = 580,
             .topLeftYCoord = 0,
             .bottomRightXCoord = 780,
-            .bottomRightYCoord = 55
+            .bottomRightYCoord = 75
         }
     },
     { // decrement button
@@ -202,9 +205,9 @@ object_t mapScreen[] = {
         .func = &shiftGraphLeft,
         .rect = {
             .topLeftXCoord = 50,
-            .topLeftYCoord = 200,
+            .topLeftYCoord = 220,
             .bottomRightXCoord = 190,
-            .bottomRightYCoord = 278
+            .bottomRightYCoord = 298
         }
     },
     { // increment Button
@@ -215,9 +218,9 @@ object_t mapScreen[] = {
         .func = &shiftGraphRight,
         .rect = {
             .topLeftXCoord = 210,
-            .topLeftYCoord = 200,
+            .topLeftYCoord = 220,
             .bottomRightXCoord = 350,
-            .bottomRightYCoord = 278
+            .bottomRightYCoord = 298
         }
     }
 };
@@ -248,23 +251,20 @@ void drawMainScreen(void) {
     OutGraphicsCharFont4(140, 40, WHITE, GREEN, "Pacific Spirit", 0);
     OutGraphicsCharFont4(100, 90, WHITE, GREEN, "Regional Park Trail", 0);
 
-    // Draw a map logo
-    /*
-    Line(190,390,240,310,CADET_BLUE);
-    Line(390,390,340,310,CADET_BLUE);
-    HLine(190,390,200,CADET_BLUE);
-    HLine(240,310,100,CADET_BLUE);
-    Fill(290,350,CADET_BLUE,CADET_BLUE);
-
-    Triangle(290,350, 240,250, 340,250, RED);
-    Fill(290,330,RED,RED);
-    Circle(290,250,50,RED);
-    Fill(290,250,RED,RED);
-    Circle(290,250,10,WHITE);
-    Fill(290,250,WHITE,WHITE);
-    */
-
     // Print weather at the bottom
+}
+
+void drawHazardScreen(void) {
+    currScreen = HAZARD_SCREEN;
+
+    // Fill the screen with a solid red colour
+    FillScreen(RED);
+
+    // Draw the full keyboard
+    drawKeyboard(34, 250);
+
+    // Draw the text box
+    drawTextBox(65, 100, 750, 170);
 }
 
 void drawHelpScreen(void) {
@@ -287,12 +287,12 @@ void drawMapScreen(void) {
     FillScreen(WHITE_SMOKE);
 
     // Header
-    FillRect(0, 0, XRES, 55, CADET_BLUE);
+    FillRect(0, 0, XRES, 75, CADET_BLUE);
     OutGraphicsCharFont3(50, 14, WHITE, POWDER_BLUE, "Trail Map", 0);
 
     // Draw fake map (for now)
-    FillRect(400, 60, 770, 450, GREEN);
-    Line(400, 60, 770, 300, CHOCOLATE);
+    FillRect(400, 80, 770, 450, GREEN);
+    Line(400, 80, 770, 300, CHOCOLATE);
     Line(400, 400, 770, 350, BROWN);
     Line(550, 450, 720, 60, CHOCOLATE);
     Circle(650, 100, 20, CHOCOLATE);
@@ -300,7 +300,7 @@ void drawMapScreen(void) {
     OutGraphicsCharFont5(520, 220, WHITE, BLACK, "MAP", 0);
 
     // text over graph
-    OutGraphicsCharFont3(50, 60, BLACK, WHITE_SMOKE, "How is the trail today?", 0);
+    OutGraphicsCharFont3(50, 80, BLACK, WHITE_SMOKE, "How is the trail today?", 0);
     
     // Create buttons and graphs
     createObjects(mapScreen, 4);

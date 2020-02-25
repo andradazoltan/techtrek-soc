@@ -50,13 +50,11 @@ void OutGraphicsCharFont3(int x, int y, int colour, int backgroundcolour, const 
                 }
 
                 for (column = 0; column < (theColumn / 2); column++) {
-                    if((pixels & BitMask))                                                      // if valid pixel, then write it
-                        WriteAPixel(xPos + column, theY+(row/2), theColour) ;
-                    else {                                                                      // if not a valid pixel, do we erase or leave it along (no erase)
-                        if(Erase == 1)
-                            WriteAPixel(xPos + column, theY+(row/2), backgroundcolour) ;
-                        // else leave it alone
+                    if (Erase == 1) {
+                        WriteAPixel(xPos + column, theY+(row/2), backgroundcolour) ;
                     }
+                    else if((pixels & BitMask))                                                      // if valid pixel, then write it
+                        WriteAPixel(xPos + column, theY+(row/2), theColour);
 
                     BitMask = BitMask >> 1 ;
                 }

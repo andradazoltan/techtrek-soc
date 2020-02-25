@@ -8,10 +8,6 @@
 #ifndef FONTS_H_
 #define FONTS_H_
 
-// font Definitions
-#define XRES 800    // column pixel count
-#define YRES 480    // row pixel count
-
 // Font 1
 extern const unsigned char Font5x7[][7];
 

@@ -23,7 +23,7 @@ void OutGraphicsCharFont5(int x, int y, int colour, int backgroundcolour, const 
 	register int 	pixels ;
 	register char 	theColour = colour  ;
 	register int 	BitMask,
-					theRow, theColumn;
+					theRow;
 
 	for (int i = 0; text[i] != '\0'; i++) {
 	    int theCharacter = text[i];
@@ -34,7 +34,6 @@ void OutGraphicsCharFont5(int x, int y, int colour, int backgroundcolour, const 
         if(((short)(theCharacter) >= (short)(' ')) && ((short)(theCharacter) <= (short)('~'))) {            // if printable character
             theCharacter -= 0x20 ;                                                                          // subtract hex 20 to get index of first printable character (the space character)
             theRow = FONT5_YPIXELS;
-            theColumn = FONT5_XPIXELS;
 
             for(row = 0; row < (theRow * 4) ; row ++)   {
                 BitMask = 128;
