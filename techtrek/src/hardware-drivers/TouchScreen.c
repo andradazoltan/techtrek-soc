@@ -9,6 +9,7 @@
 #include "TouchScreen.h"
 #include "RegisterDefs.h"
 #include "Screens.h"
+#include "Keyboard.h"
 
 // Local Function Prototypes
 static int putcharTS(int c);

@@ -120,7 +120,7 @@ void drawKeyboard(int x, int y) {
                 to_print[1] = 'K';
 
                 // Redraw box to be a different colour
-                FillRect(x1, y1, x2, y2, PINK);
+                FillRect(x1, y1, x2, y2, ORANGE);
 
                 OutGraphicsCharFont3(x1 + KEY_X_SIZE / 2 - 15, y1 + KEY_Y_SIZE / 2 - 15, WHITE, MAROON, to_print, 0);
             }

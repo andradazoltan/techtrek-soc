@@ -33,7 +33,6 @@ int putcharWIFI(int c);
 int getcharWIFI( void );
 int WIFITestForReceivedData(void);
 void WIFI_Flush(void);
-void lua_dofile(void);
 
 //Server Functions
 void lua_doServerFile(void);

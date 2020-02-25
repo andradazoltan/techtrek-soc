@@ -1,11 +1,11 @@
 -- This information is used by the Wi-Fi dongle to make a wireless connection to the router in the Lab
 -- or if you are using another router e.g. at home, change ID and Password appropriately
 
---SSID = "Ash's iPhone"
---SSID_PASSWORD = "01234567898"
+SSID = "Ash's iPhone"
+SSID_PASSWORD = "01234567898"
 
- SSID = "TAN-S"
- SSID_PASSWORD = "6045940350"
+--  SSID = "TAN-S"
+--  SSID_PASSWORD = "6045940350"
 
 
 -- SSID= "ubcvisitor"
@@ -55,10 +55,11 @@ function build_GPS_request(host, uri, data_table, lat, long)
      "Content-Length: 0\r\n"..
      "\r\n"..
      data
---     print(request)
+     print(request)
      return request
 end
 
+-- Build a generic GET request
 function build_get_request(host, url)
 
      request = "GET /"..url.." HTTP/1.0\r\n"..
@@ -69,6 +70,21 @@ function build_get_request(host, url)
           "User-Agent: Mozilla/4.0 (compatible; esp8266 Lua; Windows NT 5.1)\r\n".. 
           "Accept: */*\r\n\r\n"
 
+     return request
+end
+
+function build_rating_request(host, uri, data_table, rate)
+
+     data = ""
+
+     request = "POST "..uri.."?score=" ..rate.. " HTTP/1.1\r\n"..
+     "Host: "..host.."\r\n"..
+     "Connection: close\r\n"..
+     "Content-Type: application/x-www-form-urlencoded\r\n"..
+     "Content-Length: 0\r\n"..
+     "\r\n"..
+     data
+     print(request)
      return request
 end
 
@@ -152,7 +168,8 @@ end
 
 ------- TECHTREK GET POPULATION FROM AWS SERVER --------------
 
-POPULATION_URL = "population/1"
+--
+POPULATION_URL = "population/firmware/1"
 
 function get_population()
 
@@ -170,7 +187,8 @@ end
 
 ------- TECHTREK GET WARNINGS FROM AWS SERVER --------------
 
-WARNINGS_URL = "warning/1"
+--Get the lastest warning
+WARNINGS_URL = "warning/firmware/1"
 
 function get_warnings()
 
@@ -217,7 +235,43 @@ function post_warning(warning)
      print("End of WARNING POST")
 end
 
+------- TECHTREK GET TRAIL RATING FROM AWS SERVER --------------
 
+RATING_URL = "rating/firmware/1"
+
+function get_rating()
+
+    socket = net.createConnection(net.TCP,0)
+    socket:on("receive",display)
+    socket:connect(80,SERVER_HOST)
+
+    -- send get request
+    socket:on("connection", function(socket)
+          new_request = build_get_request(SERVER_HOST, RATING_URL)
+          socket:send(new_request)
+    end)
+
+end
+
+------- TECHTREK POST TRAIL RATING FROM AWS SERVER --------------
+
+RATING_URI = "/rating/1"
+
+-- Example: post_rating(1)
+function post_rating(rate)
+    
+    data = ""
+
+    socket = net.createConnection(net.TCP,0)
+    socket:on("receive",display)
+    socket:connect(80,SERVER_HOST)
+
+    socket:on("connection",function(sck)
+         post_request = build_rating_request(SERVER_HOST,RATING_URI,data, rate)
+         sck:send(post_request)
+    end)
+
+end
 
 
 

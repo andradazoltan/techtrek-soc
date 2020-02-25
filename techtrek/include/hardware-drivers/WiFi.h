@@ -15,10 +15,12 @@ void WIFI_Flush(void);
 
 //Server Functions
 void lua_doServerFile(void);
-char* lua_postGPS(float latitude, float longitude);
-char* lua_getWeather(void);
-char* lua_postHelp(void);
-char* lua_getPopulation(void);
-char* lua_getWarnings(void);
+void lua_postGPS(float latitude, float longitude);
+void lua_getWeather(char responseBody[]);
+void lua_getPopulation(char responseBody[]);
+void lua_getWarnings(char responseBody[]);
+void lua_postHelp(void);
+void lua_getRating(char responseBody[]);
+void lua_postRating(int score);
 
 #endif /* WIFI_H_ */

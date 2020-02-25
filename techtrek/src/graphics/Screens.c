@@ -11,6 +11,7 @@
 #include "Graphics.h"
 #include "Wifi.h"
 #include "Keyboard.h"
+#include <string.h>
 
 int currScreen = MAIN_SCREEN;
 
@@ -252,6 +253,13 @@ void drawMainScreen(void) {
     OutGraphicsCharFont4(100, 90, WHITE, GREEN, "Regional Park Trail", 0);
 
     // Print weather at the bottom
+    char weather[1024] = {0};
+    lua_getWeather(weather);
+
+    char *tok = strtok(&weather[16], "a");
+    OutGraphicsCharFont3(50, 300, WHITE, GREEN, tok, 0);
+    tok = strtok(NULL, "");
+    OutGraphicsCharFont3(50, 400, WHITE, GREEN, tok + 3 * sizeof(char), 0);
 }
 
 void drawHazardScreen(void) {
@@ -259,6 +267,9 @@ void drawHazardScreen(void) {
 
     // Fill the screen with a solid red colour
     FillScreen(RED);
+
+    // Title
+    OutGraphicsCharFont4(240, 20, WHITE, RED, "Report a Hazard", 0);
 
     // Draw the full keyboard
     drawKeyboard(34, 250);
