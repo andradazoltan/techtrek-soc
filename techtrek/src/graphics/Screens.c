@@ -260,7 +260,11 @@ void drawHazardScreen(void) {
     // Fill the screen with a solid red colour
     FillScreen(RED);
 
+    // Draw the full keyboard
     drawKeyboard(34, 250);
+
+    // Draw the text box
+    drawTextBox(65, 100, 750, 170);
 }
 
 void drawHelpScreen(void) {
