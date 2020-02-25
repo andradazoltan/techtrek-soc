@@ -18,6 +18,7 @@
  */
 enum screens{
     MAIN_SCREEN,
+    HAZARD_SCREEN,
     HELP_SCREEN,
     MAP_SCREEN
 };
@@ -80,6 +81,7 @@ extern object_t mapScreen[4];   // Map Screen Objects
 // Function Definitions
 void initColours(void);
 void drawMainScreen(void);
+void drawHazardScreen(void);
 void drawHelpScreen(void);
 void drawMapScreen(void);
 void shiftGraphLeft(void);

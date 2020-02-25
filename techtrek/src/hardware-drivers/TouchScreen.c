@@ -41,6 +41,10 @@ void ReadTouchScreen(void) {
         WaitForRelease();
 
         Point p = GetRelease();
+        printf("%d %d\n", p.x, p.y);
+
+        // Translate all y-coordinates because this touchscreen sucks
+        p.y = p.y -  50;
 
         object_t *objs;
         int numObjects;
@@ -48,6 +52,10 @@ void ReadTouchScreen(void) {
         case MAIN_SCREEN:
             objs = mainScreen;
             numObjects = 5;
+            break;
+        case HAZARD_SCREEN:
+            keyPress(p.x, p.y);
+            numObjects = 0;
             break;
         case HELP_SCREEN:
             objs = helpScreen;

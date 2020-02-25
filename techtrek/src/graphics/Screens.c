@@ -10,6 +10,7 @@
 #include "Screens.h"
 #include "Graphics.h"
 #include "Wifi.h"
+#include "Keyboard.h"
 
 int currScreen = MAIN_SCREEN;
 
@@ -66,7 +67,7 @@ object_t mainScreen[] = {
         .colour = RED,
         .text = "REPORT HAZARD",
         .textXCoord = 570,
-        .func = NULL,
+        .func = &drawHazardScreen,
         .rect = {
             .topLeftXCoord = 565,
             .topLeftYCoord = 294,
@@ -177,9 +178,9 @@ object_t mapScreen[] = {
         .func = NULL,
         .graph_hor = {
             .topLeftXCoord = 50,
-            .topLeftYCoord = 100,
+            .topLeftYCoord = 120,
             .bottomRightXCoord = 350,
-            .bottomRightYCoord = 175,
+            .bottomRightYCoord = 195,
             .percent = &graphPercent
         }
     },
@@ -193,7 +194,7 @@ object_t mapScreen[] = {
             .topLeftXCoord = 580,
             .topLeftYCoord = 0,
             .bottomRightXCoord = 780,
-            .bottomRightYCoord = 55
+            .bottomRightYCoord = 75
         }
     },
     { // decrement button
@@ -204,9 +205,9 @@ object_t mapScreen[] = {
         .func = &shiftGraphLeft,
         .rect = {
             .topLeftXCoord = 50,
-            .topLeftYCoord = 200,
+            .topLeftYCoord = 220,
             .bottomRightXCoord = 190,
-            .bottomRightYCoord = 278
+            .bottomRightYCoord = 298
         }
     },
     { // increment Button
@@ -217,9 +218,9 @@ object_t mapScreen[] = {
         .func = &shiftGraphRight,
         .rect = {
             .topLeftXCoord = 210,
-            .topLeftYCoord = 200,
+            .topLeftYCoord = 220,
             .bottomRightXCoord = 350,
-            .bottomRightYCoord = 278
+            .bottomRightYCoord = 298
         }
     }
 };
@@ -253,6 +254,15 @@ void drawMainScreen(void) {
     // Print weather at the bottom
 }
 
+void drawHazardScreen(void) {
+    currScreen = HAZARD_SCREEN;
+
+    // Fill the screen with a solid red colour
+    FillScreen(RED);
+
+    drawKeyboard(34, 250);
+}
+
 void drawHelpScreen(void) {
     currScreen = HELP_SCREEN;
 
@@ -273,12 +283,12 @@ void drawMapScreen(void) {
     FillScreen(WHITE_SMOKE);
 
     // Header
-    FillRect(0, 0, XRES, 55, CADET_BLUE);
+    FillRect(0, 0, XRES, 75, CADET_BLUE);
     OutGraphicsCharFont3(50, 14, WHITE, POWDER_BLUE, "Trail Map", 0);
 
     // Draw fake map (for now)
-    FillRect(400, 60, 770, 450, GREEN);
-    Line(400, 60, 770, 300, CHOCOLATE);
+    FillRect(400, 80, 770, 450, GREEN);
+    Line(400, 80, 770, 300, CHOCOLATE);
     Line(400, 400, 770, 350, BROWN);
     Line(550, 450, 720, 60, CHOCOLATE);
     Circle(650, 100, 20, CHOCOLATE);
@@ -286,7 +296,7 @@ void drawMapScreen(void) {
     OutGraphicsCharFont5(520, 220, WHITE, BLACK, "MAP", 0);
 
     // text over graph
-    OutGraphicsCharFont3(50, 60, BLACK, WHITE_SMOKE, "How is the trail today?", 0);
+    OutGraphicsCharFont3(50, 80, BLACK, WHITE_SMOKE, "How is the trail today?", 0);
     
     // Create buttons and graphs
     createObjects(mapScreen, 4);

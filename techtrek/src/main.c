@@ -48,11 +48,11 @@ int main (void) {
     }
 
     // Initialize a named pipe between this program and the hikercam program
-    mkfifo("/tmp/pipe", S_IWUSR | S_IRUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
+   /* mkfifo("/tmp/pipe", S_IWUSR | S_IRUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
     if ((fd_fifo = open("/tmp/pipe", O_RDONLY)) == -1 ) {
         printf("ERROR: could not open \"/tmp/pipe\"...\n");
         return 1;
-    }
+    }*/
 
     // Initialize all of the hardware
     InitWIFI();
@@ -71,7 +71,7 @@ int main (void) {
     pthread_t touch_screen_thread;
     pthread_t people_count_thread;
     pthread_create(&touch_screen_thread, NULL, (void *)&ReadTouchScreen, NULL);
-    pthread_create(&people_count_thread, NULL, (void *)&getPeopleCount, fd_fifo);
+    //pthread_create(&people_count_thread, NULL, (void *)&getPeopleCount, fd_fifo);
 
     pthread_join(touch_screen_thread, NULL);
 
