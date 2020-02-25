@@ -2,7 +2,7 @@
  * Screens.h
  *
  *  Created on: Feb 11, 2020
- *  Author: Andrada Zoltan
+ *  Author: Andrada Zoltan & Elijah Hewer
  */
 
 #ifndef SCREENS_H_

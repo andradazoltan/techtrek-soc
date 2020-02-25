@@ -13,8 +13,6 @@
 // Local Function Prototypes
 static int putcharTS(int c);
 static int getcharTS(void);
-static int TS_TestForReceivedData(void);
-static void TS_Flush(void);
 
 /*****************************************************************************
 ** Initialize touch screen controller
@@ -181,24 +179,4 @@ static int getcharTS(void)
     while((TouchScreen_LineStatusReg & 0x1) != 0x01);
 
     return (int) TouchScreen_ReceiverFifo;		// Read new character from ReceiverFiFo register
-}
-
-static int TS_TestForReceivedData(void)
-{
-    // Check if any character has been received and return TRUE if so
-    if ((TouchScreen_LineStatusReg & 0x1) == 0x1) {
-	    return 1;
-	} else {
-	    return 0;
-	}
-}
-
-static void TS_Flush(void)
-{
-    int flushedData;
-
-	// Flush UART receive buffer
-	while((TouchScreen_LineStatusReg & 0x01) == 0x01) {
-	    flushedData = TouchScreen_ReceiverFifo;
-	}
 }

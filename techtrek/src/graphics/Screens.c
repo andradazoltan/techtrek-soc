@@ -1,8 +1,10 @@
 /*
  * Screens.c
  *
- *  Created on: Feb 11, 2020
- *  Author: Andrada Zoltan
+ * Creates different screens for the GUI
+ *
+ * Created on: Feb 11, 2020
+ * Author: Andrada Zoltan
  */
 
 #include "Screens.h"
@@ -12,7 +14,7 @@
 int currScreen = MAIN_SCREEN;
 
 // to be used by pointer
-int graphPercent = 50;
+int16_t graphPercent = 50;
 
 void createObjects(object_t objs[], int numObjs);
 
@@ -93,7 +95,7 @@ object_t helpScreen[] = {
         .colour = MAROON,
         .text = "Unconscious",
         .textXCoord = 90,
-        .func = &lua_postHelp,
+        .func = (void*)&lua_postHelp,
         .rect = {
             .topLeftXCoord = 70,
             .topLeftYCoord = 150,
@@ -106,7 +108,7 @@ object_t helpScreen[] = {
         .colour = MAROON,
         .text = "Broken Bone",
         .textXCoord = 320,
-        .func = &lua_postHelp,
+        .func = (void*)&lua_postHelp,
         .rect = {
             .topLeftXCoord = 300,
             .topLeftYCoord = 150,
@@ -119,7 +121,7 @@ object_t helpScreen[] = {
         .colour = MAROON,
         .text = "Major Cut",
         .textXCoord = 565,
-        .func = &lua_postHelp,
+        .func = (void*)&lua_postHelp,
         .rect = {
             .topLeftXCoord = 530,
             .topLeftYCoord = 150,
@@ -132,7 +134,7 @@ object_t helpScreen[] = {
         .colour = MAROON,
         .text = "Too Dark",
         .textXCoord = 110,
-        .func = &lua_postHelp,
+        .func = (void*)&lua_postHelp,
         .rect = {
             .topLeftXCoord = 70,
             .topLeftYCoord = 265,
@@ -145,7 +147,7 @@ object_t helpScreen[] = {
         .colour = MAROON,
         .text = "Exhaustion",
         .textXCoord = 325,
-        .func = &lua_postHelp,
+        .func = (void*)&lua_postHelp,
         .rect = {
             .topLeftXCoord = 300,
             .topLeftYCoord = 265,
@@ -158,7 +160,7 @@ object_t helpScreen[] = {
         .colour = MAROON,
         .text = "Other",
         .textXCoord = 595,
-        .func = &lua_postHelp,
+        .func = (void*)&lua_postHelp,
         .rect = {
             .topLeftXCoord = 530,
             .topLeftYCoord = 265,
@@ -247,22 +249,6 @@ void drawMainScreen(void) {
     // Print trail name
     OutGraphicsCharFont4(140, 40, WHITE, GREEN, "Pacific Spirit", 0);
     OutGraphicsCharFont4(100, 90, WHITE, GREEN, "Regional Park Trail", 0);
-
-    // Draw a map logo
-    /*
-    Line(190,390,240,310,CADET_BLUE);
-    Line(390,390,340,310,CADET_BLUE);
-    HLine(190,390,200,CADET_BLUE);
-    HLine(240,310,100,CADET_BLUE);
-    Fill(290,350,CADET_BLUE,CADET_BLUE);
-
-    Triangle(290,350, 240,250, 340,250, RED);
-    Fill(290,330,RED,RED);
-    Circle(290,250,50,RED);
-    Fill(290,250,RED,RED);
-    Circle(290,250,10,WHITE);
-    Fill(290,250,WHITE,WHITE);
-    */
 
     // Print weather at the bottom
 }

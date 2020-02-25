@@ -31,6 +31,7 @@ PeopleTracker::PeopleTracker() : peopleCount(0), endTrackingSignal(false){
 int PeopleTracker::InitTracker() {
     if (mCam->InitCamera())
         return -1;
+    return 0;
 }
 
 void PeopleTracker::StartTracking() {
@@ -38,7 +39,7 @@ void PeopleTracker::StartTracking() {
     thread acqThread(&HikerCam::StartAcquisition, mCam);
 
     while (!endTrackingSignal) {
-        sleep(INFERENCE_TIME);
+        usleep(INFERENCE_TIME * 1000);
         vector<InferenceBoundingBox> boundingBoxes;
         mCam->GetBoundingBoxData(boundingBoxes);
 

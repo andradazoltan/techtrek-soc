@@ -7,6 +7,7 @@
 
 #include "Graphics.h"
 #include "RegisterDefs.h"
+#include <stdlib.h>
 
 /*
  *  This function creates a horizontal bar graph with a 1px border between the points specified 
