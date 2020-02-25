@@ -42,6 +42,8 @@ char* lua_getWeather(void);
 char* lua_postHelp(void);
 char* lua_getPopulation(void);
 char* lua_getWarnings(void);
+char* lua_postRating(int score);
+char* lua_getRating(void);
 
 //Helper Functions
 char* WIFI_SaveFlush(void);
@@ -78,10 +80,10 @@ int main (void) {
     // getWeatherResponse = lua_postHelp();
     // printf(getWeatherResponse);
 
-    printf("\n\nPosting GPS\n");
-    lua_postGPS(lat, longitude); 
-	getWeatherResponse = WIFI_SaveFlush();
-    printf(getWeatherResponse);
+    // printf("\n\nPosting GPS\n");
+    // lua_postGPS(lat, longitude); 
+	// getWeatherResponse = WIFI_SaveFlush();
+    // printf(getWeatherResponse);
 
 
     printf("\n\nGet Weather\n");
@@ -95,6 +97,15 @@ int main (void) {
     printf("\n\nGet warnings\n");
     getWeatherResponse = lua_getWarnings();
     printf(getWeatherResponse);
+
+    printf("\n\nPost Rating\n");
+    getWeatherResponse = lua_postRating(1);
+    printf(getWeatherResponse);
+
+    printf("\n\nGet Rating\n");
+    getWeatherResponse = lua_getRating();
+    printf(getWeatherResponse);
+
 
     printf("End of Server Function Tests\n");
 
@@ -131,6 +142,7 @@ char* lua_postGPS(float latitude, float longitude) {
     int i = 0;
     char cmd[50];
     char *flushbuf = ""; 
+    char *responseHeaders = "";
     
     //Multiply by 1000000 to avoid passing a float 
     snprintf(cmd, sizeof(cmd), "post_gps(%d, %d)\r\n", (int)(latitude*1000000), (int)(longitude*1000000));
@@ -139,44 +151,58 @@ char* lua_postGPS(float latitude, float longitude) {
     sendCommand(cmd);
 
     flushbuf = WIFI_SaveFlush(); // This saves the response from the WIFI chip (Important!)
-
+    // responseHeaders = strtok( flushbuf , "[");
     return flushbuf;
 }
 
 
-char* lua_getWeather() {
+
+char* lua_getWeather(void) {
     char cmd[] = "get_weather()\r\n";
     char *flushbuf = ""; 
+    char *responseBody = "";
+    int i = 0;
     
     sendCommand(cmd);
     flushbuf = WIFI_SaveFlush(); // This saves the response from the WIFI chip (Important!)
 
-    return flushbuf;
-
+    /* walk through tokens when splitting string*/
+    responseBody = strtok( flushbuf , "[");
+    responseBody = strtok(NULL, "[");
+    return responseBody;
 }
 
 char* lua_getPopulation() {
     char cmd[] = "get_population()\r\n";
-    char *flushbuf = ""; 
+    char *flushbuf = "";
+    char *responseBody = ""; 
     
     sendCommand(cmd);
     flushbuf = WIFI_SaveFlush(); // This saves the response from the WIFI chip (Important!)
 
-    return flushbuf;
-
+    /* walk through tokens when splitting string*/
+    responseBody = strtok( flushbuf , "[");
+    responseBody = strtok(NULL, "[");
+    return responseBody;
 }
 
+/************************** WARNING ********************/
 char* lua_getWarnings() {
     char cmd[] = "get_warnings()\r\n";
     char *flushbuf = ""; 
+    char *responseBody = "";
     
     sendCommand(cmd);
     flushbuf = WIFI_SaveFlush(); // This saves the response from the WIFI chip (Important!)
 
-    return flushbuf;
-
+    /* walk through tokens when splitting string*/
+    responseBody = strtok( flushbuf , "[");
+    responseBody = strtok(NULL, "[");
+    return responseBody;
 }
 
+
+/************************** HELP ********************/
 char* lua_postHelp() {
     int i = 0;
     char cmd[] = "post_help()\r\n";
@@ -190,15 +216,27 @@ char* lua_postHelp() {
     return flushbuf;
 }
 
+/************************** RATING ********************/
+char* lua_getRating() {
+    char cmd[] = "get_rating()\r\n";
+    char *flushbuf = ""; 
+    char *responseBody = "";
+    
+    sendCommand(cmd);
+    flushbuf = WIFI_SaveFlush(); // This saves the response from the WIFI chip (Important!)
 
-/************************** NOT IMPLEMENTED YET ********************/
-char* lua_postWarning(float latitude, float longitude) {
+    /* walk through tokens when splitting string*/
+    responseBody = strtok( flushbuf , "[");
+    responseBody = strtok(NULL, "[");
+    return responseBody;
+}
+
+char* lua_postRating(int score){
     int i = 0;
     char cmd[50];
     char *flushbuf = ""; 
     
-    //Multiply by 1000000 to avoid passing a float 
-    snprintf(cmd, sizeof(cmd), "post_gps(%d, %d)\r\n", (int)(latitude*1000000), (int)(longitude*1000000));
+    snprintf(cmd, sizeof(cmd), "post_rating(%d)\r\n", score);
 
     printf(cmd);
     sendCommand(cmd);
@@ -207,6 +245,15 @@ char* lua_postWarning(float latitude, float longitude) {
 
     return flushbuf;
 }
+
+
+
+
+
+/************************** NOT IMPLEMENTED YET ********************/
+
+
+
 
 
 /************ HELPER FUNCTIONS ******************/
