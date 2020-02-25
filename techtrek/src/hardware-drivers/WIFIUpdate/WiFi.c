@@ -38,8 +38,9 @@ void WIFI_Flush(void);
 void lua_doServerFile(void);
 char* lua_postGPS(float latitude, float longitude);
 char* lua_getWeather(void);
-char* lua_postHelp(void);
+char* lua_postHelp(char* helpMessage);
 char* lua_getPopulation(void);
+char* lua_postPopulation(int amount);
 char* lua_getWarnings(void);
 char* lua_postRating(int score);
 char* lua_getRating(void);
@@ -62,8 +63,10 @@ void WIFI_wait(int cycles);
 int main (void) {
 
     char* getWeatherResponse;
-    float lat = 25.276987;
-    float longitude = 55.296249;
+    float lat = 48.777342; 
+    float longitude = -121.813200;
+
+    char* testHelp = "This.is.a.help.and.warning.test!";
 
     printf("Starting wifi!\n");
     InitWIFI();				// Initialize the port
@@ -75,15 +78,18 @@ int main (void) {
     WIFI_Flush();
 
 
-    // printf("\n\nPosting Help\n");
-    // getWeatherResponse = lua_postHelp();
-    // printf(getWeatherResponse);
+    printf("\n\nPosting Help\n");
+    getWeatherResponse = lua_postHelp(testHelp);
+    printf(getWeatherResponse);
 
-    // printf("\n\nPosting GPS\n");
-    // lua_postGPS(lat, longitude); 
-	// getWeatherResponse = WIFI_SaveFlush();
-    // printf(getWeatherResponse);
+    printf("\n\nPost population\n");
+    getWeatherResponse = lua_postPopulation(2);
+    printf(getWeatherResponse);
 
+    printf("\n\nPosting GPS\n");
+    lua_postGPS(lat, longitude); 
+	getWeatherResponse = WIFI_SaveFlush();
+    printf(getWeatherResponse);
 
     printf("\n\nGet Weather\n");
     getWeatherResponse = lua_getWeather();
@@ -122,6 +128,8 @@ int main (void) {
 
 
 /************ TECHTREK FUNCTIONS ******************/
+
+//First function that needs to be called to initialize the wifi chip and make it connect to the wifi network
 void lua_doServerFile() {
     int i;
     char* cmd = "dofile(\"server.lua\")\r\n";
@@ -150,7 +158,6 @@ char* lua_postGPS(float latitude, float longitude) {
     sendCommand(cmd);
 
     flushbuf = WIFI_SaveFlush(); // This saves the response from the WIFI chip (Important!)
-    // responseHeaders = strtok( flushbuf , "[");
     return flushbuf;
 }
 
@@ -171,6 +178,8 @@ char* lua_getWeather(void) {
     return responseBody;
 }
 
+
+/************************** POPULATION ********************/
 char* lua_getPopulation() {
     char cmd[] = "get_population()\r\n";
     char *flushbuf = "";
@@ -183,6 +192,21 @@ char* lua_getPopulation() {
     responseBody = strtok( flushbuf , "[");
     responseBody = strtok(NULL, "[");
     return responseBody;
+}
+
+char* lua_postPopulation(int amount){
+    int i = 0;
+    char cmd[50];
+    char *flushbuf = ""; 
+    
+    snprintf(cmd, sizeof(cmd), "post_population(%d)\r\n", amount);
+
+    printf(cmd);
+    sendCommand(cmd);
+
+    flushbuf = WIFI_SaveFlush(); // This saves the response from the WIFI chip (Important!)
+
+    return flushbuf;
 }
 
 /************************** WARNING ********************/
@@ -201,11 +225,15 @@ char* lua_getWarnings() {
 }
 
 
-/************************** HELP ********************/
-char* lua_postHelp() {
+/************************** HELP (Modified to be able to send custom warnings) ********************/
+
+//HelpMessage must be in "This.format.for.it.to.work" with a maximum number of characters: 42
+char* lua_postHelp(char* helpMessage) {
     int i = 0;
-    char cmd[] = "post_help()\r\n";
+    char cmd[60];
     char *flushbuf = ""; 
+    
+    snprintf(cmd, sizeof(cmd), "post_help(\"%s\")\r\n", helpMessage);
 
     printf(cmd);
     sendCommand(cmd);
@@ -246,10 +274,6 @@ char* lua_postRating(int score){
 }
 
 
-
-
-
-/************************** NOT IMPLEMENTED YET ********************/
 
 
 
