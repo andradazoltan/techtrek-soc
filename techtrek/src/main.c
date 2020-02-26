@@ -8,6 +8,7 @@
  */
 
 #include "WiFi.h"
+#include "gps.h"
 #include "TouchScreen.h"
 #include "Graphics.h"
 #include "Screens.h"
@@ -59,6 +60,7 @@ int main (void) {
     InitWIFI();
     WIFI_Flush();
     InitTouch();
+    gps_uart_init();
 
     // Initialize the WiFi connection to the server
     lua_doServerFile();
@@ -75,6 +77,11 @@ int main (void) {
     pthread_create(&touch_screen_thread, NULL, (void *)&ReadTouchScreen, NULL);
     pthread_create(&people_count_thread, NULL, (void *)&getPeopleCount, fd_fifo);
     pthread_create(&get_warnings_thread, NULL, (void *)&getWarnings, NULL);
+
+    struct gga sentence;
+    read_gga(&sentence);
+    printf("Location: %f %f\n", sentence.gga_lat, sentence.gga_lon);
+    lua_postGPS(sentence.gga_lat, sentence.gga_lon);
 
     pthread_join(touch_screen_thread, NULL);
 
