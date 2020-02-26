@@ -438,15 +438,15 @@ void drawWarningsScreen(void) {
 
         // Copy the actual message
         tok = strtok(NULL, "");
-        strcpy(warnings[currWarning], tok);
-        printf("%s\n", tok);
-    }
+        if (tok != NULL)
+            strcpy(warnings[currWarning], tok);
 
-    // Update the currWarning index
-    if (currWarning == 4)
-        currWarning = 0;
-    else
-        currWarning++;
+        // Update the currWarning index
+        if (currWarning == 4)
+            currWarning = 0;
+        else
+            currWarning++;
+    }
 
     // Draw the warnings
     drawWarnings();
@@ -565,7 +565,7 @@ void sendEmergency(int x, int y) {
  * Print out the current list of warnings to the screen.
  */
 void drawWarnings(void) {
-    int y = 80;
+    int y = 90;
     for (int i = 0; i < 5; i++) {
         OutGraphicsCharFont3(50, y, BLACK, ORANGE, warnings[i], 0);
         y += 80;
