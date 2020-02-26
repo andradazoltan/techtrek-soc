@@ -10,7 +10,7 @@
 #include "RegisterDefs.h"
 #include "Fonts.h"
 #include "Screens.h"
-#include "Wifi.h"
+#include "WiFi.h"
 #include <stdint.h>
 
 #define MAX_KEYS_PER_ROW    10                        // Maximum number of keys in a keyboard row (top row)
