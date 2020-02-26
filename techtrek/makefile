@@ -4,7 +4,12 @@
 
 -include ../makefile.init
 
-RM := clean
+RM := rm
+
+PROJECT_ROOT := ${CURDIR}
+
+CC = arm-linux-gnueabihf-gcc
+CFLAGS += -g -O0 -I"${PROJECT_ROOT}/include/hardware-drivers" -I"${PROJECT_ROOT}/include" -I"${PROJECT_ROOT}/include/graphics" 
 
 # All of the sources participating in the build are defined here
 -include sources.mk
