@@ -6,7 +6,7 @@
  *  Author: Connor Fong & Ash Tan
  */
 
-#include "Wifi.h"
+#include "WiFi.h"
 #include "RegisterDefs.h"
 #include "Screens.h"
 #include <stdio.h>

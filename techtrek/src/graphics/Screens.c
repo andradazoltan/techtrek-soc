@@ -9,7 +9,7 @@
 
 #include "Screens.h"
 #include "Graphics.h"
-#include "Wifi.h"
+#include "WiFi.h"
 #include "Keyboard.h"
 #include <string.h>
 
