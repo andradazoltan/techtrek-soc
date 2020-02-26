@@ -77,28 +77,45 @@ int parse_gga(char *sentence_buf, struct gga *sentence) {
   return 0;
 }
 
-// Read the next sentence from the GPS and store it in the provided buffer, and
-// return the type of the sentence. Returns SENTENCE_TYPE_INVALID if the
-// sentence is longer than 128 characters.
-int read_sentence(char *raw_sentence) {
+// Read the next sentence of the specified type from the GPS and store it in the
+// provided buffer Returns -1 on invalid input
+int read_sentence(char *raw_sentence, int sentence_type) {
   int length = 0;
+  char *start_sequence;
 
-  while (*raw_sentence != '$') {
-    *raw_sentence = (char)gps_uart_getchar();
+  switch (sentence_type) {
+  case SENTENCE_TYPE_GGA:
+    start_sequence = "$GPGGA";
+    break;
+  default:
+    return -1;
   }
 
-  while (raw_sentence[length] != '\r' && length < 128) {
-    length++;
-    raw_sentence[length] = (char)gps_uart_getchar();
-  }
+  do {
+    while (strncmp(raw_sentence, start_sequence, 6)) {
+      while (*raw_sentence != '$') {
+        *raw_sentence = (char)gps_uart_getchar();
+      }
 
-  if (raw_sentence[length] != '\r') {
-    raw_sentence[length] = '\0';
-    return SENTENCE_TYPE_INVALID;
-  }
+      length = 1;
+
+      for (int i = 0; i < 5; i++) {
+        raw_sentence[length] = (char)gps_uart_getchar();
+        length++;
+      }
+    }
+
+    while (length < 128 && raw_sentence[length - 1] != '\r' &&
+           raw_sentence[length - 1] != '$') {
+      raw_sentence[length] = (char)gps_uart_getchar();
+      length++;
+    }
+
+  } while (length == 128 && raw_sentence[length - 1] != '\r' &&
+           raw_sentence[length - 1] != '$');
 
   raw_sentence[length] = '\0';
-  return get_sentence_type(raw_sentence);
+  return 0;
 }
 
 // Read and parse the next GGA sentence received from the GPS, discarding
@@ -106,9 +123,7 @@ int read_sentence(char *raw_sentence) {
 void read_gga(struct gga *sentence) {
   char raw_sentence[128];
 
-  while (read_sentence(raw_sentence) != SENTENCE_TYPE_GGA) {
-  }
-
+  read_sentence(raw_sentence, SENTENCE_TYPE_GGA);
   parse_gga(raw_sentence, sentence);
 }
 
