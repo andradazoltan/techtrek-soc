@@ -1,6 +1,9 @@
 -- This information is used by the Wi-Fi dongle to make a wireless connection to the router in the Lab
 -- or if you are using another router e.g. at home, change ID and Password appropriately
 
+--SSID = "Andrada's iPhone"
+--SSID_PASSWORD = "01234567898"
+
 SSID = "Ash's iPhone"
 SSID_PASSWORD = "01234567898"
 
@@ -41,52 +44,6 @@ end
 
 -- List all available wireless network ---
 -- See documentation: https://nodemcu.readthedocs.io/en/master/en/modules/wifi/#wifistagetap
-
-
-
-function build_GPS_request(host, uri, data_table, lat, long)
-
-     data = ""
-
-     request = "POST "..uri.."?latitude=" ..lat.. "&" .."longitude="..long.. " HTTP/1.1\r\n"..
-     "Host: "..host.."\r\n"..
-     "Connection: close\r\n"..
-     "Content-Type: application/x-www-form-urlencoded\r\n"..
-     "Content-Length: 0\r\n"..
-     "\r\n"..
-     data
-     print(request)
-     return request
-end
-
--- Build a generic GET request
-function build_get_request(host, url)
-
-     request = "GET /"..url.." HTTP/1.0\r\n"..
-          "Host: "..host.."\r\n"..
-          "Connection: close\r\n"..
-          "Accept-Charset: utf-8\r\n"..
-          "Accept-Encoding: \r\n"..
-          "User-Agent: Mozilla/4.0 (compatible; esp8266 Lua; Windows NT 5.1)\r\n".. 
-          "Accept: */*\r\n\r\n"
-
-     return request
-end
-
-function build_rating_request(host, uri, data_table, rate)
-
-     data = ""
-
-     request = "POST "..uri.."?score=" ..rate.. " HTTP/1.1\r\n"..
-     "Host: "..host.."\r\n"..
-     "Connection: close\r\n"..
-     "Content-Type: application/x-www-form-urlencoded\r\n"..
-     "Content-Length: 0\r\n"..
-     "\r\n"..
-     data
-     print(request)
-     return request
-end
 
 
 -- This function registers a function to echo back any response from the server, to our DE1/NIOS system 
@@ -139,11 +96,12 @@ function get_weather()
 
 end
 
-------- TECHTREK POST HELP --------------
+------- TECHTREK POST HELP (Modified to be able to send custom warnings) --------------
 
 HELP_URI = "/help"
 
-function post_help()
+--Example : post_help("HELP.MEEEEE.THERE.IS.A.BEAR!")
+function post_help(helpMessage)
      
      data = ""
 
@@ -151,7 +109,7 @@ function post_help()
      socket:on("receive",display)
      socket:connect(80,SERVER_HOST)
 
-     request = "POST "..HELP_URI.." HTTP/1.1\r\n"..
+     request = "POST "..HELP_URI.. "?message=" ..helpMessage.. " HTTP/1.1\r\n"..
           "Host: "..SERVER_HOST.."\r\n"..
           "Connection: close\r\n"..
           "Content-Type: application/x-www-form-urlencoded\r\n"..
@@ -168,7 +126,6 @@ end
 
 ------- TECHTREK GET POPULATION FROM AWS SERVER --------------
 
---
 POPULATION_URL = "population/firmware/1"
 
 function get_population()
@@ -181,6 +138,26 @@ function get_population()
     socket:on("connection", function(socket)
           new_request = build_get_request(SERVER_HOST, POPULATION_URL)
           socket:send(new_request)
+    end)
+
+end
+
+------- TECHTREK POST POPULATION CHANGE TO AWS SERVER --------------
+
+POPULATION_URI = "/population/1"
+
+-- Example: post_population(-4)
+function post_population(amount)
+    
+    data = ""
+
+    socket = net.createConnection(net.TCP,0)
+    socket:on("receive",display)
+    socket:connect(80,SERVER_HOST)
+
+    socket:on("connection",function(sck)
+         post_request = build_population_request(SERVER_HOST,POPULATION_URI,data, amount)
+         sck:send(post_request)
     end)
 
 end
@@ -272,6 +249,75 @@ function post_rating(rate)
     end)
 
 end
+
+
+
+
+
+------- HELPER FUNCTIONS FOR BUILDING REQUESTS  --------------
+
+-- Build a generic GET request
+function build_get_request(host, url)
+
+     request = "GET /"..url.." HTTP/1.0\r\n"..
+          "Host: "..host.."\r\n"..
+          "Connection: close\r\n"..
+          "Accept-Charset: utf-8\r\n"..
+          "Accept-Encoding: \r\n"..
+          "User-Agent: Mozilla/4.0 (compatible; esp8266 Lua; Windows NT 5.1)\r\n".. 
+          "Accept: */*\r\n\r\n"
+
+     return request
+end
+
+function build_GPS_request(host, uri, data_table, lat, long)
+
+     data = ""
+
+     request = "POST "..uri.."?latitude=" ..lat.. "&" .."longitude="..long.. " HTTP/1.1\r\n"..
+     "Host: "..host.."\r\n"..
+     "Connection: close\r\n"..
+     "Content-Type: application/x-www-form-urlencoded\r\n"..
+     "Content-Length: 0\r\n"..
+     "\r\n"..
+     data
+     --print(request)
+     return request
+end
+
+
+function build_rating_request(host, uri, data_table, rate)
+
+     data = ""
+
+     request = "POST "..uri.."?score=" ..rate.. " HTTP/1.1\r\n"..
+     "Host: "..host.."\r\n"..
+     "Connection: close\r\n"..
+     "Content-Type: application/x-www-form-urlencoded\r\n"..
+     "Content-Length: 0\r\n"..
+     "\r\n"..
+     data
+     --print(request)
+     return request
+end
+
+function build_population_request(host, uri, data_table, amount)
+
+     data = ""
+
+     request = "POST "..uri.."?count=" ..amount.. " HTTP/1.1\r\n"..
+     "Host: "..host.."\r\n"..
+     "Connection: close\r\n"..
+     "Content-Type: application/x-www-form-urlencoded\r\n"..
+     "Content-Length: 0\r\n"..
+     "\r\n"..
+     data
+     print(request)
+     return request
+end
+
+
+
 
 
 
