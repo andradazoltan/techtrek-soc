@@ -17,7 +17,6 @@ static int putcharWIFI(int c);
 static int getcharWIFI(void);
 static void WIFI_SaveFlush(char buf[]);
 static void sendCommand(char *command);
-static void WIFI_wait(int cycles);
 
 /**************************************************************************
 ** Subroutine to initialise the WIFI Port by writing some data
@@ -68,15 +67,17 @@ void lua_postGPS(float latitude, float longitude) {
 
 void lua_getWeather(char responseBody[]) {
     char cmd[] = "get_weather()\r\n";
-    char flushbuf[1024];
+    char flushbuf[1024] = "";
 
     sendCommand(cmd);
     WIFI_SaveFlush(flushbuf); // This saves the response from the WIFI chip (Important!)
 
-    // Get the start of the message body and copy it to the response buffer
+    // Get the message body and copy it to the response buffer
     char *tok = strtok(flushbuf, "[");
     tok = strtok(NULL, "[");
-    strcpy(responseBody, tok);
+    if (tok != NULL) {
+        strcpy(responseBody, tok);
+    }
 }
 
 void lua_getPopulation(char responseBody[]) {
@@ -86,9 +87,23 @@ void lua_getPopulation(char responseBody[]) {
     sendCommand(cmd);
     WIFI_SaveFlush(flushbuf); // This saves the response from the WIFI chip (Important!)
 
-    /* Walk through tokens when splitting string */
-    responseBody = strtok(flushbuf , "[");
-    responseBody = strtok(NULL, "[");
+    // Get the message body and copy it to the response buffer
+    char *tok = strtok(flushbuf, "[");
+    tok = strtok(NULL, "[");
+    if (tok != NULL) {
+        strcpy(responseBody, tok);
+    }
+}
+
+void lua_postPopulation(int amount) {
+    char cmd[50];
+    char flushbuf[1024];
+
+    snprintf(cmd, sizeof(cmd), "post_population(%d)\r\n", amount);
+
+    sendCommand(cmd);
+
+    WIFI_SaveFlush(flushbuf); // This saves the response from the WIFI chip (Important!)
 }
 
 void lua_getWarnings(char responseBody[]) {
@@ -98,29 +113,35 @@ void lua_getWarnings(char responseBody[]) {
     sendCommand(cmd);
     WIFI_SaveFlush(flushbuf); // This saves the response from the WIFI chip (Important!)
 
-    /* Walk through tokens when splitting string */
-    responseBody = strtok(flushbuf , "[");
-    responseBody = strtok(NULL, "[");
+    // Get the message body and copy it to the response buffer
+    char *tok = strtok(flushbuf, "[");
+    tok = strtok(NULL, "[");
+    if (tok != NULL) {
+        strcpy(responseBody, tok);
+    }
 }
 
-void lua_postHelp(void) {
-    // Blink help message a few times
-    for (int i = 0; i < 3; i++) {
+// helpMessage must be in "This.format.for.it.to.work" with a maximum number of characters: 42
+void lua_postHelp(char helpMessage[]) {
+    if (currScreen == HELP_SCREEN) {
+        // Blink help message a few times
+        for (int i = 0; i < 3; i++) {
+            OutGraphicsCharFont5(65, 400, WHITE, RED, "HELP IS ON THE WAY!", 0);
+            usleep(500 * 1000);
+            OutGraphicsCharFont5(65, 400, WHITE, RED, "HELP IS ON THE WAY!", 1);
+            usleep(500 * 1000);
+        }
         OutGraphicsCharFont5(65, 400, WHITE, RED, "HELP IS ON THE WAY!", 0);
-        usleep(500 * 1000);
-        OutGraphicsCharFont5(65, 400, WHITE, RED, "HELP IS ON THE WAY!", 1);
-        usleep(500 * 1000);
+
+        // Wait a few seconds before going back to main screen
+        sleep(3);
     }
-    OutGraphicsCharFont5(65, 400, WHITE, RED, "HELP IS ON THE WAY!", 0);
 
-    // Wait a few seconds before going back to main screen
-    sleep(3);
-
-    // Send the Wifi message
-    char cmd[] = "post_help()\r\n";
+    char cmd[60];
     char flushbuf[1024];
 
-    printf(cmd);
+    snprintf(cmd, sizeof(cmd), "post_help(\"%s\")\r\n", helpMessage);
+
     sendCommand(cmd);
 
     WIFI_SaveFlush(flushbuf); // This saves the response from the WIFI chip (Important!)
@@ -136,9 +157,12 @@ void lua_getRating(char responseBody[]) {
     sendCommand(cmd);
     WIFI_SaveFlush(flushbuf); // This saves the response from the WIFI chip (Important!)
 
-    /* walk through tokens when splitting string*/
-    responseBody = strtok(flushbuf , "[");
-    responseBody = strtok(NULL, "[");
+    // Get the message body and copy it to the response buffer
+    char *tok = strtok(flushbuf, "[");
+    tok = strtok(NULL, "[");
+    if (tok != NULL) {
+        strcpy(responseBody, tok);
+    }
 }
 
 void lua_postRating(int score) {
@@ -162,11 +186,6 @@ static void sendCommand(char *command)
         for(j = 0; j < 1000; j++) {;} //Give time to send signal
         putcharWIFI(command[i]);
     }
-}
-
-static void WIFI_wait(int cycles)
-{
-    for (int i = 0; !WIFITestForReceivedData() && i < cycles; i++);
 }
 
 /*----------- SAVE CHARACTER STREAM FROM WIFI CHIP ------------------*/

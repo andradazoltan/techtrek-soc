@@ -13,6 +13,8 @@
 #include "Colours.h"
 #include "Fonts.h"
 
+extern int people_count;
+
 /*
  * List of screens
  */
@@ -20,7 +22,9 @@ enum screens{
     MAIN_SCREEN,
     HAZARD_SCREEN,
     HELP_SCREEN,
-    MAP_SCREEN
+    MAP_SCREEN,
+    INFO_SCREEN,
+    WARNINGS_SCREEN
 };
 
 /*
@@ -76,16 +80,25 @@ typedef struct
 extern int currScreen;
 extern object_t mainScreen[5];  // Main Screen Objects
 extern object_t helpScreen[6];  // Help Screen Objects
-extern object_t mapScreen[4];   // Map Screen Objects
+extern object_t mapScreen[1];   // Map Screen Objects
+extern object_t infoScreen[5];  // Info Screen Objects
+extern object_t warningsScreen[1]; // Warnings Screen Objects
+
+extern char warnings[5][42];
+extern int currWarning;
 
 // Function Definitions
 void initColours(void);
 void drawMainScreen(void);
 void drawHazardScreen(void);
 void drawHelpScreen(void);
+void drawInfoScreen(void);
 void drawMapScreen(void);
 void shiftGraphLeft(void);
 void shiftGraphRight(void);
 int IsObjectPressed(int x, int y, object_t obj);
+
+void sendEmergency(int x, int y);
+void drawWarnings(void);
 
 #endif /* SCREENS_H_ */

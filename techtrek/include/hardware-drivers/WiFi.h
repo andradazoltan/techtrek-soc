@@ -18,8 +18,9 @@ void lua_doServerFile(void);
 void lua_postGPS(float latitude, float longitude);
 void lua_getWeather(char responseBody[]);
 void lua_getPopulation(char responseBody[]);
+void lua_postPopulation(int amount);
 void lua_getWarnings(char responseBody[]);
-void lua_postHelp(void);
+void lua_postHelp(char helpMessage[]) ;
 void lua_getRating(char responseBody[]);
 void lua_postRating(int score);
 

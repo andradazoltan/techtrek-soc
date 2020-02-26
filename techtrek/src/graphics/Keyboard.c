@@ -9,6 +9,8 @@
 #include "Colours.h"
 #include "RegisterDefs.h"
 #include "Fonts.h"
+#include "Screens.h"
+#include "Wifi.h"
 #include <stdint.h>
 
 #define MAX_KEYS_PER_ROW    10                        // Maximum number of keys in a keyboard row (top row)
@@ -39,7 +41,8 @@ uint16_t tbXStart = 0;
 uint16_t tbXEnd = 0;
 
 /*
- *
+ * Stores what hazard was typed out by the user. Is cleared
+ * once the user hits ok.
  */
 char hazardBuf[MAX_CHARS] = {0};
 uint8_t currIdx = 0;
@@ -68,11 +71,16 @@ keys_t keys[] = {
     }
 };
 
-
 /*
  *  Draw the keyboard
  */
 void drawKeyboard(int x, int y) {
+    // Clear the hazardBuf buffer
+    for (int i = 0; i < MAX_CHARS; i++) {
+        hazardBuf[i] = '\0';
+    }
+    currIdx = 0;
+
     for (int row = 0; row < 3; row++) {
         // Get the current row
         keys_t curr_row = keys[row];
@@ -195,14 +203,18 @@ void keyRelease(int x, int y) {
     else if (to_print[0] == '\n') { // Enter key
         // Clear the text box
         drawTextBox(tbXStart, cursorYPos - 10, tbXEnd, cursorYPos + cursorLen + 10);
+        OutGraphicsCharFont3(tbXStart + 10, cursorYPos + 10, WHITE, BLACK, "Thank you for reporting.", 0);
 
         // Call wifi function
+        lua_postHelp(hazardBuf);
 
         // Clear the hazardBuf buffer
         for (int i = 0; i < MAX_CHARS; i++) {
             hazardBuf[i] = '\0';
         }
         currIdx = 0;
+        drawMainScreen();
+        return;
     }
     else {
         if ((cursorXPos + FONT3_XPIXELS) < tbXEnd) { // Don't let it print outside the box
@@ -210,7 +222,12 @@ void keyRelease(int x, int y) {
             cursorXPos += FONT3_XPIXELS;
 
             // Add a character to the hazardBuf
-            hazardBuf[currIdx] = to_print[0];
+            if (to_print[0] == ' ') {
+                hazardBuf[currIdx] = '.';
+            }
+            else {
+                hazardBuf[currIdx] = to_print[0];
+            }
             currIdx++;
         }
     }

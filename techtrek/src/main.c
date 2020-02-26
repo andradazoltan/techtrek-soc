@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <string.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/mman.h>
@@ -25,10 +26,10 @@
 
 // Private function prototypes
 void getPeopleCount(int fd);
+void getWarnings(void);
 
 // Global Variables
 void *virtual_base = NULL;
-int people_count = 0;
 
 int main (void) {
     int fd, fd_fifo;
@@ -48,11 +49,11 @@ int main (void) {
     }
 
     // Initialize a named pipe between this program and the hikercam program
-   /* mkfifo("/tmp/pipe", S_IWUSR | S_IRUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
-    if ((fd_fifo = open("/tmp/pipe", O_RDONLY)) == -1 ) {
+    mkfifo("/tmp/pipe", S_IWUSR | S_IRUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
+    if ((fd_fifo = open("/tmp/pipe", O_RDONLY | O_NONBLOCK)) == -1) {
         printf("ERROR: could not open \"/tmp/pipe\"...\n");
         return 1;
-    }*/
+    }
 
     // Initialize all of the hardware
     InitWIFI();
@@ -70,8 +71,10 @@ int main (void) {
     // Kick off threads
     pthread_t touch_screen_thread;
     pthread_t people_count_thread;
+    pthread_t get_warnings_thread;
     pthread_create(&touch_screen_thread, NULL, (void *)&ReadTouchScreen, NULL);
-    //pthread_create(&people_count_thread, NULL, (void *)&getPeopleCount, fd_fifo);
+    pthread_create(&people_count_thread, NULL, (void *)&getPeopleCount, fd_fifo);
+    pthread_create(&get_warnings_thread, NULL, (void *)&getWarnings, NULL);
 
     pthread_join(touch_screen_thread, NULL);
 
@@ -95,16 +98,76 @@ int main (void) {
  * @param fd: file pointer to pipe file
  */
 void getPeopleCount(int fd) {
+    // Post the initial population count, this should be 0
+    lua_postPopulation(people_count);
+
     while (1) {
         // Assume count will never get larger than 8 digits long
         char buf[8] = {0};
 
         // Note that read will block until the FIFO is not empty
         if (read(fd, buf, 8) > 0) {
-            printf("%s\n", buf);
             people_count = atoi(buf);
+            lua_postPopulation(people_count);
         }
 
         usleep(1000 * 1000);
+    }
+}
+
+/*
+ * Get the latest warning the from server, and update the list of
+ * warnings to hold the latest 5 warnings.
+ *
+ * If on the main screen currently, print an alert with the total
+ * number of unviewed warnings.
+ */
+void getWarnings(void) {
+    int newWarnings = 0;
+    char ids[5][30];
+
+    while (1) {
+        // Get the latest response
+        char response[100];
+        lua_getWarnings(response);
+
+        // Index of previous warning
+        int prevWarning = (currWarning == 0) ? 4 : currWarning - 1;
+
+        // Pull out the ID of the warning and check that we haven't seen this one yet
+        char *tok = strtok(response, "-");
+        if (tok != NULL && (strcmp(ids[prevWarning], tok) == 0))
+        {
+            // Copy the id
+            strcpy(ids[currWarning], tok);
+
+            // Copy the actual message
+            tok = strtok(NULL, "");
+            strcpy(warnings[currWarning], tok);
+
+            // Post an alert if on the main screen
+            if (currScreen == MAIN_SCREEN) {
+                newWarnings++;
+
+                char alert[30];
+                sprintf(alert, "There are %d new warnings!", newWarnings);
+
+                // Alert on main screen
+                FillRect(70, 250, 400, 300, RED);
+                OutGraphicsCharFont3(80, 260, WHITE, RED, alert, 0);
+            }
+            else {
+                newWarnings = 0;
+            }
+        }
+
+        // Update the currWarning index
+        if (currWarning == 4)
+            currWarning = 0;
+        else
+            currWarning++;
+
+        // Sleep for 5 seconds before trying again
+        usleep(5000 * 1000);
     }
 }
