@@ -51,5 +51,8 @@ void OutGraphicsCharFont2(int x, int y, int colour, int backgroundcolour, const 
                 }
             }
         }
+
+        // Update the starting X position for the next character
+        theX += (FONT2_XPIXELS + 2);
 	}
 }

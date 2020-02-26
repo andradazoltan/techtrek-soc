@@ -27,7 +27,6 @@
 
 // Private function prototypes
 void getPeopleCount(int fd);
-void getWarnings(void);
 
 // Global Variables
 void *virtual_base = NULL;
@@ -70,18 +69,16 @@ int main (void) {
     initColours();
     drawMainScreen();
 
-    // Kick off threads
-    pthread_t touch_screen_thread;
-    pthread_t people_count_thread;
-    pthread_t get_warnings_thread;
-    pthread_create(&touch_screen_thread, NULL, (void *)&ReadTouchScreen, NULL);
-    pthread_create(&people_count_thread, NULL, (void *)&getPeopleCount, fd_fifo);
-    pthread_create(&get_warnings_thread, NULL, (void *)&getWarnings, NULL);
-
     struct gga sentence;
     read_gga(&sentence);
     printf("Location: %f %f\n", sentence.gga_lat, sentence.gga_lon);
     lua_postGPS(sentence.gga_lat, sentence.gga_lon);
+
+    // Kick off threads
+    pthread_t touch_screen_thread;
+    pthread_t people_count_thread;
+    pthread_create(&touch_screen_thread, NULL, (void *)&ReadTouchScreen, NULL);
+    pthread_create(&people_count_thread, NULL, (void *)&getPeopleCount, fd_fifo);
 
     pthread_join(touch_screen_thread, NULL);
 
@@ -119,62 +116,5 @@ void getPeopleCount(int fd) {
         }
 
         usleep(1000 * 1000);
-    }
-}
-
-/*
- * Get the latest warning the from server, and update the list of
- * warnings to hold the latest 5 warnings.
- *
- * If on the main screen currently, print an alert with the total
- * number of unviewed warnings.
- */
-void getWarnings(void) {
-    int newWarnings = 0;
-    char ids[5][30];
-
-    while (1) {
-        // Get the latest response
-        char response[100];
-        lua_getWarnings(response);
-
-        // Index of previous warning
-        int prevWarning = (currWarning == 0) ? 4 : currWarning - 1;
-
-        // Pull out the ID of the warning and check that we haven't seen this one yet
-        char *tok = strtok(response, "-");
-        if (tok != NULL && (strcmp(ids[prevWarning], tok) == 0))
-        {
-            // Copy the id
-            strcpy(ids[currWarning], tok);
-
-            // Copy the actual message
-            tok = strtok(NULL, "");
-            strcpy(warnings[currWarning], tok);
-
-            // Post an alert if on the main screen
-            if (currScreen == MAIN_SCREEN) {
-                newWarnings++;
-
-                char alert[30];
-                sprintf(alert, "There are %d new warnings!", newWarnings);
-
-                // Alert on main screen
-                FillRect(70, 250, 400, 300, RED);
-                OutGraphicsCharFont3(80, 260, WHITE, RED, alert, 0);
-            }
-            else {
-                newWarnings = 0;
-            }
-        }
-
-        // Update the currWarning index
-        if (currWarning == 4)
-            currWarning = 0;
-        else
-            currWarning++;
-
-        // Sleep for 5 seconds before trying again
-        usleep(5000 * 1000);
     }
 }

@@ -111,6 +111,7 @@ void lua_getWarnings(char responseBody[]) {
     char flushbuf[1024];
 
     sendCommand(cmd);
+    printf("getwarns\n");
     WIFI_SaveFlush(flushbuf); // This saves the response from the WIFI chip (Important!)
 
     // Get the message body and copy it to the response buffer
@@ -118,6 +119,7 @@ void lua_getWarnings(char responseBody[]) {
     tok = strtok(NULL, "[");
     if (tok != NULL) {
         strcpy(responseBody, tok);
+        printf("%s\n", responseBody);
     }
 }
 
@@ -141,7 +143,7 @@ void lua_postHelp(char helpMessage[]) {
     char flushbuf[1024];
 
     snprintf(cmd, sizeof(cmd), "post_help(\"%s\")\r\n", helpMessage);
-
+    printf("%s\n", cmd);
     sendCommand(cmd);
 
     WIFI_SaveFlush(flushbuf); // This saves the response from the WIFI chip (Important!)
