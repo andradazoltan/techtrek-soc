@@ -1,5 +1,5 @@
 /*
- * Screens.h
+ *  Screens.h
  *
  *  Created on: Feb 11, 2020
  *  Author: Andrada Zoltan & Elijah Hewer
@@ -12,8 +12,11 @@
 #include <stdio.h>
 #include "Colours.h"
 #include "Fonts.h"
+#include "images.h"
 
+// Extern Declarations
 extern int people_count;
+extern BMP techtrek;
 
 /*
  * List of screens

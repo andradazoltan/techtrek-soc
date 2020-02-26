@@ -66,6 +66,10 @@ int main (void) {
     lua_doServerFile();
     WIFI_Flush();
 
+    // Initialize the images
+    BMP techtrek;
+    initImage("techtrek.bmp", &techtrek);
+
     // Initialize the main GUI screen
     initColours();
     drawMainScreen();
@@ -93,6 +97,9 @@ int main (void) {
         return 1;
     }
 
+    // free images
+    freeImage(&techtrek);
+    
     close(fd);
     close(fd_fifo);
     return 0;

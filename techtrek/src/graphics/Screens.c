@@ -11,6 +11,7 @@
 #include "Graphics.h"
 #include "WiFi.h"
 #include "Keyboard.h"
+#include "images.h"
 #include <string.h>
 
 // Extern variables
@@ -306,7 +307,10 @@ void drawMainScreen(void) {
     createObjects(mainScreen, 5);
 
     // Print trail name
-    OutGraphicsCharFont4(100, 40, WHITE, GREEN, "Spanish Banks Trail", 0);
+    OutGraphicsCharFont4(100, 190, WHITE, GREEN, "Spanish Banks Trail", 0);
+
+    // Draw logo
+    drawImage(40, 40, WHITE, &techtrek);
 }
 
 void drawHazardScreen(void) {
