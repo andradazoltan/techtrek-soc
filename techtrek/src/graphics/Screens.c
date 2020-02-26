@@ -24,6 +24,7 @@ int16_t graphPercent = 50;
 // Warnings buffer
 char warnings[5][42];
 int currWarning = 0;
+char ids[5][30];
 
 // Private function prototypes
 void createObjects(object_t objs[], int numObjs);
@@ -51,7 +52,7 @@ object_t mainScreen[] = {
         .colour = CHOCOLATE,
         .text = "WARNINGS",
         .textXCoord = 610,
-        .func = NULL,
+        .func = &drawWarningsScreen,
         .rect = {
             .topLeftXCoord = 565,
             .topLeftYCoord = 108,
@@ -386,7 +387,7 @@ void drawInfoScreen(void) {
     // Get the weather and print it
     char weather[1024] = "";
     lua_getWeather(weather);
-    OutGraphicsCharFont3(360, 130, BLACK, DARK_SLATE_BLUE, &weather[16], 0);
+    OutGraphicsCharFont2(370, 130, BLACK, DARK_SLATE_BLUE, &weather[16], 0);
 }
 
 void drawMapScreen(void) {
@@ -420,10 +421,36 @@ void drawWarningsScreen(void) {
 
     // Header
     FillRect(0, 0, XRES, 70, RED);
-    OutGraphicsCharFont4(70, 14, WHITE, RED, "TODAY'S WARNINGS", 0);
+    OutGraphicsCharFont4(100, 14, WHITE, RED, "TODAY'S WARNINGS", 0);
 
     // Create objects
     createObjects(warningsScreen, 1);
+
+    // Get the latest response
+    char response[100];
+    lua_getWarnings(response);
+
+    // Index of previous warning
+    int prevWarning = (currWarning == 0) ? 4 : currWarning - 1;
+
+    // Pull out the ID of the warning and check that we haven't seen this one yet
+    char *tok = strtok(response, "-");
+    if (tok != NULL && (strcmp(ids[prevWarning], tok) != 0))
+    {
+        // Copy the id
+        strcpy(ids[currWarning], tok);
+
+        // Copy the actual message
+        tok = strtok(NULL, "");
+        if (tok != NULL)
+            strcpy(warnings[currWarning], tok);
+
+        // Update the currWarning index
+        if (currWarning == 4)
+            currWarning = 0;
+        else
+            currWarning++;
+    }
 
     // Draw the warnings
     drawWarnings();
@@ -530,8 +557,8 @@ void sendEmergency(int x, int y) {
 
             // Replace all spaces with a period since space is a special character in a query
             for (int j = 0; j < 42; j++) {
-                if (msg[i] == ' ')
-                    msg[i] = '.';
+                if (msg[j] == ' ')
+                    msg[j] = '.';
             }
             lua_postHelp(msg);
         }
@@ -542,7 +569,7 @@ void sendEmergency(int x, int y) {
  * Print out the current list of warnings to the screen.
  */
 void drawWarnings(void) {
-    int y = 80;
+    int y = 90;
     for (int i = 0; i < 5; i++) {
         OutGraphicsCharFont3(50, y, BLACK, ORANGE, warnings[i], 0);
         y += 80;

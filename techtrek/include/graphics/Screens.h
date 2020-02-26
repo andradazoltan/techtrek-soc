@@ -97,6 +97,7 @@ void drawHazardScreen(void);
 void drawHelpScreen(void);
 void drawInfoScreen(void);
 void drawMapScreen(void);
+void drawWarningsScreen(void);
 void shiftGraphLeft(void);
 void shiftGraphRight(void);
 int IsObjectPressed(int x, int y, object_t obj);
