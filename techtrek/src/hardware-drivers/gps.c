@@ -96,20 +96,12 @@ int read_sentence(char *raw_sentence, int sentence_type) {
   do {
     gps_uart_flush();
 
-    checksum = 0;
-    while (strncmp(raw_sentence, start_sequence, 6)) {
-      while (*raw_sentence != '$') {
-        *raw_sentence = (char)gps_uart_getchar();
-      }
-
-      length = 1;
-
-      for (int i = 0; i < 5; i++) {
-        raw_sentence[length] = (char)gps_uart_getchar();
-        checksum ^= raw_sentence[length];
-        length++;
-      }
+    while (*raw_sentence != '$') {
+      *raw_sentence = (char)gps_uart_getchar();
     }
+
+    length = 1;
+    checksum = 0;
 
     while (length < 125 && raw_sentence[length - 1] != '*') {
       raw_sentence[length] = (char)gps_uart_getchar();
@@ -125,7 +117,8 @@ int read_sentence(char *raw_sentence, int sentence_type) {
 
     sscanf(raw_sentence + length, "%hhX", &received_checksum);
 
-  } while (checksum != received_checksum);
+  } while (checksum != received_checksum &&
+           strncmp(raw_sentence, start_sequence, 6) != 0);
 
   return 0;
 }
