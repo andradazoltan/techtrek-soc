@@ -91,7 +91,12 @@ int read_sentence(char *raw_sentence, int sentence_type) {
     return -1;
   }
 
+  char checksum;
+  char received_checksum;
   do {
+    gps_uart_flush();
+
+    checksum = 0;
     while (strncmp(raw_sentence, start_sequence, 6)) {
       while (*raw_sentence != '$') {
         *raw_sentence = (char)gps_uart_getchar();
@@ -101,20 +106,27 @@ int read_sentence(char *raw_sentence, int sentence_type) {
 
       for (int i = 0; i < 5; i++) {
         raw_sentence[length] = (char)gps_uart_getchar();
+        checksum ^= raw_sentence[length];
         length++;
       }
     }
 
-    while (length < 128 && raw_sentence[length - 1] != '\r' &&
-           raw_sentence[length - 1] != '$') {
+    while (length < 125 && raw_sentence[length - 1] != '*') {
       raw_sentence[length] = (char)gps_uart_getchar();
+      if (raw_sentence[length] != '*') {
+        checksum ^= raw_sentence[length];
+      }
       length++;
     }
 
-  } while (length == 128 && raw_sentence[length - 1] != '\r' &&
-           raw_sentence[length - 1] != '$');
+    raw_sentence[length] = (char)gps_uart_getchar();
+    raw_sentence[length + 1] = (char)gps_uart_getchar();
+    raw_sentence[length + 2] = '\0';
 
-  raw_sentence[length] = '\0';
+    sscanf(raw_sentence + length, "%hhX", &received_checksum);
+
+  } while (checksum != received_checksum);
+
   return 0;
 }
 
@@ -124,6 +136,7 @@ void read_gga(struct gga *sentence) {
   char raw_sentence[128];
 
   read_sentence(raw_sentence, SENTENCE_TYPE_GGA);
+  printf("%s\n", raw_sentence);
   parse_gga(raw_sentence, sentence);
 }
 
