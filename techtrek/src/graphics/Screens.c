@@ -201,6 +201,7 @@ object_t mapScreen[] = {
             .bottomRightYCoord = 70
         }
     },
+    /*
     { // Left
         .type = RECT,
         .colour = CHOCOLATE,
@@ -253,6 +254,7 @@ object_t mapScreen[] = {
             .bottomRightYCoord = 474
         }
     }
+    */
 };
 
 object_t infoScreen[] = {
@@ -472,7 +474,7 @@ void drawMapScreen(void) {
     OutGraphicsCharFont3(50, 14, WHITE, POWDER_BLUE, "Trail Map", 0);
     
     // Create buttons and graphs
-    createObjects(mapScreen, 5);
+    createObjects(mapScreen, 1);
 }
 
 void drawWarningsScreen(void) {

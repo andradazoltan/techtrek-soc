@@ -99,7 +99,7 @@ void drawImage(int topLeftX, int topLeftY, int Colour, BMP* myBMP) {
 
                 if (x_val >= (*myBMP).header.width) {
                     break;  // reached the last valid bit in the row
-                }
+                } XRES
                 else {
                     offset = (cur_row * bytes_per_row) + cur_byte;
                     byte_data = *((*myBMP).data + offset);
@@ -107,7 +107,7 @@ void drawImage(int topLeftX, int topLeftY, int Colour, BMP* myBMP) {
                     pixel_val = byte_data & (mask << (7 - bit));
                     // printf("X:%i    Y:%i    B:%i\n", x_val + topLeftX, y_val + topLeftY, pixel_val);
 
-                    if (pixel_val > 0) {
+                    if (pixel_val > 0 && x_val + topLeftX >= 0 && x_val + topLeftX < XRES && y_val + topLeftY >= 0 && y_val + topLeftY < YRES) {
                         WriteAPixel(x_val + topLeftX, y_val + topLeftY, Colour);
                     }
                 }

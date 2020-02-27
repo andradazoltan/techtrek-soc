@@ -84,7 +84,7 @@ typedef struct
 extern int currScreen;
 extern object_t mainScreen[5];  // Main Screen Objects
 extern object_t helpScreen[6];  // Help Screen Objects
-extern object_t mapScreen[5];   // Map Screen Objects
+extern object_t mapScreen[1];   // Map Screen Objects
 extern object_t infoScreen[5];  // Info Screen Objects
 extern object_t warningsScreen[1]; // Warnings Screen Objects
 

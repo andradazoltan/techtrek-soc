@@ -13,6 +13,7 @@
 #include "Graphics.h"
 #include "Screens.h"
 #include "RegisterDefs.h"
+#include "images.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
