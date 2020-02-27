@@ -30,6 +30,8 @@ void getPeopleCount(int fd);
 
 // Global Variables
 void *virtual_base = NULL;
+BMP techtrek;
+BMP parkmap;
 
 int main (void) {
     int fd, fd_fifo;
@@ -66,8 +68,8 @@ int main (void) {
     WIFI_Flush();
 
     // Initialize the images
-    BMP techtrek;
-    initImage("techtrek.bmp", &techtrek);
+    initImage("/home/ubuntu/Pictures/techtrek.bmp", &techtrek);
+    initImage("/home/ubuntu/Pictures/PacificSpiritParkMap.bmp", &parkmap);
 
     // Initialize the main GUI screen
     initColours();
@@ -96,6 +98,7 @@ int main (void) {
 
     // free images
     freeImage(&techtrek);
+    freeImage(&parkmap);
     
     close(fd);
     close(fd_fifo);

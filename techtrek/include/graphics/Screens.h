@@ -17,6 +17,7 @@
 // Extern Declarations
 extern int people_count;
 extern BMP techtrek;
+extern BMP parkmap;
 
 /*
  * List of screens
@@ -83,7 +84,7 @@ typedef struct
 extern int currScreen;
 extern object_t mainScreen[5];  // Main Screen Objects
 extern object_t helpScreen[6];  // Help Screen Objects
-extern object_t mapScreen[1];   // Map Screen Objects
+extern object_t mapScreen[5];   // Map Screen Objects
 extern object_t infoScreen[5];  // Info Screen Objects
 extern object_t warningsScreen[1]; // Warnings Screen Objects
 
@@ -100,6 +101,10 @@ void drawMapScreen(void);
 void drawWarningsScreen(void);
 void shiftGraphLeft(void);
 void shiftGraphRight(void);
+void shiftMapLeft(void);
+void shiftMapRight(void);
+void shiftMapUp(void);
+void shiftMapDown(void);
 int IsObjectPressed(int x, int y, object_t obj);
 
 void sendEmergency(int x, int y);

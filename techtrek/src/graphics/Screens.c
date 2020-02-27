@@ -21,6 +21,10 @@ int currScreen = MAIN_SCREEN;
 // Current percentage displayed on ratings graph
 int16_t graphPercent = 50;
 
+// offset for map coordinates
+int x_off = 50;
+int y_off = 0;
+
 // Warnings buffer
 char warnings[5][42];
 int currWarning = 0;
@@ -195,6 +199,58 @@ object_t mapScreen[] = {
             .bottomRightXCoord = 780,
             .bottomRightYCoord = 70
         }
+    },
+    { // Left
+        .type = RECT,
+        .colour = CHOCOLATE,
+        .text = "LEFT",
+        .textXCoord = 40,
+        .func = &shiftMapLeft,
+        .rect = {
+            .topLeftXCoord = 35,
+            .topLeftYCoord = 240 - (50/2),
+            .bottomRightXCoord = 105,
+            .bottomRightYCoord = 240 + (50/2)
+        }
+    },
+    { // Right
+        .type = RECT,
+        .colour = CHOCOLATE,
+        .text = "RIGHT",
+        .textXCoord = 799 - 100,
+        .func = &shiftMapRight,
+        .rect = {
+            .topLeftXCoord = 794 - 100,
+            .topLeftYCoord = 240 - (50/2),
+            .bottomRightXCoord = 794,
+            .bottomRightYCoord = 240 + (50/2)
+        }
+    },
+    { // Up
+        .type = RECT,
+        .colour = CHOCOLATE,
+        .text = "UP",
+        .textXCoord = 400 - (75/2) + 15,
+        .func = &shiftMapUp,
+        .rect = {
+            .topLeftXCoord = 400 - (75/2),
+            .topLeftYCoord = 75,
+            .bottomRightXCoord = 400 + (75/2),
+            .bottomRightYCoord = 125
+        }
+    },
+    { // Down
+        .type = RECT,
+        .colour = CHOCOLATE,
+        .text = "DOWN",
+        .textXCoord = 400 - (75/2) + 5,
+        .func = &shiftMapDown,
+        .rect = {
+            .topLeftXCoord = 400 - (75/2),
+            .topLeftYCoord = 424,
+            .bottomRightXCoord = 400 + (75/2),
+            .bottomRightYCoord = 474
+        }
     }
 };
 
@@ -311,7 +367,7 @@ void drawMainScreen(void) {
     OutGraphicsCharFont4(100, 190, WHITE, GREEN, "Spanish Banks Trail", 0);
 
     // Draw logo
-    drawImage(40, 40, WHITE, &techtrek);
+    drawImage(((550/2) - (400/2) + 20), 40, WHITE, &techtrek);
 }
 
 void drawHazardScreen(void) {
@@ -396,21 +452,15 @@ void drawMapScreen(void) {
     // Fill the screen with a solid "white smoke" colour
     FillScreen(WHITE_SMOKE);
 
+    // draw map
+    drawImage(x_off, y_off, GREEN, &parkmap);
+
     // Header
     FillRect(0, 0, XRES, 70, CADET_BLUE);
     OutGraphicsCharFont3(50, 14, WHITE, POWDER_BLUE, "Trail Map", 0);
-
-    // Draw fake map (for now)
-    FillRect(400, 80, 770, 450, GREEN);
-    Line(400, 80, 770, 300, CHOCOLATE);
-    Line(400, 400, 770, 350, BROWN);
-    Line(550, 450, 720, 60, CHOCOLATE);
-    Circle(650, 100, 20, CHOCOLATE);
-    FillCircle(450, 200, 30, BLUE);
-    OutGraphicsCharFont5(520, 220, WHITE, BLACK, "MAP", 0);
     
     // Create buttons and graphs
-    createObjects(mapScreen, 1);
+    createObjects(mapScreen, 5);
 }
 
 void drawWarningsScreen(void) {
@@ -490,6 +540,26 @@ void shiftGraphRight(void) {
         infoScreen[0].colour = GREEN;
 
     createObjects(infoScreen, 5);
+}
+
+void shiftMapLeft(void) {
+    x_off -= 70;
+    drawMapScreen();
+}
+
+void shiftMapRight(void) {
+    x_off += 70;
+    drawMapScreen();
+}
+
+void shiftMapUp(void) {
+    y_off -= 70;
+    drawMapScreen();
+}
+
+void shiftMapDown(void) {
+    y_off += 70;
+    drawMapScreen();
 }
 
 void createObjects(object_t objs[], int numObjs) {
