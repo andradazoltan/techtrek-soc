@@ -17,6 +17,7 @@ c5_pin_model_dump.txt
 *.sip
 *.axf*
 *.sw[a-z]
+*.jic
 tags
 techtrek/techtrek
 work/

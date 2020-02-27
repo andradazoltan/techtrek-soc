@@ -48,7 +48,7 @@ int parse_gga(char *sentence_buf, struct gga *sentence) {
                       strtof(field_start + 3, &next_field_start) / 60;
   field_start = strtok(NULL, ",");
   if (field_start[0] == 'W') {
-    sentence->gga_lat = -sentence->gga_lat;
+    sentence->gga_lat = -sentence->gga_lon;
   } else if (field_start[0] != 'E') {
     return SENTENCE_TYPE_INVALID;
   }
@@ -91,30 +91,36 @@ int read_sentence(char *raw_sentence, int sentence_type) {
     return -1;
   }
 
+  gps_uart_flush();
+
+  char checksum;
+  char received_checksum;
   do {
-    while (strncmp(raw_sentence, start_sequence, 6)) {
-      while (*raw_sentence != '$') {
-        *raw_sentence = (char)gps_uart_getchar();
-      }
 
-      length = 1;
-
-      for (int i = 0; i < 5; i++) {
-        raw_sentence[length] = (char)gps_uart_getchar();
-        length++;
-      }
+    while (*raw_sentence != '$') {
+      *raw_sentence = (char)gps_uart_getchar();
     }
 
-    while (length < 128 && raw_sentence[length - 1] != '\r' &&
-           raw_sentence[length - 1] != '$') {
+    length = 1;
+    checksum = 0;
+
+    while (length < 125 && raw_sentence[length - 1] != '*') {
       raw_sentence[length] = (char)gps_uart_getchar();
+      if (raw_sentence[length] != '*') {
+        checksum ^= raw_sentence[length];
+      }
       length++;
     }
 
-  } while (length == 128 && raw_sentence[length - 1] != '\r' &&
-           raw_sentence[length - 1] != '$');
+    raw_sentence[length] = (char)gps_uart_getchar();
+    raw_sentence[length + 1] = (char)gps_uart_getchar();
+    raw_sentence[length + 2] = '\0';
 
-  raw_sentence[length] = '\0';
+    sscanf(raw_sentence + length, "%hhX", &received_checksum);
+
+  } while (checksum != received_checksum ||
+           strncmp(raw_sentence, start_sequence, 6) != 0);
+
   return 0;
 }
 
@@ -124,6 +130,7 @@ void read_gga(struct gga *sentence) {
   char raw_sentence[128];
 
   read_sentence(raw_sentence, SENTENCE_TYPE_GGA);
+  printf("%s\n", raw_sentence);
   parse_gga(raw_sentence, sentence);
 }
 
