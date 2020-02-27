@@ -76,19 +76,20 @@ int main (void) {
     initColours();
     drawMainScreen();
 
+    struct gga sentence;
+  //  do {
+        read_gga(&sentence);
+  //  } while (!gga_fix_is_valid(sentence));
+
+   // printf("Location: %f %f\n", sentence.gga_lat, sentence.gga_lon);
+   // lua_postGPS(sentence.gga_lat, sentence.gga_lon);
+    lua_postGPS(49.261976, -123.249864);
+
     // Kick off threads
     pthread_t touch_screen_thread;
     pthread_t people_count_thread;
     pthread_create(&touch_screen_thread, NULL, (void *)&ReadTouchScreen, NULL);
     pthread_create(&people_count_thread, NULL, (void *)&getPeopleCount, fd_fifo);
-
-    struct gga sentence;
-    do {
-        read_gga(&sentence);
-    } while (!gga_fix_is_valid(sentence));
-
-    printf("Location: %f %f\n", sentence.gga_lat, sentence.gga_lon);
-    lua_postGPS(sentence.gga_lat, sentence.gga_lon);
 
     pthread_join(touch_screen_thread, NULL);
 
@@ -116,9 +117,6 @@ int main (void) {
  * @param fd: file pointer to pipe file
  */
 void getPeopleCount(int fd) {
-    // Post the initial population count, this should be 0
-    lua_postPopulation(people_count);
-
     while (1) {
         // Assume count will never get larger than 8 digits long
         char buf[8] = {0};
@@ -126,6 +124,13 @@ void getPeopleCount(int fd) {
         // Note that read will block until the FIFO is not empty
         if (read(fd, buf, 8) > 0) {
             people_count = atoi(buf);
+            if (currScreen == INFO_SCREEN) {
+                FillRect(335, 190, 755, 300, DARK_SLATE_BLUE);
+                OutGraphicsCharFont3(345, 200, GREEN, DARK_SLATE_BLUE, "TRAIL POPULATION:", 0);
+                char people[20];
+                sprintf(people, "%d people", people_count);
+                OutGraphicsCharFont4(450, 240, BLACK, DARK_SLATE_BLUE, people, 0);
+            }
             lua_postPopulation(people_count);
         }
 

@@ -99,7 +99,7 @@ void drawImage(int topLeftX, int topLeftY, int Colour, BMP* myBMP) {
 
                 if (x_val >= (*myBMP).header.width) {
                     break;  // reached the last valid bit in the row
-                } XRES
+                }
                 else {
                     offset = (cur_row * bytes_per_row) + cur_byte;
                     byte_data = *((*myBMP).data + offset);

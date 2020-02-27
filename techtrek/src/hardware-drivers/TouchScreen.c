@@ -42,7 +42,8 @@ void ReadTouchScreen(void) {
         WaitForRelease();
 
         Point p = GetRelease();
-
+        if (p.y > 300)
+            p.y += 50;
         printf("%d %d\n", p.x, p.y);
 
         object_t *objs;

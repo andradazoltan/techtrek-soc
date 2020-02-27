@@ -69,6 +69,7 @@ void lua_getWeather(char responseBody[]) {
     char cmd[] = "get_weather()\r\n";
     char flushbuf[1024] = "";
 
+    printf(cmd);
     sendCommand(cmd);
     WIFI_SaveFlush(flushbuf); // This saves the response from the WIFI chip (Important!)
 
@@ -84,6 +85,7 @@ void lua_getPopulation(char responseBody[]) {
     char cmd[] = "get_population()\r\n";
     char flushbuf[1024];
 
+    printf(cmd);
     sendCommand(cmd);
     WIFI_SaveFlush(flushbuf); // This saves the response from the WIFI chip (Important!)
 
@@ -101,6 +103,7 @@ void lua_postPopulation(int amount) {
 
     snprintf(cmd, sizeof(cmd), "post_population(%d)\r\n", amount);
 
+    printf(cmd);
     sendCommand(cmd);
 
     WIFI_SaveFlush(flushbuf); // This saves the response from the WIFI chip (Important!)
@@ -110,8 +113,8 @@ void lua_getWarnings(char responseBody[]) {
     char cmd[] = "get_warnings()\r\n";
     char flushbuf[1024];
 
+    printf(cmd);
     sendCommand(cmd);
-    printf("getwarns\n");
     WIFI_SaveFlush(flushbuf); // This saves the response from the WIFI chip (Important!)
 
     // Get the message body and copy it to the response buffer
@@ -143,7 +146,7 @@ void lua_postHelp(char helpMessage[]) {
     char flushbuf[1024];
 
     snprintf(cmd, sizeof(cmd), "post_help(\"%s\")\r\n", helpMessage);
-    printf("%s\n", cmd);
+    printf(cmd);
     sendCommand(cmd);
 
     WIFI_SaveFlush(flushbuf); // This saves the response from the WIFI chip (Important!)
@@ -156,6 +159,7 @@ void lua_getRating(char responseBody[]) {
     char cmd[] = "get_rating()\r\n";
     char flushbuf[1024];
 
+    printf(cmd);
     sendCommand(cmd);
     WIFI_SaveFlush(flushbuf); // This saves the response from the WIFI chip (Important!)
 
