@@ -91,10 +91,11 @@ int read_sentence(char *raw_sentence, int sentence_type) {
     return -1;
   }
 
+  gps_uart_flush();
+
   char checksum;
   char received_checksum;
   do {
-    gps_uart_flush();
 
     while (*raw_sentence != '$') {
       *raw_sentence = (char)gps_uart_getchar();
@@ -117,7 +118,7 @@ int read_sentence(char *raw_sentence, int sentence_type) {
 
     sscanf(raw_sentence + length, "%hhX", &received_checksum);
 
-  } while (checksum != received_checksum &&
+  } while (checksum != received_checksum ||
            strncmp(raw_sentence, start_sequence, 6) != 0);
 
   return 0;
