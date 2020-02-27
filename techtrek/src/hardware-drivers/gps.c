@@ -48,7 +48,7 @@ int parse_gga(char *sentence_buf, struct gga *sentence) {
                       strtof(field_start + 3, &next_field_start) / 60;
   field_start = strtok(NULL, ",");
   if (field_start[0] == 'W') {
-    sentence->gga_lat = -sentence->gga_lat;
+    sentence->gga_lat = -sentence->gga_lon;
   } else if (field_start[0] != 'E') {
     return SENTENCE_TYPE_INVALID;
   }
