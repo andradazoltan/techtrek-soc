@@ -78,7 +78,6 @@ int main (void) {
     pthread_t people_count_thread;
     pthread_create(&touch_screen_thread, NULL, (void *)&ReadTouchScreen, NULL);
     pthread_create(&people_count_thread, NULL, (void *)&getPeopleCount, fd_fifo);
-    pthread_create(&get_warnings_thread, NULL, (void *)&getWarnings, NULL);
 
     struct gga sentence;
     do {
