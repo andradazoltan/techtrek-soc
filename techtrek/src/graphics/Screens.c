@@ -13,6 +13,7 @@
 #include "Keyboard.h"
 #include "images.h"
 #include <string.h>
+#include <time.h>
 
 // Extern variables
 int people_count = 0;
@@ -353,10 +354,21 @@ void drawInfoScreen(void) {
     FillRect(0, 0, XRES, 70, DARK_BLUE);
 
     // Make time box and fill in with time
+    time_t now_epoch = time(NULL);
+    struct tm *now = localtime(&now_epoch);
+
+    char time_now[32];
+    sprintf(time_now, "%d:%d", now->tm_hour, now->tm_min);
+
     FillRect(65, 90, 315, 200, DARK_SLATE_BLUE);
+    OutGraphicsCharFont3(145,140, BLACK, DARK_SLATE_BLUE, time_now, 0);
 
     // Make date box and fill in with date
+    char date_now[32];
+    sprintf(date_now, "%d-%d-%d", now->tm_mday, now->tm_mon+1, now->tm_year+1900);
+
     FillRect(65, 220, 315, 300, DARK_SLATE_BLUE);
+    OutGraphicsCharFont3(125, 260, BLACK, DARK_SLATE_BLUE, date_now, 0);
 
     // Make weather box
     FillRect(335, 90, 755, 170, DARK_SLATE_BLUE);
