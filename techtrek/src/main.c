@@ -73,16 +73,20 @@ int main (void) {
     initColours();
     drawMainScreen();
 
-    struct gga sentence;
-    read_gga(&sentence);
-    printf("Location: %f %f\n", sentence.gga_lat, sentence.gga_lon);
-    lua_postGPS(sentence.gga_lat, sentence.gga_lon);
-
     // Kick off threads
     pthread_t touch_screen_thread;
     pthread_t people_count_thread;
     pthread_create(&touch_screen_thread, NULL, (void *)&ReadTouchScreen, NULL);
     pthread_create(&people_count_thread, NULL, (void *)&getPeopleCount, fd_fifo);
+    pthread_create(&get_warnings_thread, NULL, (void *)&getWarnings, NULL);
+
+    struct gga sentence;
+    do {
+        read_gga(&sentence);
+    } while (!gga_fix_is_valid(sentence));
+
+    printf("Location: %f %f\n", sentence.gga_lat, sentence.gga_lon);
+    lua_postGPS(sentence.gga_lat, sentence.gga_lon);
 
     pthread_join(touch_screen_thread, NULL);
 
