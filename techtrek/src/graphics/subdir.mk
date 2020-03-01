@@ -3,8 +3,7 @@
 ################################################################################
 
 # Add inputs and outputs from these tool invocations to the build variables 
-C_SRCS += \
-../src/graphics/ColourPallette.c \
+C_SRCS += ../src/graphics/ColourPallette.c \
 ../src/graphics/Fill.c \
 ../src/graphics/Fonts.c \
 ../src/graphics/GraphData.c \
@@ -15,7 +14,8 @@ C_SRCS += \
 ../src/graphics/OutGraphicsCharFont3.c \
 ../src/graphics/OutGraphicsCharFont4.c \
 ../src/graphics/OutGraphicsCharFont5.c \
-../src/graphics/Screens.c 
+../src/graphics/Screens.c \
+../src/graphics/images.c
 
 OBJS += \
 ./src/graphics/ColourPallette.o \
@@ -29,7 +29,8 @@ OBJS += \
 ./src/graphics/OutGraphicsCharFont3.o \
 ./src/graphics/OutGraphicsCharFont4.o \
 ./src/graphics/OutGraphicsCharFont5.o \
-./src/graphics/Screens.o 
+./src/graphics/Screens.o \
+./src/graphics/images.o
 
 C_DEPS += \
 ./src/graphics/ColourPallette.d \
@@ -43,7 +44,8 @@ C_DEPS += \
 ./src/graphics/OutGraphicsCharFont3.d \
 ./src/graphics/OutGraphicsCharFont4.d \
 ./src/graphics/OutGraphicsCharFont5.d \
-./src/graphics/Screens.d 
+./src/graphics/Screens.d \
+./src/graphics/images.d
 
 
 # Each subdirectory must supply rules for building sources it contributes
