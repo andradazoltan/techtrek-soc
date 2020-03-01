@@ -4,7 +4,7 @@
 
 -include ../makefile.init
 
-RM := rm
+RM := rm -f
 
 PROJECT_ROOT := ${CURDIR}
 
