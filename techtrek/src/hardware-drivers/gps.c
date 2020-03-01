@@ -16,14 +16,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-int get_sentence_type(char *sentence_buf) {
-  if (strncmp(sentence_buf, "GPGGA", 5) == 0) {
-    return SENTENCE_TYPE_GGA;
-  }
-
-  return SENTENCE_TYPE_INVALID;
-}
-
+/*
+ * Given a char array containing a valid GGA sentence, parses the sentence and
+ * stores its contents in the struct gga *sentence.
+ */
 int parse_gga(char *sentence_buf, struct gga *sentence) {
   char *field_start = strtok(sentence_buf, ",");
   char *next_field_start;
@@ -82,8 +78,10 @@ int parse_gga(char *sentence_buf, struct gga *sentence) {
   return 0;
 }
 
-// Read the next sentence of the specified type from the GPS and store it in the
-// provided buffer Returns -1 on invalid input
+/*
+ * Read the next sentence of the specified type from the GPS and store it in the
+ * provided buffer Returns -1 on invalid input
+ */
 int read_sentence(char *raw_sentence, int sentence_type) {
   int length = 0;
   char *start_sequence;
@@ -129,8 +127,10 @@ int read_sentence(char *raw_sentence, int sentence_type) {
   return 0;
 }
 
-// Read and parse the next GGA sentence received from the GPS, discarding
-// sentences of other types
+/*
+ * Read and parse the next GGA sentence received from the GPS, discarding
+ * sentences of other types
+ */
 void read_gga(struct gga *sentence) {
   char raw_sentence[128];
 
@@ -139,6 +139,10 @@ void read_gga(struct gga *sentence) {
   parse_gga(raw_sentence, sentence);
 }
 
+/*
+ * Determine whether a given struct represents a valid fix or not. Returns 1 if
+ * the fix is valid and 0 otherwise
+ */
 int gga_fix_is_valid(struct gga sentence) {
   if (sentence.gga_fix > 0 && sentence.gga_fix < 6) {
     return 1;
@@ -147,6 +151,9 @@ int gga_fix_is_valid(struct gga sentence) {
   return 0;
 }
 
+/*
+ * Initialize the UART
+ */
 void gps_uart_init(void) {
   // Program serial port to communicate with GPS
 
@@ -164,6 +171,9 @@ void gps_uart_init(void) {
                        0x06; // Now Clear all bits in the FiFo control registers
 }
 
+/*
+ * Write a single character the the UART
+ */
 int gps_uart_putchar(int c) {
   while ((GPS_LineStatusReg & 0x20) !=
          0x20) { // wait for Transmitter Holding Register bit (5) of line status
@@ -175,6 +185,10 @@ int gps_uart_putchar(int c) {
   return c;                      // return the character we printed
 }
 
+/*
+ * Read and return a single character from the UART. If none are available,
+ * block until one becomes available
+ */
 int gps_uart_getchar(void) {
   while (
       (GPS_LineStatusReg & 0x1) !=
@@ -186,22 +200,20 @@ int gps_uart_getchar(void) {
                                 // register, return new character
 }
 
-// the following function polls the UART to determine if any character
-// has been received. It doesn't wait for one, or read it, it simply tests
-// to see if one is available to read from the FIFO
+/*
+ * Poll the UART to determine if any character is available in the buffer
+ */
 int gps_uart_data_available(void) {
   if ((GPS_LineStatusReg & 0x1) == 0x1) {
     return 1;
   } else {
     return 0;
   }
-  // if RS232_LineStatusReg bit 0 is set to 1
-  // return TRUE, otherwise return FALSE
 }
 
-//
-// Remove/flush the UART receiver buffer by removing any unread characters
-//
+/*
+ * Flush the UART receiver buffer by removing any unread characters
+ */
 void gps_uart_flush(void) {
   int flushedData;
   while ((GPS_LineStatusReg & 0x01) == 0x01) {
@@ -210,37 +222,4 @@ void gps_uart_flush(void) {
 
   (void)flushedData; // Get rid of unused variable warning
   return;
-  // while bit 0 of Line Status Register == ‘1’
-  // read unwanted char out of fifo receiver buffer
-  // return; // no more characters so return
-}
-
-int swap_endian(char *s) {
-  register int val;
-  val = strtoul(s, NULL, 16); // convert to 4 byte int form in base 16
-  val = ((val << 8) & 0xFF00FF00) | ((val >> 8) & 0xFF00FF);
-  val = (val << 16) | ((val >> 16) & 0xFFFF);
-  return val;
-}
-
-// thesetwo functions takea 4 byte IEEE-754 format float
-// (passed as a 4 byte int representing latitude and longitude values)
-// in big endian formatand converts it to an ASCII decimal string
-// which it returns with decimal point in the string.
-char *float_to_lat(int x) // output format is xx.yyyy
-{
-  static char buff[100];
-  float *ptr = (float *)(&x); // cast int to float
-  float f = *ptr;             // get the float
-  sprintf(buff, "%2.4f", f);  // write in string to an arrayreturnbuff ;
-  return buff;
-}
-
-char *float_to_lon(int x) // output format is (-)xxx.yyyy
-{
-  static char buff[100];
-  float *ptr = (float *)(&x);
-  float f = *ptr;
-  sprintf(buff, "%3.4f", f);
-  return buff;
 }

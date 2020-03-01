@@ -14,7 +14,7 @@ typedef struct {
 } Point;
 
 // Function Definitions
-void InitTouch(void);
+void touch_uart_init(void);
 void ReadTouchScreen(void);
 
 int ScreenTouched(void);

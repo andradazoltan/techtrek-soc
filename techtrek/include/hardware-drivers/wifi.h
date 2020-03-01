@@ -1,5 +1,5 @@
 /*
- *  WiFi.h
+ *  wifi.h
  *
  *  Created on: Jan 30, 2020
  *  Author: Connor Fong & Ash Tan
@@ -9,9 +9,9 @@
 #define WIFI_H_
 
 // Function Definitions
-void InitWIFI(void);
+void wifi_uart_init(void);
 int WIFITestForReceivedData(void);
-void WIFI_Flush(void);
+void wifi_uart_flush(void);
 
 // Server Functions
 void lua_doServerFile(void);

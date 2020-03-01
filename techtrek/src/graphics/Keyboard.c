@@ -12,7 +12,7 @@
 #include "Graphics.h"
 #include "RegisterDefs.h"
 #include "Screens.h"
-#include "WiFi.h"
+#include "wifi.h"
 #include <stdint.h>
 
 #define MAX_KEYS_PER_ROW                                                       \

@@ -18,7 +18,7 @@ static int getcharTS(void);
 /*****************************************************************************
 ** Initialize touch screen controller
 *****************************************************************************/
-void InitTouch(void) {
+void touch_uart_init(void) {
   TouchScreen_LineControlReg |=
       0x80; // Enable access to the baud rate registers
   TouchScreen_DivisorLatchLSB =

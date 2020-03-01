@@ -6,19 +6,19 @@
 C_SRCS += \
 ../src/hardware-drivers/Serial.c \
 ../src/hardware-drivers/TouchScreen.c \
-../src/hardware-drivers/WiFi.c \
+../src/hardware-drivers/wifi.c \
 ../src/hardware-drivers/gps.c 
 
 OBJS += \
 ./src/hardware-drivers/Serial.o \
 ./src/hardware-drivers/TouchScreen.o \
-./src/hardware-drivers/WiFi.o \
+./src/hardware-drivers/wifi.o \
 ./src/hardware-drivers/gps.o 
 
 C_DEPS += \
 ./src/hardware-drivers/Serial.d \
 ./src/hardware-drivers/TouchScreen.d \
-./src/hardware-drivers/WiFi.d \
+./src/hardware-drivers/wifi.d \
 ./src/hardware-drivers/gps.d 
 
 

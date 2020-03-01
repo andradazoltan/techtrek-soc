@@ -10,8 +10,8 @@
 #include "Screens.h"
 #include "Graphics.h"
 #include "Keyboard.h"
-#include "WiFi.h"
 #include "images.h"
+#include "wifi.h"
 #include <string.h>
 #include <time.h>
 

@@ -11,9 +11,9 @@
 #include "RegisterDefs.h"
 #include "Screens.h"
 #include "TouchScreen.h"
-#include "WiFi.h"
 #include "gps.h"
 #include "images.h"
+#include "wifi.h"
 #include <fcntl.h>
 #include <pthread.h>
 #include <stdint.h>
@@ -26,7 +26,7 @@
 #include <unistd.h>
 
 // Private function prototypes
-void getPeopleCount(int fd);
+void get_people_count(int fd);
 
 // Global Variables
 void *virtual_base = NULL;
@@ -60,14 +60,14 @@ int main(void) {
   }
 
   // Initialize all of the hardware
-  InitWIFI();
-  WIFI_Flush();
-  InitTouch();
+  wifi_uart_init();
+  wifi_uart_flush();
+  touch_uart_init();
   gps_uart_init();
 
   // Initialize the WiFi connection to the server
   lua_doServerFile();
-  WIFI_Flush();
+  wifi_uart_flush();
 
   // Initialize the images
   initImage("/home/ubuntu/Pictures/techtrek.bmp", &techtrek);
@@ -90,7 +90,8 @@ int main(void) {
   pthread_t touch_screen_thread;
   pthread_t people_count_thread;
   pthread_create(&touch_screen_thread, NULL, (void *)&ReadTouchScreen, NULL);
-  pthread_create(&people_count_thread, NULL, (void *)&getPeopleCount, fd_fifo);
+  pthread_create(&people_count_thread, NULL, (void *)&get_people_count,
+                 (void *)fd_fifo);
 
   pthread_join(touch_screen_thread, NULL);
   pthread_join(people_count_thread, NULL);
@@ -120,7 +121,7 @@ int main(void) {
  *
  * @param fd: file pointer to pipe file
  */
-void getPeopleCount(int fd) {
+void get_people_count(int fd) {
   while (1) {
     // Assume count will never get larger than 8 digits long
     char buf[8] = {0};

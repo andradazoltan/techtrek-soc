@@ -1,12 +1,12 @@
 /*
- *  WiFi.c
+ *  wifi.c
  *  Drives WiFi using UART
  *
  *  Created on: Jan 30, 2020
  *  Author: Connor Fong & Ash Tan
  */
 
-#include "WiFi.h"
+#include "wifi.h"
 #include "RegisterDefs.h"
 #include "Screens.h"
 #include <stdio.h>
@@ -26,7 +26,7 @@ static void sendCommand(char *command);
 **
 ** Refer to UART data sheet for details of registers and programming
 ***************************************************************************/
-void InitWIFI(void) {
+void wifi_uart_init(void) {
   WIFI_LineControlReg |= 0x80; // Enable access to the baud rate registers
   WIFI_DivisorLatchLSB =
       0x1B; // Set Divisor latch (LSB and MSB) to get required baud rate
@@ -61,7 +61,7 @@ void lua_postGPS(float latitude, float longitude) {
   snprintf(cmd, sizeof(cmd), "post_gps(%d, %d)\r\n", (int)(latitude * 1000000),
            (int)(longitude * 1000000));
 
-  printf(cmd);
+  printf("%s\n", cmd);
   sendCommand(cmd);
 
   WIFI_SaveFlush(
@@ -72,7 +72,7 @@ void lua_getWeather(char responseBody[]) {
   char cmd[] = "get_weather()\r\n";
   char flushbuf[1024] = "";
 
-  printf(cmd);
+  printf("%s\n", cmd);
   sendCommand(cmd);
   WIFI_SaveFlush(
       flushbuf); // This saves the response from the WIFI chip (Important!)
@@ -89,7 +89,7 @@ void lua_getPopulation(char responseBody[]) {
   char cmd[] = "get_population()\r\n";
   char flushbuf[1024];
 
-  printf(cmd);
+  printf("%s\n", cmd);
   sendCommand(cmd);
   WIFI_SaveFlush(
       flushbuf); // This saves the response from the WIFI chip (Important!)
@@ -108,7 +108,7 @@ void lua_postPopulation(int amount) {
 
   snprintf(cmd, sizeof(cmd), "post_population(%d)\r\n", amount);
 
-  printf(cmd);
+  printf("%s\n", cmd);
   sendCommand(cmd);
 
   WIFI_SaveFlush(
@@ -119,7 +119,7 @@ void lua_getWarnings(char responseBody[]) {
   char cmd[] = "get_warnings()\r\n";
   char flushbuf[1024];
 
-  printf(cmd);
+  printf("%s\n", cmd);
   sendCommand(cmd);
   WIFI_SaveFlush(
       flushbuf); // This saves the response from the WIFI chip (Important!)
@@ -154,7 +154,7 @@ void lua_postHelp(char helpMessage[]) {
   char flushbuf[1024];
 
   snprintf(cmd, sizeof(cmd), "post_help(\"%s\")\r\n", helpMessage);
-  printf(cmd);
+  printf("%s\n", cmd);
   sendCommand(cmd);
 
   WIFI_SaveFlush(
@@ -168,7 +168,7 @@ void lua_getRating(char responseBody[]) {
   char cmd[] = "get_rating()\r\n";
   char flushbuf[1024];
 
-  printf(cmd);
+  printf("%s\n", cmd);
   sendCommand(cmd);
   WIFI_SaveFlush(
       flushbuf); // This saves the response from the WIFI chip (Important!)
@@ -187,7 +187,7 @@ void lua_postRating(int score) {
 
   snprintf(cmd, sizeof(cmd), "post_rating(%d)\r\n", score);
 
-  printf(cmd);
+  printf("%s\n", cmd);
   sendCommand(cmd);
 
   WIFI_SaveFlush(
@@ -249,7 +249,7 @@ int WIFITestForReceivedData(void) {
   }
 }
 
-void WIFI_Flush() {
+void wifi_uart_flush() {
   int flushedData;
 
   // Flush UART receive buffer
