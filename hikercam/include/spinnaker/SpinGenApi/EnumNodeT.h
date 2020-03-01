@@ -18,128 +18,129 @@
 #ifndef SPINNAKER_GENAPI_ENUMNODET_H
 #define SPINNAKER_GENAPI_ENUMNODET_H
 
-#include "SpinnakerPlatform.h"
-#include "GCString.h"
-#include "INode.h"
 #include "EnumNode.h"
+#include "GCString.h"
+#include "IEnumEntry.h"
 #include "IEnumeration.h"
 #include "IEnumerationT.h"
-#include "IEnumEntry.h"
+#include "INode.h"
 #include "Node.h"
+#include "SpinnakerPlatform.h"
 
 #ifdef _WIN32
-#pragma warning ( push )
-#pragma warning( disable : 4250 ) // C4250 - 'class1' : inherits 'class2::member' via dominance
-#pragma warning ( disable : 4251 ) // XXX needs to have dll-interface to be used by clients of class YYY
-#pragma warning( disable: 4275 ) // non dll-interface structXXX used as base
+#pragma warning(push)
+#pragma warning(disable : 4250) // C4250 - 'class1' : inherits 'class2::member'
+                                // via dominance
+#pragma warning(disable : 4251) // XXX needs to have dll-interface to be used by
+                                // clients of class YYY
+#pragma warning(disable : 4275) // non dll-interface structXXX used as base
 #endif
 
-namespace Spinnaker
-{
-    namespace GenApi
-    {
-        /**
-        *  @defgroup SpinnakerGenApiClasses Spinnaker GenApi Classes
-        */
-        /*@{*/
+namespace Spinnaker {
+namespace GenApi {
+/**
+ *  @defgroup SpinnakerGenApiClasses Spinnaker GenApi Classes
+ */
+/*@{*/
 
-        /**
-        *  @defgroup EnumNodeT_h EnumNodeT Class
-        */
-        /*@{*/
+/**
+ *  @defgroup EnumNodeT_h EnumNodeT Class
+ */
+/*@{*/
 
-        /**
-        * @brief Interface for string properties
-        */
-        template< class EnumT >
-        class SPINNAKER_API CEnumerationTRef : virtual public IEnumerationT<EnumT> , public virtual EnumNode
-        {
-        public:
-            struct NodeImpl;
-            CEnumerationTRef();
+/**
+ * @brief Interface for string properties
+ */
+template <class EnumT>
+class SPINNAKER_API CEnumerationTRef : virtual public IEnumerationT<EnumT>,
+                                       public virtual EnumNode {
+public:
+  struct NodeImpl;
+  CEnumerationTRef();
 
-            CEnumerationTRef(std::shared_ptr<Node::NodeImpl> pEnumeration);
+  CEnumerationTRef(std::shared_ptr<Node::NodeImpl> pEnumeration);
 
-            virtual ~CEnumerationTRef();
+  virtual ~CEnumerationTRef();
 
-            /**
-            * Set node value
-            *
-            * @param Value The value to set
-            * @param Verify Enables AccessMode and Range verification (default = true)
-            */
-            virtual void SetValue(EnumT Value, bool Verify = true);
+  /**
+   * Set node value
+   *
+   * @param Value The value to set
+   * @param Verify Enables AccessMode and Range verification (default = true)
+   */
+  virtual void SetValue(EnumT Value, bool Verify = true);
 
-            /**
-            * Set node value
-            */
-            virtual IEnumeration& operator=(EnumT Value);
+  /**
+   * Set node value
+   */
+  virtual IEnumeration &operator=(EnumT Value);
 
-            /**
-            * Get node value
-            *
-            * @param Verify Enables Range verification (default = false). The AccessMode is always checked
-            * @param IgnoreCache If true the value is read ignoring any caches (default = false)
-            * @return The value read
-            */
-            virtual EnumT GetValue(bool Verify = false, bool IgnoreCache = false);
+  /**
+   * Get node value
+   *
+   * @param Verify Enables Range verification (default = false). The AccessMode
+   * is always checked
+   * @param IgnoreCache If true the value is read ignoring any caches (default =
+   * false)
+   * @return The value read
+   */
+  virtual EnumT GetValue(bool Verify = false, bool IgnoreCache = false);
 
-            /**
-            * Get node value
-            */
-            virtual EnumT operator()();
+  /**
+   * Get node value
+   */
+  virtual EnumT operator()();
 
-            /**
-            * Set node value
-            *
-            * Note : the operator= is not inherited thus the operator= versions
-            * from IEnumeration must be implemented again
-            */
-            virtual IEnumeration& operator=(const GenICam::gcstring& ValueStr);
+  /**
+   * Set node value
+   *
+   * Note : the operator= is not inherited thus the operator= versions
+   * from IEnumeration must be implemented again
+   */
+  virtual IEnumeration &operator=(const GenICam::gcstring &ValueStr);
 
-            /**
-            * returns the EnumEntry object belonging to the Value
-            */
-            virtual IEnumEntry* GetEntry(const EnumT Value);
+  /**
+   * returns the EnumEntry object belonging to the Value
+   */
+  virtual IEnumEntry *GetEntry(const EnumT Value);
 
-            /**
-            * Get an entry node by its IntValue
-            */
-            virtual IEnumEntry* GetEntry(const int64_t IntValue);
+  /**
+   * Get an entry node by its IntValue
+   */
+  virtual IEnumEntry *GetEntry(const int64_t IntValue);
 
-            /**
-            * Get the current entry
-            */
-            virtual IEnumEntry* GetCurrentEntry(bool Verify = false, bool IgnoreCache = false);
+  /**
+   * Get the current entry
+   */
+  virtual IEnumEntry *GetCurrentEntry(bool Verify = false,
+                                      bool IgnoreCache = false);
 
-            /**
-            * overload SetReference for EnumerationT
-            */
-            virtual void SetReference(INode* pBase);
-            
-            /**
-            * sets the Enum value corresponding to a value
-            */
-            virtual void SetEnumReference(int Index, GenICam::gcstring Name);
+  /**
+   * overload SetReference for EnumerationT
+   */
+  virtual void SetReference(INode *pBase);
 
-            /**
-            * sets the number of enum values
-            */
-            virtual void SetNumEnums(int NumEnums);
+  /**
+   * sets the Enum value corresponding to a value
+   */
+  virtual void SetEnumReference(int Index, GenICam::gcstring Name);
 
-        private:
-            
-            std::shared_ptr<Node::NodeImpl> m_pEnumerationT;
+  /**
+   * sets the number of enum values
+   */
+  virtual void SetNumEnums(int NumEnums);
 
-        };
+private:
+  std::shared_ptr<Node::NodeImpl> m_pEnumerationT;
+};
 
-        /*@}*/
-        /*@}*/
-    }
-}
+/*@}*/
+/*@}*/
+} // namespace GenApi
+} // namespace Spinnaker
 
 #ifdef _WIN32
-#pragma warning ( pop )
+#pragma warning(pop)
 #endif
 
 #endif // SPINNAKER_GENAPI_ENUMNODET_H

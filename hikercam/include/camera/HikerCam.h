@@ -8,33 +8,31 @@
 #ifndef HIKERCAM_H_
 #define HIKERCAM_H_
 
-#include "Spinnaker.h"
 #include "SpinGenApi/SpinnakerGenApi.h"
-#include <vector>
-#include <mutex>
+#include "Spinnaker.h"
 #include <atomic>
+#include <mutex>
+#include <vector>
 
 class HikerCam {
-    public:
-        HikerCam();
-        ~HikerCam();
+public:
+  HikerCam();
+  ~HikerCam();
 
-        int InitCamera(void);
-        int StartAcquisition(void);
-        void EndAcquisition(void);
-        void GetBoundingBoxData(std::vector<Spinnaker::InferenceBoundingBox>& buf);
+  int InitCamera(void);
+  int StartAcquisition(void);
+  void EndAcquisition(void);
+  void GetBoundingBoxData(std::vector<Spinnaker::InferenceBoundingBox> &buf);
 
-    private:
-        Spinnaker::SystemPtr mSystem;
-        Spinnaker::CameraPtr mCamera;
-        std::atomic<bool> endAcquistionSignal;
+private:
+  Spinnaker::SystemPtr mSystem;
+  Spinnaker::CameraPtr mCamera;
+  std::atomic<bool> endAcquistionSignal;
 
-        std::mutex* bufferMutex;
-        std::vector<Spinnaker::InferenceBoundingBox>* boundingBoxBuffer;
+  std::mutex *bufferMutex;
+  std::vector<Spinnaker::InferenceBoundingBox> *boundingBoxBuffer;
 
-        int EnableInference(Spinnaker::GenApi::INodeMap& nodeMap);
+  int EnableInference(Spinnaker::GenApi::INodeMap &nodeMap);
 };
-
-
 
 #endif /* HIKERCAM_H_ */

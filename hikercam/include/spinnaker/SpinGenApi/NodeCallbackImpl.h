@@ -15,7 +15,7 @@
 // THIS SOFTWARE OR ITS DERIVATIVES.
 //=============================================================================
 /*!
-* @brief   This file exists only for backward compatibility reasons
-*/
+ * @brief   This file exists only for backward compatibility reasons
+ */
 
 #include "SpinGenApi/NodeCallback.h"

@@ -21,56 +21,53 @@
 #include "Interface/ILoggingEvent.h"
 #include "LoggingEventDataPtr.h"
 
-namespace Spinnaker
-{
-	class LoggingEventDataPtr;
+namespace Spinnaker {
+class LoggingEventDataPtr;
 
-	/**
-	 *  @defgroup SpinnakerEventClasses Spinnaker Event Classes
-	 */
-	/*@{*/
+/**
+ *  @defgroup SpinnakerEventClasses Spinnaker Event Classes
+ */
+/*@{*/
 
-	/**
-	 *  @defgroup LoggingEvent_h LoggingEvent Class
-	 */
-	/*@{*/
+/**
+ *  @defgroup LoggingEvent_h LoggingEvent Class
+ */
+/*@{*/
 
-    /**
-     * @brief An event handler for capturing the device logging event.
-     */
+/**
+ * @brief An event handler for capturing the device logging event.
+ */
 
-	class SPINNAKER_API LoggingEvent : public ILoggingEvent
-	{
-	public:
+class SPINNAKER_API LoggingEvent : public ILoggingEvent {
+public:
+  /**
+   * Default constructor.
+   */
+  LoggingEvent();
 
-		/**
-		* Default constructor.
-		*/
-		LoggingEvent();
+  /**
+   * Virtual destructor.
+   */
+  ~LoggingEvent();
 
-		/**
-		* Virtual destructor.
-		*/
-		~LoggingEvent();
+  /**
+   * The callback for the log event.
+   *
+   * @param eventPtr The logging event pointer
+   *
+   */
+  virtual void OnLogEvent(LoggingEventDataPtr eventPtr) = 0;
 
-		/**
-		* The callback for the log event.
-		*
-		* @param eventPtr The logging event pointer
-		*
-		*/
-		virtual void OnLogEvent(LoggingEventDataPtr eventPtr) = 0;
+protected:
+  /**
+   * Assignment operator.
+   */
+  LoggingEvent &operator=(const LoggingEvent &);
+};
 
-	protected:
-		/**
-		* Assignment operator.
-		*/
-		LoggingEvent& operator=(const LoggingEvent&);
-	};
+/*@}*/
 
-    /*@}*/
-
-    /*@}*/
-}
+/*@}*/
+} // namespace Spinnaker
 
 #endif // PGR_SPINNAKER_LOGGINGEvent_H

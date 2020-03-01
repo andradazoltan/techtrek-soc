@@ -20,56 +20,54 @@
 
 #include "Interface/IInterfaceEvent.h"
 
-namespace Spinnaker
-{
-	/**
-	 * @defgroup SpinnakerEventClasses Spinnaker Event Classes
-	 */
-	/*@{*/
+namespace Spinnaker {
+/**
+ * @defgroup SpinnakerEventClasses Spinnaker Event Classes
+ */
+/*@{*/
 
-	/**
-	 *  @defgroup InterfaceEvent_h InterfaceEvent Class
-	 */
-	/*@{*/
+/**
+ *  @defgroup InterfaceEvent_h InterfaceEvent Class
+ */
+/*@{*/
 
-    /**
-    * @brief A handler to device arrival and removal events on all interfaces.
-    */
+/**
+ * @brief A handler to device arrival and removal events on all interfaces.
+ */
 
-    class SPINNAKER_API InterfaceEvent : public IInterfaceEvent
-	{
-	public:
-		/**
-		* Default constructor.
-		*/
-		InterfaceEvent();
+class SPINNAKER_API InterfaceEvent : public IInterfaceEvent {
+public:
+  /**
+   * Default constructor.
+   */
+  InterfaceEvent();
 
-		/**
-		* Virtual destructor.
-		*/
-		virtual ~InterfaceEvent();
+  /**
+   * Virtual destructor.
+   */
+  virtual ~InterfaceEvent();
 
-		/**
-		* Device arrival event callback.
-		*/
-		virtual void OnDeviceArrival(uint64_t serialNumber) = 0;
+  /**
+   * Device arrival event callback.
+   */
+  virtual void OnDeviceArrival(uint64_t serialNumber) = 0;
 
-		/**
-		* Callback to the device removal event.
-		*
-		* @param serialNumber The serial number of the removed device
-		*/
-		virtual void OnDeviceRemoval(uint64_t serialNumber) = 0;
+  /**
+   * Callback to the device removal event.
+   *
+   * @param serialNumber The serial number of the removed device
+   */
+  virtual void OnDeviceRemoval(uint64_t serialNumber) = 0;
 
-	protected:
-		/**
-		* Assignment operator.
-		*/
-		InterfaceEvent& operator=( const InterfaceEvent& );
-	};
-	/*@}*/
+protected:
+  /**
+   * Assignment operator.
+   */
+  InterfaceEvent &operator=(const InterfaceEvent &);
+};
+/*@}*/
 
-	/*@}*/
-}
+/*@}*/
+} // namespace Spinnaker
 
 #endif // PGR_SPINNAKER_INTERFACEEVENT_H

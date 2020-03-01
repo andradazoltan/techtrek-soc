@@ -18,26 +18,24 @@
 #ifndef PGR_SPINNAKER_ILOGGINGEVENT_H
 #define PGR_SPINNAKER_ILOGGINGEVENT_H
 
-#include "SpinnakerDefs.h"
-#include "SpinnakerPlatform.h"
 #include "Event.h"
 #include "LoggingEventDataPtr.h"
+#include "SpinnakerDefs.h"
+#include "SpinnakerPlatform.h"
 
-namespace Spinnaker
-{
-    class LoggingEventDataPtr;
+namespace Spinnaker {
+class LoggingEventDataPtr;
 
-    class ILoggingEvent : public virtual Event
-    {
-    public:
-        virtual ~ILoggingEvent() {};
-        virtual void OnLogEvent(LoggingEventDataPtr eventPtr) = 0;
+class ILoggingEvent : public virtual Event {
+public:
+  virtual ~ILoggingEvent(){};
+  virtual void OnLogEvent(LoggingEventDataPtr eventPtr) = 0;
 
-    protected:
-        ILoggingEvent() {};
-        ILoggingEvent(const ILoggingEvent&) {};
-        ILoggingEvent& operator=(const ILoggingEvent&);
-    };
-}
+protected:
+  ILoggingEvent(){};
+  ILoggingEvent(const ILoggingEvent &){};
+  ILoggingEvent &operator=(const ILoggingEvent &);
+};
+} // namespace Spinnaker
 
 #endif /* PGR_SPINNAKER_ILOGGINGEVENT_H */

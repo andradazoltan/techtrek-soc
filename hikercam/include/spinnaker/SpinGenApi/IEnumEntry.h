@@ -19,68 +19,66 @@
 #define SPINNAKER_GENAPI_IENUMENTRY_H
 
 #include "GCString.h"
-#include "SpinnakerPlatform.h"
 #include "IValue.h"
+#include "SpinnakerPlatform.h"
 
 #ifdef _WIN32
-#pragma warning ( push )
-#pragma warning ( disable : 4251 ) // XXX needs to have dll-interface to be used by clients of class YYY
+#pragma warning(push)
+#pragma warning(disable : 4251) // XXX needs to have dll-interface to be used by
+                                // clients of class YYY
 #endif
 
-namespace Spinnaker
-{
-    namespace GenApi
-    {
-        /**
-        *  @defgroup SpinnakerGenApiInterfaces Spinnaker GenApi Interfaces
-        */
-        /*@{*/
+namespace Spinnaker {
+namespace GenApi {
+/**
+ *  @defgroup SpinnakerGenApiInterfaces Spinnaker GenApi Interfaces
+ */
+/*@{*/
 
-        /**
-        *  @defgroup IEnumEntry_h IEnumEntry Interface
-        */
-        /*@{*/
+/**
+ *  @defgroup IEnumEntry_h IEnumEntry Interface
+ */
+/*@{*/
 
-        //*************************************************************
-        // IEnumEntry interface
-        //*************************************************************
+//*************************************************************
+// IEnumEntry interface
+//*************************************************************
 
-        /**
-        * @brief Interface of single enum value
-        */
-        /*! Maps of Enum Values to symbolic values */
-        interface SPINNAKER_API_ABSTRACT IEnumEntry : virtual public IValue
-        {
+/**
+ * @brief Interface of single enum value
+ */
+/*! Maps of Enum Values to symbolic values */
+interface SPINNAKER_API_ABSTRACT IEnumEntry : virtual public IValue {
 
-        public:
-            /**
-            * Get numeric enum value
-            */
-            virtual int64_t GetValue() = 0;
+public:
+  /**
+   * Get numeric enum value
+   */
+  virtual int64_t GetValue() = 0;
 
-            /**
-            * Get symbolic enum value
-            */
-            virtual GenICam::gcstring GetSymbolic()const = 0;
+  /**
+   * Get symbolic enum value
+   */
+  virtual GenICam::gcstring GetSymbolic() const = 0;
 
-            /**
-            * Get double number associated with the entry
-            */
-            virtual double GetNumericValue() = 0;
+  /**
+   * Get double number associated with the entry
+   */
+  virtual double GetNumericValue() = 0;
 
-            /**
-            * Indicates if the corresponding EnumEntry is self clearing
-            */
-            virtual bool IsSelfClearing() = 0;
-        };
+  /**
+   * Indicates if the corresponding EnumEntry is self clearing
+   */
+  virtual bool IsSelfClearing() = 0;
+};
 
-        /*@}*/
-        /*@}*/
-    }
-}
+/*@}*/
+/*@}*/
+} // namespace GenApi
+} // namespace Spinnaker
 
 #ifdef _WIN32
-#pragma warning ( pop )
+#pragma warning(pop)
 #endif
 
 #endif // ifndef SPINNAKER_GENAPI_IENUMENTRY_H

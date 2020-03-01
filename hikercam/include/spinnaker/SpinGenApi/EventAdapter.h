@@ -18,65 +18,61 @@
 #ifndef SPINNAKER_GENAPI_EVENTADAPTER_H
 #define SPINNAKER_GENAPI_EVENTADAPTER_H
 
-#include "Types.h"
-#include "INodeMap.h"
 #include "EventPort.h"
+#include "INodeMap.h"
+#include "Types.h"
 
-namespace Spinnaker
-{
-    namespace GenApi
-    {
+namespace Spinnaker {
+namespace GenApi {
 
-        /**
-        *  @defgroup SpinnakerGenApiClasses Spinnaker GenApi Classes
-        */
-        /*@{*/
+/**
+ *  @defgroup SpinnakerGenApiClasses Spinnaker GenApi Classes
+ */
+/*@{*/
 
-        /**
-        *  @defgroup EventAdapter_h EventAdapter Class
-        */
-        /*@{*/
+/**
+ *  @defgroup EventAdapter_h EventAdapter Class
+ */
+/*@{*/
 
-        /**
-        * @brief Delivers Events to ports
-        */
-        class SPINNAKER_API CEventAdapter
-        {
+/**
+ * @brief Delivers Events to ports
+ */
+class SPINNAKER_API CEventAdapter {
 
-        public:
-            /**
-            * Constructor
-            */
-            CEventAdapter(INodeMap* pNodeMap = NULL);
+public:
+  /**
+   * Constructor
+   */
+  CEventAdapter(INodeMap *pNodeMap = NULL);
 
-            /**
-            * Destructor
-            */
-            virtual ~CEventAdapter();
+  /**
+   * Destructor
+   */
+  virtual ~CEventAdapter();
 
-            /**
-            * Attaches to a node map and retrieves the chunk ports
-            */
-            virtual void AttachNodeMap(INodeMap* pNodeMap);
+  /**
+   * Attaches to a node map and retrieves the chunk ports
+   */
+  virtual void AttachNodeMap(INodeMap *pNodeMap);
 
-            /**
-            * Detaches from the node emap
-            */
-            virtual void DetachNodeMap();
+  /**
+   * Detaches from the node emap
+   */
+  virtual void DetachNodeMap();
 
-            /**
-            * Deliver message
-            */
-            virtual void DeliverMessage(const uint8_t msg[], uint32_t numBytes) = 0;
+  /**
+   * Deliver message
+   */
+  virtual void DeliverMessage(const uint8_t msg[], uint32_t numBytes) = 0;
 
-        protected:
+protected:
+  void *m_pEventAdapter;
+};
 
-            void* m_pEventAdapter;
-        };
-
-        /*@}*/
-        /*@}*/
-    }
-}
+/*@}*/
+/*@}*/
+} // namespace GenApi
+} // namespace Spinnaker
 
 #endif // SPINNAKER_GENAPI_EVENTADAPTER_H

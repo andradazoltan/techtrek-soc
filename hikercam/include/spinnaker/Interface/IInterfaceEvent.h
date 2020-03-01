@@ -18,25 +18,24 @@
 #ifndef PGR_SPINNAKER_IINTERFACEVENT_H
 #define PGR_SPINNAKER_IINTERFACEVENT_H
 
-#include "Event.h"
 #include "ArrivalEvent.h"
+#include "Event.h"
 #include "RemovalEvent.h"
 #include "SpinnakerPlatform.h"
 
-namespace Spinnaker
-{
-    class SPINNAKER_API IInterfaceEvent : public virtual IArrivalEvent, public virtual IRemovalEvent
-    {
-    public:
-        virtual ~IInterfaceEvent() {};
-        virtual void OnDeviceArrival(uint64_t serialNumber) = 0;
-        virtual void OnDeviceRemoval(uint64_t serialNumber) = 0;
+namespace Spinnaker {
+class SPINNAKER_API IInterfaceEvent : public virtual IArrivalEvent,
+                                      public virtual IRemovalEvent {
+public:
+  virtual ~IInterfaceEvent(){};
+  virtual void OnDeviceArrival(uint64_t serialNumber) = 0;
+  virtual void OnDeviceRemoval(uint64_t serialNumber) = 0;
 
-    protected:
-        IInterfaceEvent() {};
-        IInterfaceEvent(const IInterfaceEvent&) {};
-        IInterfaceEvent& operator=(const IInterfaceEvent&);
-    };
-}
+protected:
+  IInterfaceEvent(){};
+  IInterfaceEvent(const IInterfaceEvent &){};
+  IInterfaceEvent &operator=(const IInterfaceEvent &);
+};
+} // namespace Spinnaker
 
 #endif /* PGR_SPINNAKER_IINTERFACEVENT_H */

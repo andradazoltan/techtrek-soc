@@ -14,7 +14,7 @@
 // SUFFERED BY LICENSEE AS A RESULT OF USING, MODIFYING OR DISTRIBUTING
 // THIS SOFTWARE OR ITS DERIVATIVES.
 //=============================================================================
-   
+
 /* Auto-generated file. Do not modify. */
 
 #include "QuickSpinC.h"
@@ -22,54 +22,53 @@
 #ifndef FLIR_SPINNAKERC_TLINTERFACE_H
 #define FLIR_SPINNAKERC_TLINTERFACE_H
 
-/**	
-* @defgroup TLInterfaceC_h TLInterface Structures
-* @ingroup CQuickSpin
-*/
+/**
+ * @defgroup TLInterfaceC_h TLInterface Structures
+ * @ingroup CQuickSpin
+ */
 /*@{*/
 
-typedef struct _quickSpinTLInterface
-{
-	quickSpinStringNode InterfaceID;
-	quickSpinStringNode InterfaceDisplayName;
-	quickSpinStringNode InterfaceType;
-	quickSpinIntegerNode GevInterfaceGateway;
-	quickSpinIntegerNode GevInterfaceMACAddress;
-	quickSpinIntegerNode GevInterfaceIPAddress;
-	quickSpinIntegerNode GevInterfaceSubnetMask;
-	quickSpinIntegerNode GevInterfaceTransmitLinkSpeed;
-	quickSpinIntegerNode GevInterfaceReceiveLinkSpeed;
-	quickSpinIntegerNode GevInterfaceMTU;
-	quickSpinEnumerationNode POEStatus;
-	quickSpinEnumerationNode FilterDriverStatus;
-	quickSpinIntegerNode GevActionDeviceKey;
-	quickSpinIntegerNode GevActionGroupKey;
-	quickSpinIntegerNode GevActionGroupMask;
-	quickSpinIntegerNode GevActionTime;
-	quickSpinCommandNode ActionCommand;
-	quickSpinStringNode DeviceUnlock;
-	quickSpinCommandNode DeviceUpdateList;
-	quickSpinIntegerNode DeviceCount;
-	quickSpinIntegerNode DeviceSelector;
-	quickSpinStringNode DeviceID;
-	quickSpinStringNode DeviceVendorName;
-	quickSpinStringNode DeviceModelName;
-	quickSpinEnumerationNode DeviceAccessStatus;
-	quickSpinIntegerNode GevDeviceIPAddress;
-	quickSpinIntegerNode GevDeviceSubnetMask;
-	quickSpinIntegerNode GevDeviceMACAddress;
-	quickSpinCommandNode AutoForceIP;
-	quickSpinIntegerNode IncompatibleDeviceCount;
-	quickSpinIntegerNode IncompatibleDeviceSelector;
-	quickSpinStringNode IncompatibleDeviceID;
-	quickSpinStringNode IncompatibleDeviceVendorName;
-	quickSpinStringNode IncompatibleDeviceModelName;
-	quickSpinIntegerNode IncompatibleGevDeviceIPAddress;
-	quickSpinIntegerNode IncompatibleGevDeviceSubnetMask;
-	quickSpinIntegerNode IncompatibleGevDeviceMACAddress;
-	quickSpinStringNode HostAdapterName;
-	quickSpinStringNode HostAdapterVendor;
-	quickSpinStringNode HostAdapterDriverVersion;
+typedef struct _quickSpinTLInterface {
+  quickSpinStringNode InterfaceID;
+  quickSpinStringNode InterfaceDisplayName;
+  quickSpinStringNode InterfaceType;
+  quickSpinIntegerNode GevInterfaceGateway;
+  quickSpinIntegerNode GevInterfaceMACAddress;
+  quickSpinIntegerNode GevInterfaceIPAddress;
+  quickSpinIntegerNode GevInterfaceSubnetMask;
+  quickSpinIntegerNode GevInterfaceTransmitLinkSpeed;
+  quickSpinIntegerNode GevInterfaceReceiveLinkSpeed;
+  quickSpinIntegerNode GevInterfaceMTU;
+  quickSpinEnumerationNode POEStatus;
+  quickSpinEnumerationNode FilterDriverStatus;
+  quickSpinIntegerNode GevActionDeviceKey;
+  quickSpinIntegerNode GevActionGroupKey;
+  quickSpinIntegerNode GevActionGroupMask;
+  quickSpinIntegerNode GevActionTime;
+  quickSpinCommandNode ActionCommand;
+  quickSpinStringNode DeviceUnlock;
+  quickSpinCommandNode DeviceUpdateList;
+  quickSpinIntegerNode DeviceCount;
+  quickSpinIntegerNode DeviceSelector;
+  quickSpinStringNode DeviceID;
+  quickSpinStringNode DeviceVendorName;
+  quickSpinStringNode DeviceModelName;
+  quickSpinEnumerationNode DeviceAccessStatus;
+  quickSpinIntegerNode GevDeviceIPAddress;
+  quickSpinIntegerNode GevDeviceSubnetMask;
+  quickSpinIntegerNode GevDeviceMACAddress;
+  quickSpinCommandNode AutoForceIP;
+  quickSpinIntegerNode IncompatibleDeviceCount;
+  quickSpinIntegerNode IncompatibleDeviceSelector;
+  quickSpinStringNode IncompatibleDeviceID;
+  quickSpinStringNode IncompatibleDeviceVendorName;
+  quickSpinStringNode IncompatibleDeviceModelName;
+  quickSpinIntegerNode IncompatibleGevDeviceIPAddress;
+  quickSpinIntegerNode IncompatibleGevDeviceSubnetMask;
+  quickSpinIntegerNode IncompatibleGevDeviceMACAddress;
+  quickSpinStringNode HostAdapterName;
+  quickSpinStringNode HostAdapterVendor;
+  quickSpinStringNode HostAdapterDriverVersion;
 } quickSpinTLInterface;
 
 /*@}*/

@@ -20,77 +20,75 @@
 
 #include "SpinnakerPlatform.h"
 
-namespace Spinnaker
-{
-    /**
-    *  @defgroup SpinnakerClasses Spinnaker Classes
-    */
-    /*@{*/
+namespace Spinnaker {
+/**
+ *  @defgroup SpinnakerClasses Spinnaker Classes
+ */
+/*@{*/
 
-    /**
-    *  @defgroup BasePtr_h BasePtr Class
-    */
-    /*@{*/
+/**
+ *  @defgroup BasePtr_h BasePtr Class
+ */
+/*@{*/
 
-    /**
-    * @brief The base class of the SystemPtr, CameraPtr, InterfacePtr, ImagePtr and LoggingEventDataPtr objects.
-    */
-    template<class T, class B = T >
-    class SPINNAKER_API BasePtr
-    {
-    public:
-        //! Default constructor.
-        BasePtr(void) throw();
+/**
+ * @brief The base class of the SystemPtr, CameraPtr, InterfacePtr, ImagePtr and
+ * LoggingEventDataPtr objects.
+ */
+template <class T, class B = T> class SPINNAKER_API BasePtr {
+public:
+  //! Default constructor.
+  BasePtr(void) throw();
 
-        virtual ~BasePtr(void);
+  virtual ~BasePtr(void);
 
-        //! Copy constructor
-        BasePtr(const BasePtr& other) throw();
+  //! Copy constructor
+  BasePtr(const BasePtr &other) throw();
 
-        //! Assign INode Pointer
-        virtual BasePtr& operator=(const BasePtr& rhs);
+  //! Assign INode Pointer
+  virtual BasePtr &operator=(const BasePtr &rhs);
 
-        virtual BasePtr& operator=(const int nMustBeNull);
+  virtual BasePtr &operator=(const int nMustBeNull);
 
-        virtual BasePtr& operator=(const long nMustBeNull);
+  virtual BasePtr &operator=(const long nMustBeNull);
 
-        virtual BasePtr& operator=(const std::nullptr_t nullPtr);
+  virtual BasePtr &operator=(const std::nullptr_t nullPtr);
 
-        //! Dereferencing
-        virtual operator T*(void) const;
+  //! Dereferencing
+  virtual operator T *(void)const;
 
-        //! Dereferencing
-        virtual T* operator->(void) const;
+  //! Dereferencing
+  virtual T *operator->(void)const;
 
-        //! True if the pointer is valid
-        virtual bool IsValid() const throw();
+  //! True if the pointer is valid
+  virtual bool IsValid() const throw();
 
-        //! True if the pointer is valid
-        virtual operator bool(void) const throw();
+  //! True if the pointer is valid
+  virtual operator bool(void) const throw();
 
-        //! Pointer equal
-        virtual bool operator==(const BasePtr &rT) const;
+  //! Pointer equal
+  virtual bool operator==(const BasePtr &rT) const;
 
-        //! Pointer equal
-        virtual bool operator==(std::nullptr_t) const;
+  //! Pointer equal
+  virtual bool operator==(std::nullptr_t) const;
 
-        //! Pointer equal
-        virtual bool operator==(int nMustBeNull) const;
+  //! Pointer equal
+  virtual bool operator==(int nMustBeNull) const;
 
-        //! Pointer equal
-        virtual bool operator==(long nMustBeNull) const;
+  //! Pointer equal
+  virtual bool operator==(long nMustBeNull) const;
 
-        //! get()
-        virtual T* get() const;
+  //! get()
+  virtual T *get() const;
 
-    protected:
-        struct PointerData;
-        //! Underlying raw pointer.
-        PointerData* m_pT;
-    };
+protected:
+  struct PointerData;
+  //! Underlying raw pointer.
+  PointerData *m_pT;
+};
 
-    /** @}*/
+/** @}*/
 
-    /** @}*/
-}
-#endif //FLIR_SPINNAKER_BASE_PTR_H
+/** @}*/
+} // namespace Spinnaker
+#endif // FLIR_SPINNAKER_BASE_PTR_H

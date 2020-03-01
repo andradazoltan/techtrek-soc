@@ -14,7 +14,7 @@
 // SUFFERED BY LICENSEE AS A RESULT OF USING, MODIFYING OR DISTRIBUTING
 // THIS SOFTWARE OR ITS DERIVATIVES.
 //=============================================================================
-   
+
 /* Auto-generated file. Do not modify. */
 
 #include "QuickSpinC.h"
@@ -22,37 +22,36 @@
 #ifndef FLIR_SPINNAKERC_TLSTREAM_H
 #define FLIR_SPINNAKERC_TLSTREAM_H
 
-/**	
-* @defgroup TLStreamC_h TLStream Structures
-* @ingroup CQuickSpin
-*/
+/**
+ * @defgroup TLStreamC_h TLStream Structures
+ * @ingroup CQuickSpin
+ */
 /*@{*/
 
-typedef struct _quickSpinTLStream
-{
-	quickSpinStringNode StreamID;
-	quickSpinEnumerationNode StreamType;
-	quickSpinIntegerNode StreamTotalBufferCount;
-	quickSpinIntegerNode StreamDefaultBufferCount;
-	quickSpinIntegerNode StreamDefaultBufferCountMax;
-	quickSpinEnumerationNode StreamDefaultBufferCountMode;
-	quickSpinIntegerNode StreamBufferCountManual;
-	quickSpinIntegerNode StreamBufferCountResult;
-	quickSpinIntegerNode StreamBufferCountMax;
-	quickSpinEnumerationNode StreamBufferCountMode;
-	quickSpinEnumerationNode StreamBufferHandlingMode;
-	quickSpinBooleanNode StreamCRCCheckEnable;
-	quickSpinBooleanNode GevPacketResendMode;
-	quickSpinIntegerNode GevMaximumNumberResendRequests;
-	quickSpinIntegerNode GevPacketResendTimeout;
-	quickSpinIntegerNode GevMaximumNumberResendBuffers;
-	quickSpinIntegerNode GevTotalPacketCount;
-	quickSpinIntegerNode GevFailedPacketCount;
-	quickSpinIntegerNode GevResendPacketCount;
-	quickSpinIntegerNode StreamFailedBufferCount;
-	quickSpinIntegerNode StreamBufferUnderrunCount;
-	quickSpinIntegerNode GevResendRequestCount;
-	quickSpinIntegerNode StreamBlockTransferSize;
+typedef struct _quickSpinTLStream {
+  quickSpinStringNode StreamID;
+  quickSpinEnumerationNode StreamType;
+  quickSpinIntegerNode StreamTotalBufferCount;
+  quickSpinIntegerNode StreamDefaultBufferCount;
+  quickSpinIntegerNode StreamDefaultBufferCountMax;
+  quickSpinEnumerationNode StreamDefaultBufferCountMode;
+  quickSpinIntegerNode StreamBufferCountManual;
+  quickSpinIntegerNode StreamBufferCountResult;
+  quickSpinIntegerNode StreamBufferCountMax;
+  quickSpinEnumerationNode StreamBufferCountMode;
+  quickSpinEnumerationNode StreamBufferHandlingMode;
+  quickSpinBooleanNode StreamCRCCheckEnable;
+  quickSpinBooleanNode GevPacketResendMode;
+  quickSpinIntegerNode GevMaximumNumberResendRequests;
+  quickSpinIntegerNode GevPacketResendTimeout;
+  quickSpinIntegerNode GevMaximumNumberResendBuffers;
+  quickSpinIntegerNode GevTotalPacketCount;
+  quickSpinIntegerNode GevFailedPacketCount;
+  quickSpinIntegerNode GevResendPacketCount;
+  quickSpinIntegerNode StreamFailedBufferCount;
+  quickSpinIntegerNode StreamBufferUnderrunCount;
+  quickSpinIntegerNode GevResendRequestCount;
+  quickSpinIntegerNode StreamBlockTransferSize;
 } quickSpinTLStream;
 
 /*@}*/

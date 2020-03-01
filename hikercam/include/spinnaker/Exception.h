@@ -18,124 +18,117 @@
 #ifndef PGR_SPINNAKER_EXCEPTION_H
 #define PGR_SPINNAKER_EXCEPTION_H
 
-#include "SpinnakerPlatform.h"
 #include "SpinnakerDefs.h"
-#include <stdio.h>
+#include "SpinnakerPlatform.h"
 #include <exception>
+#include <stdio.h>
 
 #ifdef _WIN32
-#pragma warning (push)
-#pragma warning (disable : 4275) // non dll-interface structXXX used as base
+#pragma warning(push)
+#pragma warning(disable : 4275) // non dll-interface structXXX used as base
 #endif
 
-namespace Spinnaker
-{
-	/**
-	 *  @defgroup SpinnakerClasses Spinnaker Classes
-	 */
+namespace Spinnaker {
+/**
+ *  @defgroup SpinnakerClasses Spinnaker Classes
+ */
 
-	/*@{*/
+/*@{*/
 
-	/**
-	 *  @defgroup Exception_h Exception Class
-	 */
+/**
+ *  @defgroup Exception_h Exception Class
+ */
 
-	/*@{*/
+/*@{*/
 
-    /**
-    * @brief The Exception object represents an error that is returned from the library.
-    *        Overloaded operators allow comparisons against other Exception objects.
-    */
+/**
+ * @brief The Exception object represents an error that is returned from the
+ * library. Overloaded operators allow comparisons against other Exception
+ * objects.
+ */
 
-    class SPINNAKER_API Exception : public virtual std::exception
-    {
+class SPINNAKER_API Exception : public virtual std::exception {
 
-    public:
+public:
+  /**
+   * Default constructor.
+   */
+  Exception();
 
-        /**
-         * Default constructor.
-         */
-        Exception();
+  /**
+   * Message constructor.
+   *
+   * @param line Line number where the exception is thrown
+   * @param fileName Name of the file called
+   * @param funcName Name of the function called
+   * @param buildDate Build date
+   * @param buildTime Build time
+   * @param errMsg A pointer to the exception message string
+   * @param err Error code
+   */
+  Exception(int line, const char *fileName, const char *funcName,
+            const char *buildDate, const char *buildTime, const char *errMsg,
+            Error err);
 
-		/**
-         * Message constructor.
-         *
-         * @param line Line number where the exception is thrown
-		 * @param fileName Name of the file called
-		 * @param funcName Name of the function called
-		 * @param buildDate Build date
-		 * @param buildTime Build time
-		 * @param errMsg A pointer to the exception message string
-		 * @param err Error code
-         */
-		Exception( int line,
-			const char * fileName,
-			const char * funcName,
-			const char * buildDate,
-			const char * buildTime,
-			const char * errMsg,
-			Error	err);
+  /**
+   * Copy constructor.
+   */
+  Exception(const Exception &except);
 
-        /**
-         * Copy constructor.
-         */
-        Exception( const Exception& except );
+  /**
+   * Default destructor.
+   */
+  virtual ~Exception() throw();
 
-        /**
-         * Default destructor.
-         */
-        virtual ~Exception() throw() ;
+  /**
+   * Assignment operator.
+   */
+  Exception &operator=(const Exception &except);
 
-		/**
-         * Assignment operator.
-         */
-		Exception&	operator=( const Exception& except );
+  /**
+   * Equality operator.
+   */
+  bool operator==(const Error err) const;
 
-		/**
-         * Equality operator.
-         */
-		bool operator==( const Error err) const;
+  /**
+   * Inequality operator.
+   */
+  bool operator!=(const Error err) const;
 
-		/**
-         * Inequality operator.
-         */
-		bool operator!=( const Error err) const;
+  /**
+   * virtual override for what().
+   * Gets the error code and error message.
+   */
+  virtual const char *what() const
+      throw(); // add throw() to avoid looser throw specifier error
 
-		/**
-         * virtual override for what().
-		 * Gets the error code and error message.
-         */
-		virtual const char * what() const throw (); //add throw() to avoid looser throw specifier error
+  /**
+   * Gets the error code and full error message including the line, file,
+   * function, build date, and time.
+   */
+  const char *GetFullErrorMessage() const;
 
-		/**
-         * Gets the error code and full error message including the line, file, function, build date, and time.
-         */
-		const char * GetFullErrorMessage() const;
+  /**
+   * Accessor Functions.
+   */
+  const char *GetErrorMessage() const;
+  const char *GetFileName() const;
+  const char *GetFunctionName() const;
+  const char *GetBuildDate() const;
+  const char *GetBuildTime() const;
+  int GetLineNumber() const;
+  Error GetError() const;
 
-		/**
-         * Accessor Functions.
-         */
-		const char *	GetErrorMessage() const;
-		const char *	GetFileName() const;
-		const char *	GetFunctionName() const;
-		const char *	GetBuildDate() const;
-		const char *	GetBuildTime() const;
-		int				GetLineNumber() const;
-		Error	GetError() const;
+protected:
+private:
+  struct ExceptionData;
+  ExceptionData *m_pImpl;
+};
 
+/*@}*/
 
-    protected:
-
-    private:
-
-		struct ExceptionData;
-        ExceptionData* m_pImpl;
-    };
-
-	/*@}*/
-
-	/*@}*/
-}
+/*@}*/
+} // namespace Spinnaker
 
 #ifdef _WIN32
 #pragma warning(pop)

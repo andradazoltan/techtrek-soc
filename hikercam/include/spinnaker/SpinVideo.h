@@ -18,139 +18,127 @@
 #ifndef FLIR_SPIN_VIDEO_H
 #define FLIR_SPIN_VIDEO_H
 
-#include "SpinnakerPlatform.h"
-#include "SpinVideoDefs.h"
 #include "ImagePtr.h"
+#include "SpinVideoDefs.h"
+#include "SpinnakerPlatform.h"
 
-namespace Spinnaker
-{
-    namespace Video
-    {
-        /**
-        *  @defgroup SpinnakerClasses Spinnaker Classes
-        */
-        /*@{*/
+namespace Spinnaker {
+namespace Video {
+/**
+ *  @defgroup SpinnakerClasses Spinnaker Classes
+ */
+/*@{*/
 
-        /**
-        *  @defgroup SpinVideo_h Spinnaker Video Class
-        */
-        /*@{*/
+/**
+ *  @defgroup SpinVideo_h Spinnaker Video Class
+ */
+/*@{*/
 
-        /**
-        * @brief Provides the functionality for the user to record images to an AVI/MP4 file.
-        */
+/**
+ * @brief Provides the functionality for the user to record images to an AVI/MP4
+ * file.
+ */
 
-        class SPINNAKER_API SpinVideo
-        {
-        public:
+class SPINNAKER_API SpinVideo {
+public:
+  /**
+   * Default constructor.
+   */
+  SpinVideo();
 
-            /**
-             * Default constructor.
-             */
-            SpinVideo();
+  /**
+   * Default destructor.
+   */
+  virtual ~SpinVideo();
 
-            /**
-             * Default destructor.
-             */
-            virtual ~SpinVideo();
+  /**
+   * Open an video file in preparation for writing Images to disk.
+   * The size of video files is limited to 2GB. The filenames are
+   * automatically generated using the filename specified.
+   *
+   * @param pFileName The filename of the video file.
+   * @param pOption Options to apply to the video file.
+   *
+   * @see Close()
+   *
+   */
+  virtual void Open(const char *pFileName, AVIOption &pOption);
 
-            /**
-             * Open an video file in preparation for writing Images to disk.
-             * The size of video files is limited to 2GB. The filenames are
-             * automatically generated using the filename specified.
-             *
-             * @param pFileName The filename of the video file.
-             * @param pOption Options to apply to the video file.
-             *
-             * @see Close()
-             *
-             */
-            virtual void Open(
-                const char* pFileName,
-                AVIOption &  pOption);
+  /**
+   * Open an MJPEG video file in preparation for writing Images to disk.
+   * The size of video files is limited to 2GB. The filenames are
+   * automatically generated using the filename specified.
+   *
+   * @param pFileName The filename of the video file.
+   * @param pOption MJPEG options to apply to the video file.
+   *
+   * @see Close()
+   * @see MJPGOption
+   *
+   */
+  virtual void Open(const char *pFileName, MJPGOption &pOption);
 
-            /**
-             * Open an MJPEG video file in preparation for writing Images to disk.
-             * The size of video files is limited to 2GB. The filenames are
-             * automatically generated using the filename specified.
-             *
-             * @param pFileName The filename of the video file.
-             * @param pOption MJPEG options to apply to the video file.
-             *
-             * @see Close()
-             * @see MJPGOption
-             *
-             */
-            virtual void Open(
-                const char* pFileName,
-                MJPGOption &  pOption);
+  /**
+   * Open an H264 MP4 video file in preparation for writing Images to disk.
+   * The size of MP4 files is limited to 2GB. The filenames are
+   * automatically generated using the filename specified.
+   *
+   * @param pFileName The filename of the MP4 video file.
+   * @param pOption H264 options to apply to the MP4 video file.
+   *
+   * @see Close()
+   * @see H264Option
+   *
+   */
+  virtual void Open(const char *pFileName, H264Option &pOption);
 
+  /**
+   * Append an image to the video file.
+   * When using the H264 encoder, several images are required to be appended
+   * before the encoder is able to output the first encoded frame.
+   *
+   * @param pImage The image to append.
+   *
+   */
+  virtual void Append(ImagePtr pImage);
 
-            /**
-            * Open an H264 MP4 video file in preparation for writing Images to disk.
-            * The size of MP4 files is limited to 2GB. The filenames are
-            * automatically generated using the filename specified.
-            *
-            * @param pFileName The filename of the MP4 video file.
-            * @param pOption H264 options to apply to the MP4 video file.
-            *
-            * @see Close()
-            * @see H264Option
-            *
-            */
-            virtual void Open(
-                const char* pFileName,
-                H264Option &  pOption);
+  /**
+   * Close the video file.
+   * This function will throw an exception when the H264 encoder was unable
+   * to output any encoded frames, in which case the output video should
+   * be considered invalid.
+   *
+   * @see Open()
+   * @see Append(ImagePtr pImage)
+   *
+   */
+  virtual void Close();
 
+  /**
+   * Set the maximum file size (in megabytes) of a AVI/MP4 file. A new video
+   * file is created automatically when file size limit is reached. Setting a
+   * maximum size of 0 indicates no limit on file size.
+   *
+   * @param size The maximum video file size in MB.
+   *
+   * @see Append(ImagePtr pImage)
+   *
+   */
+  virtual void SetMaximumFileSize(unsigned int size);
 
-            /**
-             * Append an image to the video file.
-             * When using the H264 encoder, several images are required to be appended
-             * before the encoder is able to output the first encoded frame.
-             *
-             * @param pImage The image to append.
-             *
-             */
-            virtual void Append(ImagePtr pImage);
+private:
+  SpinVideo(const SpinVideo &);
+  SpinVideo &operator=(const SpinVideo &);
 
-            /**
-             * Close the video file.
-             * This function will throw an exception when the H264 encoder was unable
-             * to output any encoded frames, in which case the output video should
-             * be considered invalid.
-             *
-             * @see Open()
-             * @see Append(ImagePtr pImage)
-             *
-             */
-            virtual void Close();
+  struct SpinVideoData; // Forward declaration
 
-            /**
-             * Set the maximum file size (in megabytes) of a AVI/MP4 file. A new video file
-             * is created automatically when file size limit is reached. Setting
-             * a maximum size of 0 indicates no limit on file size.
-             *
-             * @param size The maximum video file size in MB.
-             *
-             * @see Append(ImagePtr pImage)
-             *
-             */
-            virtual void SetMaximumFileSize(unsigned int size);
+  SpinVideoData *m_pSpinVideoData;
+};
 
-        private:
+/*@}*/
 
-            SpinVideo(const SpinVideo&);
-            SpinVideo& operator=(const SpinVideo&);
-
-            struct SpinVideoData; // Forward declaration
-
-            SpinVideoData* m_pSpinVideoData;
-        };
-
-        /*@}*/
-
-        /*@}*/
-    }
-}
+/*@}*/
+} // namespace Video
+} // namespace Spinnaker
 
 #endif // FLIR_SPIN_VIDEO_H

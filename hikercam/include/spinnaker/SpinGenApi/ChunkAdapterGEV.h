@@ -20,68 +20,65 @@
 
 #include "ChunkAdapter.h"
 
-namespace Spinnaker
-{
-    namespace GenApi
-    {
-        // Declaration of GigE Vision Chunk message trailer
+namespace Spinnaker {
+namespace GenApi {
+// Declaration of GigE Vision Chunk message trailer
 
-        // make sure everything is properly packed
-#   pragma pack(push, 1)
+// make sure everything is properly packed
+#pragma pack(push, 1)
 
-        /**
-        * @brief header of a GVCP request packet
-        */
-        typedef struct GVCP_CHUNK_TRAILER
-        {
-            uint32_t ChunkID;
-            uint32_t ChunkLength;
-        } GVCP_CHUNK_TRAILER;
+/**
+ * @brief header of a GVCP request packet
+ */
+typedef struct GVCP_CHUNK_TRAILER {
+  uint32_t ChunkID;
+  uint32_t ChunkLength;
+} GVCP_CHUNK_TRAILER;
 
-        // restore the previous packing
-#   pragma pack(pop)
+// restore the previous packing
+#pragma pack(pop)
 
-        /**
-        *  @defgroup SpinnakerGenApiClasses Spinnaker GenApi Classes
-        */
-        /*@{*/
+/**
+ *  @defgroup SpinnakerGenApiClasses Spinnaker GenApi Classes
+ */
+/*@{*/
 
-        /**
-        *  @defgroup ChunkAdapterGEV_h ChunkAdapterGEV Class
-        */
-        /*@{*/
+/**
+ *  @defgroup ChunkAdapterGEV_h ChunkAdapterGEV Class
+ */
+/*@{*/
 
-        /**
-        * @brief Connects a chunked DCAM buffer to a node map.
-        */
-        class SPINNAKER_API CChunkAdapterGEV : public  CChunkAdapter
-        {
+/**
+ * @brief Connects a chunked DCAM buffer to a node map.
+ */
+class SPINNAKER_API CChunkAdapterGEV : public CChunkAdapter {
 
-        public:
-            /**
-            * Constructor.
-            */
-            CChunkAdapterGEV(INodeMap* pNodeMap = NULL, int64_t MaxChunkCacheSize = -1);
+public:
+  /**
+   * Constructor.
+   */
+  CChunkAdapterGEV(INodeMap *pNodeMap = NULL, int64_t MaxChunkCacheSize = -1);
 
-            /**
-            * Destructor.
-            */
-            virtual ~CChunkAdapterGEV();
+  /**
+   * Destructor.
+   */
+  virtual ~CChunkAdapterGEV();
 
-          /**
-            * Checks if a buffer contains chunks in a known format.
-            */
-            virtual bool CheckBufferLayout(uint8_t *pBuffer, int64_t BufferLength);
+  /**
+   * Checks if a buffer contains chunks in a known format.
+   */
+  virtual bool CheckBufferLayout(uint8_t *pBuffer, int64_t BufferLength);
 
-          /**
-            * Attaches a buffer to the matching ChunkPort.
-            */
-            virtual void AttachBuffer(uint8_t *pBuffer, int64_t BufferLength, AttachStatistics_t *pAttachStatistics = NULL);
-        };
+  /**
+   * Attaches a buffer to the matching ChunkPort.
+   */
+  virtual void AttachBuffer(uint8_t *pBuffer, int64_t BufferLength,
+                            AttachStatistics_t *pAttachStatistics = NULL);
+};
 
-        /*@}*/
-        /*@}*/
-    }
-}
+/*@}*/
+/*@}*/
+} // namespace GenApi
+} // namespace Spinnaker
 
 #endif // SPINNAKER_GENAPI_CHUNKADAPTERGEV_H

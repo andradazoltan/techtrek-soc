@@ -20,54 +20,52 @@
 
 #include "Interface/IRemovalEvent.h"
 
-namespace Spinnaker
-{
-	/**
-	 * @defgroup SpinnakerEventClasses Spinnaker Event Classes
-	 */
+namespace Spinnaker {
+/**
+ * @defgroup SpinnakerEventClasses Spinnaker Event Classes
+ */
 
-	/*@{*/
+/*@{*/
 
-	/**
-	 *  @defgroup RemovalEvent_h RemovalEvent Class
-	 */
+/**
+ *  @defgroup RemovalEvent_h RemovalEvent Class
+ */
 
-	/*@{*/
+/*@{*/
 
-    /**
-    * @brief An event handler for capturing the device removal event.
-    */
+/**
+ * @brief An event handler for capturing the device removal event.
+ */
 
-	class SPINNAKER_API RemovalEvent : public IRemovalEvent
-	{
-	public:
-		/**
-		* Default Constructor
-		*/
-		RemovalEvent();
+class SPINNAKER_API RemovalEvent : public IRemovalEvent {
+public:
+  /**
+   * Default Constructor
+   */
+  RemovalEvent();
 
-		/**
-		* Virtual Destructor
-		*/
-		virtual ~RemovalEvent();
+  /**
+   * Virtual Destructor
+   */
+  virtual ~RemovalEvent();
 
-		/**
-		* Device removal event callback.
-		*
-		* @param serialNumber The serial number of the device removed
-		*/
-		virtual void OnDeviceRemoval(uint64_t serialNumber) = 0;
+  /**
+   * Device removal event callback.
+   *
+   * @param serialNumber The serial number of the device removed
+   */
+  virtual void OnDeviceRemoval(uint64_t serialNumber) = 0;
 
-	protected:
-		/**
-		* Assignment operator.
-		*/
-		RemovalEvent& operator=( const RemovalEvent& );
-	};
+protected:
+  /**
+   * Assignment operator.
+   */
+  RemovalEvent &operator=(const RemovalEvent &);
+};
 
-	/*@}*/
+/*@}*/
 
-	/*@}*/
-}
+/*@}*/
+} // namespace Spinnaker
 
 #endif // PGR_SPINNAKER_REMOVALEVENT_H

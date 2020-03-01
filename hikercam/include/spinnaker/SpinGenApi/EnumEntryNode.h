@@ -18,90 +18,87 @@
 #ifndef SPINNAKER_GENAPI_ENUMENTRYNODE_H
 #define SPINNAKER_GENAPI_ENUMENTRYNODE_H
 
-#include "SpinnakerPlatform.h"
-#include "Types.h"
 #include "Base.h"
 #include "GCString.h"
-#include "ISelector.h"
-#include "INode.h"
-#include "ValueNode.h"
 #include "IEnumEntry.h"
+#include "INode.h"
+#include "ISelector.h"
+#include "SpinnakerPlatform.h"
+#include "Types.h"
+#include "ValueNode.h"
 
 #ifdef _WIN32
-#pragma warning ( push )
-#pragma warning( disable : 4250 ) // C4250 - 'class1' : inherits 'class2::member' via dominance
-#pragma warning ( disable : 4251 ) // XXX needs to have dll-interface to be used by clients of class YYY
-#pragma warning( disable: 4275 ) // non dll-interface structXXX used as base
+#pragma warning(push)
+#pragma warning(disable : 4250) // C4250 - 'class1' : inherits 'class2::member'
+                                // via dominance
+#pragma warning(disable : 4251) // XXX needs to have dll-interface to be used by
+                                // clients of class YYY
+#pragma warning(disable : 4275) // non dll-interface structXXX used as base
 #endif
 
-namespace Spinnaker
-{
-    namespace GenApi
-    {
-        /**
-        *  @defgroup SpinnakerGenApiClasses Spinnaker GenApi Classes
-        */
-        /*@{*/
-        
-        /**
-        *  @defgroup EnumEntryNode_h EnumEntryNode Class
-        */
-        /*@{*/
+namespace Spinnaker {
+namespace GenApi {
+/**
+ *  @defgroup SpinnakerGenApiClasses Spinnaker GenApi Classes
+ */
+/*@{*/
 
-        /**
-        * @brief Interface for string properties
-        */
-        class SPINNAKER_API EnumEntryNode : virtual public IEnumEntry, virtual public ValueNode
-        {
-        public:
-            struct NodeImpl;
-            EnumEntryNode();
+/**
+ *  @defgroup EnumEntryNode_h EnumEntryNode Class
+ */
+/*@{*/
 
-            EnumEntryNode(std::shared_ptr<Node::NodeImpl> pEnumEntry);
+/**
+ * @brief Interface for string properties
+ */
+class SPINNAKER_API EnumEntryNode : virtual public IEnumEntry,
+                                    virtual public ValueNode {
+public:
+  struct NodeImpl;
+  EnumEntryNode();
 
-            virtual ~EnumEntryNode();
+  EnumEntryNode(std::shared_ptr<Node::NodeImpl> pEnumEntry);
 
-            /**
-            * Get numeric enum value
-            */
-            virtual int64_t GetValue();
+  virtual ~EnumEntryNode();
 
-            /**
-            * Get symbolic enum value
-            */
-            virtual GenICam::gcstring GetSymbolic()const;
+  /**
+   * Get numeric enum value
+   */
+  virtual int64_t GetValue();
 
-            /**
-            * Get double number associated with the entry
-            */
-            virtual double GetNumericValue();
+  /**
+   * Get symbolic enum value
+   */
+  virtual GenICam::gcstring GetSymbolic() const;
 
-            /**
-            * Indicates if the corresponding EnumEntry is self clearing
-            */
-            virtual bool IsSelfClearing();
+  /**
+   * Get double number associated with the entry
+   */
+  virtual double GetNumericValue();
 
-            /**
-            * overload SetReference for EnumEntry
-            */
-            virtual void SetReference(INode* pBase);
+  /**
+   * Indicates if the corresponding EnumEntry is self clearing
+   */
+  virtual bool IsSelfClearing();
 
+  /**
+   * overload SetReference for EnumEntry
+   */
+  virtual void SetReference(INode *pBase);
 
-        private:
+private:
+  std::shared_ptr<Node::NodeImpl> m_pEnumEntry;
+};
 
-            std::shared_ptr<Node::NodeImpl> m_pEnumEntry;
+typedef EnumEntryNode CEnumEntryRef;
 
-        };
-
-        typedef EnumEntryNode CEnumEntryRef;
-
-        /*@}*/
-        /*@}*/
-    }
-}
+/*@}*/
+/*@}*/
+} // namespace GenApi
+} // namespace Spinnaker
 
 #ifdef _WIN32
-#pragma warning ( pop )
+#pragma warning(pop)
 #endif
 
 #endif // SPINNAKER_GENAPI_ENUMENTRYNODE_H

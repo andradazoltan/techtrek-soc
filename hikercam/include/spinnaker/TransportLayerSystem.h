@@ -14,69 +14,68 @@
 // SUFFERED BY LICENSEE AS A RESULT OF USING, MODIFYING OR DISTRIBUTING
 // THIS SOFTWARE OR ITS DERIVATIVES.
 //=============================================================================
-   
+
 /* Auto-generated file. Do not modify. */
 
 #ifndef FLIR_SPINNAKER_TRANSPORTLAYERSYSTEM_H
 #define FLIR_SPINNAKER_TRANSPORTLAYERSYSTEM_H
 
-#include "SpinnakerPlatform.h"
 #include "SpinGenApi/SpinnakerGenApi.h"
+#include "SpinnakerPlatform.h"
 #include "TransportLayerDefs.h"
 #include <string>
 
-namespace Spinnaker
-{
-	/**
-	* @defgroup SpinnakerQuickSpinClasses Spinnaker QuickSpin Classes
-	*/
-	/*@{*/
+namespace Spinnaker {
+/**
+ * @defgroup SpinnakerQuickSpinClasses Spinnaker QuickSpin Classes
+ */
+/*@{*/
 
-	/**
-	* @defgroup TransportLayerSystem_h TransportLayerSystem Class
-	*/
-	/*@{*/
+/**
+ * @defgroup TransportLayerSystem_h TransportLayerSystem Class
+ */
+/*@{*/
 
-	/**
-	*@brief Part of the QuickSpin API to provide access to camera information without having to first initialize the camera.
-	*/
+/**
+ *@brief Part of the QuickSpin API to provide access to camera information
+ *without having to first initialize the camera.
+ */
 
-	class SPINNAKER_API TransportLayerSystem
-	{
-	public:
-		TransportLayerSystem(GenApi::INodeMap *nodeMapTLDevice);
-		~TransportLayerSystem();
+class SPINNAKER_API TransportLayerSystem {
+public:
+  TransportLayerSystem(GenApi::INodeMap *nodeMapTLDevice);
+  ~TransportLayerSystem();
 
-	protected:
-		TransportLayerSystem();
+protected:
+  TransportLayerSystem();
 
-	private:
-		TransportLayerSystem(const TransportLayerSystem&);
-		TransportLayerSystem& operator=(const TransportLayerSystem&);
-		TransportLayerSystem& operator=(GenApi::INodeMap &);
+private:
+  TransportLayerSystem(const TransportLayerSystem &);
+  TransportLayerSystem &operator=(const TransportLayerSystem &);
+  TransportLayerSystem &operator=(GenApi::INodeMap &);
 
-	public:
-		/**
-		 * Description: Enables or disables enumeration of GEV Interfaces.
-		 * Visibility: Expert
-		 */
-		GenApi::IBoolean &EnumerateGEVInterfaces;
+public:
+  /**
+   * Description: Enables or disables enumeration of GEV Interfaces.
+   * Visibility: Expert
+   */
+  GenApi::IBoolean &EnumerateGEVInterfaces;
 
-		/**
-		 * Description: Automatically forces any cameras on the system to an IP Address on the same subnet as the interfaces they are connected to.
-		 * Visibility: Expert
-		 */
-		GenApi::ICommand &AutoForceIP;
+  /**
+   * Description: Automatically forces any cameras on the system to an IP
+   * Address on the same subnet as the interfaces they are connected to.
+   * Visibility: Expert
+   */
+  GenApi::ICommand &AutoForceIP;
 
+protected:
+  friend class System;
+  friend class ISystem;
+  friend class SystemPtrInternal;
+};
+/*@}*/
 
-	protected:
-		friend class System;
-		friend class ISystem;
-		friend class SystemPtrInternal;
-	};
-	/*@}*/
+/*@}*/
 
-	/*@}*/
-
-}
+} // namespace Spinnaker
 #endif // FLIR_SPINNAKER_TRANSPORTLAYERSYSTEM_H

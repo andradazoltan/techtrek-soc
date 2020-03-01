@@ -14,298 +14,300 @@
 // SUFFERED BY LICENSEE AS A RESULT OF USING, MODIFYING OR DISTRIBUTING
 // THIS SOFTWARE OR ITS DERIVATIVES.
 //=============================================================================
-   
+
 /* Auto-generated file. Do not modify. */
 
 #ifndef FLIR_SPINNAKER_TRANSPORTLAYERINTERFACE_H
 #define FLIR_SPINNAKER_TRANSPORTLAYERINTERFACE_H
 
-#include "SpinnakerPlatform.h"
 #include "SpinGenApi/SpinnakerGenApi.h"
+#include "SpinnakerPlatform.h"
 #include "TransportLayerDefs.h"
 #include <string>
 
-namespace Spinnaker
-{
-	/**
-	* @defgroup SpinnakerQuickSpinClasses Spinnaker QuickSpin Classes
-	*/
-	/*@{*/
+namespace Spinnaker {
+/**
+ * @defgroup SpinnakerQuickSpinClasses Spinnaker QuickSpin Classes
+ */
+/*@{*/
 
-	/**
-	* @defgroup TransportLayerInterface_h TransportLayerInterface Class
-	*/
-	/*@{*/
+/**
+ * @defgroup TransportLayerInterface_h TransportLayerInterface Class
+ */
+/*@{*/
 
-	/**
-	*@brief Part of the QuickSpin API to provide access to camera information without having to first initialize the camera.
-	*/
+/**
+ *@brief Part of the QuickSpin API to provide access to camera information
+ *without having to first initialize the camera.
+ */
 
-	class SPINNAKER_API TransportLayerInterface
-	{
-	public:
-		TransportLayerInterface(GenApi::INodeMap *nodeMapTLDevice);
-		~TransportLayerInterface();
+class SPINNAKER_API TransportLayerInterface {
+public:
+  TransportLayerInterface(GenApi::INodeMap *nodeMapTLDevice);
+  ~TransportLayerInterface();
 
-	protected:
-		TransportLayerInterface();
+protected:
+  TransportLayerInterface();
 
-	private:
-		TransportLayerInterface(const TransportLayerInterface&);
-		TransportLayerInterface& operator=(const TransportLayerInterface&);
-		TransportLayerInterface& operator=(GenApi::INodeMap &);
+private:
+  TransportLayerInterface(const TransportLayerInterface &);
+  TransportLayerInterface &operator=(const TransportLayerInterface &);
+  TransportLayerInterface &operator=(GenApi::INodeMap &);
 
-	public:
-		/**
-		 * Description: Transport layer Producer wide unique identifier of the selected interface.
-		 * Visibility: Expert
-		 */
-		GenApi::IString &InterfaceID;
+public:
+  /**
+   * Description: Transport layer Producer wide unique identifier of the
+   * selected interface. Visibility: Expert
+   */
+  GenApi::IString &InterfaceID;
 
-		/**
-		 * Description: User readable name of the selected interface.
-		 * Visibility: Expert
-		 */
-		GenApi::IString &InterfaceDisplayName;
+  /**
+   * Description: User readable name of the selected interface.
+   * Visibility: Expert
+   */
+  GenApi::IString &InterfaceDisplayName;
 
-		/**
-		 * Description: Transport layer type of the interface.
-		 * Visibility: Expert
-		 */
-		GenApi::IString &InterfaceType;
+  /**
+   * Description: Transport layer type of the interface.
+   * Visibility: Expert
+   */
+  GenApi::IString &InterfaceType;
 
-		/**
-		 * Description: IP address of the selected gateway entry of this interface.
-		 * Visibility: Expert
-		 */
-		GenApi::IInteger &GevInterfaceGateway;
+  /**
+   * Description: IP address of the selected gateway entry of this interface.
+   * Visibility: Expert
+   */
+  GenApi::IInteger &GevInterfaceGateway;
 
-		/**
-		 * Description: 48-bit MAC address of this interface.
-		 * Visibility: Expert
-		 */
-		GenApi::IInteger &GevInterfaceMACAddress;
+  /**
+   * Description: 48-bit MAC address of this interface.
+   * Visibility: Expert
+   */
+  GenApi::IInteger &GevInterfaceMACAddress;
 
-		/**
-		 * Description: IP address of the selected subnet of this interface.
-		 * Visibility: Expert
-		 */
-		GenApi::IInteger &GevInterfaceIPAddress;
+  /**
+   * Description: IP address of the selected subnet of this interface.
+   * Visibility: Expert
+   */
+  GenApi::IInteger &GevInterfaceIPAddress;
 
-		/**
-		 * Description: Subnet mask of the selected subnet of this interface.
-		 * Visibility: Expert
-		 */
-		GenApi::IInteger &GevInterfaceSubnetMask;
+  /**
+   * Description: Subnet mask of the selected subnet of this interface.
+   * Visibility: Expert
+   */
+  GenApi::IInteger &GevInterfaceSubnetMask;
 
-		/**
-		 * Description: Transmit link speed of this interface in bits per second.
-		 * Visibility: Expert
-		 */
-		GenApi::IInteger &GevInterfaceTransmitLinkSpeed;
+  /**
+   * Description: Transmit link speed of this interface in bits per second.
+   * Visibility: Expert
+   */
+  GenApi::IInteger &GevInterfaceTransmitLinkSpeed;
 
-		/**
-		 * Description: Receive link speed of this interface in bits per second.
-		 * Visibility: Expert
-		 */
-		GenApi::IInteger &GevInterfaceReceiveLinkSpeed;
+  /**
+   * Description: Receive link speed of this interface in bits per second.
+   * Visibility: Expert
+   */
+  GenApi::IInteger &GevInterfaceReceiveLinkSpeed;
 
-		/**
-		 * Description: Maximum transmission unit of this interface.
-		 * Visibility: Expert
-		 */
-		GenApi::IInteger &GevInterfaceMTU;
+  /**
+   * Description: Maximum transmission unit of this interface.
+   * Visibility: Expert
+   */
+  GenApi::IInteger &GevInterfaceMTU;
 
-		/**
-		 * Description: Reports and controls the interface's power over Ethernet status.
-		 * Visibility: Expert
-		 */
-		GenApi::IEnumerationT<POEStatusEnum> &POEStatus;
+  /**
+   * Description: Reports and controls the interface's power over Ethernet
+   * status. Visibility: Expert
+   */
+  GenApi::IEnumerationT<POEStatusEnum> &POEStatus;
 
-		/**
-		 * Description: Reports whether FLIR Light Weight Filter Driver is enabled or not.
-		 * Visibility: Expert
-		 */
-		GenApi::IEnumerationT<FilterDriverStatusEnum> &FilterDriverStatus;
+  /**
+   * Description: Reports whether FLIR Light Weight Filter Driver is enabled or
+   * not. Visibility: Expert
+   */
+  GenApi::IEnumerationT<FilterDriverStatusEnum> &FilterDriverStatus;
 
-		/**
-		 * Description: Key to authorize the action for the device.
-		 * Visibility: Expert
-		 */
-		GenApi::IInteger &GevActionDeviceKey;
+  /**
+   * Description: Key to authorize the action for the device.
+   * Visibility: Expert
+   */
+  GenApi::IInteger &GevActionDeviceKey;
 
-		/**
-		 * Description: Provides the key that the device will use to validate the action on reception of the action protocol message.
-		 * Visibility: Expert
-		 */
-		GenApi::IInteger &GevActionGroupKey;
+  /**
+   * Description: Provides the key that the device will use to validate the
+   * action on reception of the action protocol message. Visibility: Expert
+   */
+  GenApi::IInteger &GevActionGroupKey;
 
-		/**
-		 * Description: Provides the mask that the device will use to validate the action on reception of the action protocol message.
-		 * Visibility: Expert
-		 */
-		GenApi::IInteger &GevActionGroupMask;
+  /**
+   * Description: Provides the mask that the device will use to validate the
+   * action on reception of the action protocol message. Visibility: Expert
+   */
+  GenApi::IInteger &GevActionGroupMask;
 
-		/**
-		 * Description: Provides the time in nanoseconds when the action is to be executed.
-		 * Visibility: Expert
-		 */
-		GenApi::IInteger &GevActionTime;
+  /**
+   * Description: Provides the time in nanoseconds when the action is to be
+   * executed. Visibility: Expert
+   */
+  GenApi::IInteger &GevActionTime;
 
-		/**
-		 * Description: Issues an Action Command to attached GEV devices on interface.
-		 * Visibility: Expert
-		 */
-		GenApi::ICommand &ActionCommand;
+  /**
+   * Description: Issues an Action Command to attached GEV devices on interface.
+   * Visibility: Expert
+   */
+  GenApi::ICommand &ActionCommand;
 
-		/**
-		 * Description: Unlocks devices for internal use.
-		 * Visibility: Expert
-		 */
-		GenApi::IString &DeviceUnlock;
+  /**
+   * Description: Unlocks devices for internal use.
+   * Visibility: Expert
+   */
+  GenApi::IString &DeviceUnlock;
 
-		/**
-		 * Description: Updates the internal device list.
-		 * Visibility: Expert
-		 */
-		GenApi::ICommand &DeviceUpdateList;
+  /**
+   * Description: Updates the internal device list.
+   * Visibility: Expert
+   */
+  GenApi::ICommand &DeviceUpdateList;
 
-		/**
-		 * Description: Number of compatible devices detected on current interface.
-		 * Visibility: Expert
-		 */
-		GenApi::IInteger &DeviceCount;
+  /**
+   * Description: Number of compatible devices detected on current interface.
+   * Visibility: Expert
+   */
+  GenApi::IInteger &DeviceCount;
 
-		/**
-		 * Description: Selector for the different devices on this interface. This value only changes on execution of "DeviceUpdateList". The selector is 0-based in order to match the index of the C interface.
-		 * Visibility: Expert
-		 */
-		GenApi::IInteger &DeviceSelector;
+  /**
+   * Description: Selector for the different devices on this interface. This
+   * value only changes on execution of "DeviceUpdateList". The selector is
+   * 0-based in order to match the index of the C interface. Visibility: Expert
+   */
+  GenApi::IInteger &DeviceSelector;
 
-		/**
-		 * Description: Interface wide unique identifier of the selected device. This value only changes on execution of "DeviceUpdateList".
-		 * Visibility: Expert
-		 */
-		GenApi::IString &DeviceID;
+  /**
+   * Description: Interface wide unique identifier of the selected device. This
+   * value only changes on execution of "DeviceUpdateList". Visibility: Expert
+   */
+  GenApi::IString &DeviceID;
 
-		/**
-		 * Description: Name of the device vendor. This value only changes on execution of "DeviceUpdateList".
-		 * Visibility: Expert
-		 */
-		GenApi::IString &DeviceVendorName;
+  /**
+   * Description: Name of the device vendor. This value only changes on
+   * execution of "DeviceUpdateList". Visibility: Expert
+   */
+  GenApi::IString &DeviceVendorName;
 
-		/**
-		 * Description: Name of the device model. This value only changes on execution of "DeviceUpdateList".
-		 * Visibility: Expert
-		 */
-		GenApi::IString &DeviceModelName;
+  /**
+   * Description: Name of the device model. This value only changes on execution
+   * of "DeviceUpdateList". Visibility: Expert
+   */
+  GenApi::IString &DeviceModelName;
 
-		/**
-		 * Description: Gives the device's access status at the moment of the last execution of "DeviceUpdateList". This value only changes on execution of "DeviceUpdateList".
-		 * Visibility: Expert
-		 */
-		GenApi::IEnumerationT<DeviceAccessStatusEnum> &DeviceAccessStatus;
+  /**
+   * Description: Gives the device's access status at the moment of the last
+   * execution of "DeviceUpdateList". This value only changes on execution of
+   * "DeviceUpdateList". Visibility: Expert
+   */
+  GenApi::IEnumerationT<DeviceAccessStatusEnum> &DeviceAccessStatus;
 
-		/**
-		 * Description: Current IP address of the GVCP interface of the selected remote device.
-		 * Visibility: Expert
-		 */
-		GenApi::IInteger &GevDeviceIPAddress;
+  /**
+   * Description: Current IP address of the GVCP interface of the selected
+   * remote device. Visibility: Expert
+   */
+  GenApi::IInteger &GevDeviceIPAddress;
 
-		/**
-		 * Description: Current subnet mask of the GVCP interface of the selected remote device.
-		 * Visibility: Expert
-		 */
-		GenApi::IInteger &GevDeviceSubnetMask;
+  /**
+   * Description: Current subnet mask of the GVCP interface of the selected
+   * remote device. Visibility: Expert
+   */
+  GenApi::IInteger &GevDeviceSubnetMask;
 
-		/**
-		 * Description: 48-bit MAC address of the GVCP interface of the selected remote device.
-		 * Visibility: Expert
-		 */
-		GenApi::IInteger &GevDeviceMACAddress;
+  /**
+   * Description: 48-bit MAC address of the GVCP interface of the selected
+   * remote device. Visibility: Expert
+   */
+  GenApi::IInteger &GevDeviceMACAddress;
 
-		/**
-		 * Description: Automatically forces any cameras on interface to an IP Address on the same subnet as the interface.
-		 * Visibility: Expert
-		 */
-		GenApi::ICommand &AutoForceIP;
+  /**
+   * Description: Automatically forces any cameras on interface to an IP Address
+   * on the same subnet as the interface. Visibility: Expert
+   */
+  GenApi::ICommand &AutoForceIP;
 
-		/**
-		 * Description: Number of incompatible devices detected on current interface.
-		 * Visibility: Expert
-		 */
-		GenApi::IInteger &IncompatibleDeviceCount;
+  /**
+   * Description: Number of incompatible devices detected on current interface.
+   * Visibility: Expert
+   */
+  GenApi::IInteger &IncompatibleDeviceCount;
 
-		/**
-		 * Description: Selector for the devices that are not compatible with Spinnaker on this interface. This value only changes on execution of "DeviceUpdateList". The selector is 0-based in order to match the index of the C interface.
-		 * Visibility: Expert
-		 */
-		GenApi::IInteger &IncompatibleDeviceSelector;
+  /**
+   * Description: Selector for the devices that are not compatible with
+   * Spinnaker on this interface. This value only changes on execution of
+   * "DeviceUpdateList". The selector is 0-based in order to match the index of
+   * the C interface. Visibility: Expert
+   */
+  GenApi::IInteger &IncompatibleDeviceSelector;
 
-		/**
-		 * Description: Interface wide unique identifier of the selected incompatible device. This value only changes on execution of "DeviceUpdateList".
-		 * Visibility: Expert
-		 */
-		GenApi::IString &IncompatibleDeviceID;
+  /**
+   * Description: Interface wide unique identifier of the selected incompatible
+   * device. This value only changes on execution of "DeviceUpdateList".
+   * Visibility: Expert
+   */
+  GenApi::IString &IncompatibleDeviceID;
 
-		/**
-		 * Description: Name of the incompatible device vendor. This value only changes on execution of "DeviceUpdateList".
-		 * Visibility: Expert
-		 */
-		GenApi::IString &IncompatibleDeviceVendorName;
+  /**
+   * Description: Name of the incompatible device vendor. This value only
+   * changes on execution of "DeviceUpdateList". Visibility: Expert
+   */
+  GenApi::IString &IncompatibleDeviceVendorName;
 
-		/**
-		 * Description: Name of the incompatible device model. This value only changes on execution of "DeviceUpdateList".
-		 * Visibility: Expert
-		 */
-		GenApi::IString &IncompatibleDeviceModelName;
+  /**
+   * Description: Name of the incompatible device model. This value only changes
+   * on execution of "DeviceUpdateList". Visibility: Expert
+   */
+  GenApi::IString &IncompatibleDeviceModelName;
 
-		/**
-		 * Description: Current IP address of the GVCP interface of the selected remote incompatible device.
-		 * Visibility: Expert
-		 */
-		GenApi::IInteger &IncompatibleGevDeviceIPAddress;
+  /**
+   * Description: Current IP address of the GVCP interface of the selected
+   * remote incompatible device. Visibility: Expert
+   */
+  GenApi::IInteger &IncompatibleGevDeviceIPAddress;
 
-		/**
-		 * Description: Current subnet mask of the GVCP interface of the selected remote incompatible device.
-		 * Visibility: Expert
-		 */
-		GenApi::IInteger &IncompatibleGevDeviceSubnetMask;
+  /**
+   * Description: Current subnet mask of the GVCP interface of the selected
+   * remote incompatible device. Visibility: Expert
+   */
+  GenApi::IInteger &IncompatibleGevDeviceSubnetMask;
 
-		/**
-		 * Description: 48-bit MAC address of the GVCP interface of the selected remote incompatible device.
-		 * Visibility: Expert
-		 */
-		GenApi::IInteger &IncompatibleGevDeviceMACAddress;
+  /**
+   * Description: 48-bit MAC address of the GVCP interface of the selected
+   * remote incompatible device. Visibility: Expert
+   */
+  GenApi::IInteger &IncompatibleGevDeviceMACAddress;
 
-		/**
-		 * Description: User readable name of the interface's host adapter.
-		 * Visibility: Expert
-		 */
-		GenApi::IString &HostAdapterName;
+  /**
+   * Description: User readable name of the interface's host adapter.
+   * Visibility: Expert
+   */
+  GenApi::IString &HostAdapterName;
 
-		/**
-		 * Description: User readable name of the host adapter's vendor.
-		 * Visibility: Expert
-		 */
-		GenApi::IString &HostAdapterVendor;
+  /**
+   * Description: User readable name of the host adapter's vendor.
+   * Visibility: Expert
+   */
+  GenApi::IString &HostAdapterVendor;
 
-		/**
-		 * Description: Driver version of the interface's host adapter.
-		 * Visibility: Expert
-		 */
-		GenApi::IString &HostAdapterDriverVersion;
+  /**
+   * Description: Driver version of the interface's host adapter.
+   * Visibility: Expert
+   */
+  GenApi::IString &HostAdapterDriverVersion;
 
+protected:
+  friend class Interface;
+  friend class IInterface;
+  friend class InterfaceInternal;
+};
+/*@}*/
 
-	protected:
-		friend class Interface;
-		friend class IInterface;
-		friend class InterfaceInternal;
+/*@}*/
 
-	};
-	/*@}*/
-
-	/*@}*/
-
-}
+} // namespace Spinnaker
 #endif // FLIR_SPINNAKER_TRANSPORTLAYERINTERFACE_H

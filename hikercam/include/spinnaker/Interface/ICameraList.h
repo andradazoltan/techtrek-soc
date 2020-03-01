@@ -18,59 +18,57 @@
 #ifndef FLIR_SPINNAKER_ICAMERALIST_H
 #define FLIR_SPINNAKER_ICAMERALIST_H
 
-#include "SpinnakerPlatform.h"
-#include "SpinnakerDefs.h"
 #include "Camera.h"
 #include "CameraPtr.h"
+#include "SpinnakerDefs.h"
+#include "SpinnakerPlatform.h"
 
-namespace Spinnaker
-{
-    class CameraList;
-    class CameraPtr;
-    /**
-    *  @defgroup SpinnakerClasses Spinnaker Classes
-    */
+namespace Spinnaker {
+class CameraList;
+class CameraPtr;
+/**
+ *  @defgroup SpinnakerClasses Spinnaker Classes
+ */
 
-    /*@{*/
+/*@{*/
 
-    /**
-    *  @defgroup CameraList_h Camera List Class
-    */
+/**
+ *  @defgroup CameraList_h Camera List Class
+ */
 
-    /*@{*/
+/*@{*/
 
-    /**
-    * @brief Used to hold a list of camera objects.
-    */
-    class SPINNAKER_API ICameraList
-    {
-    public:
-        virtual ~ICameraList() {};
-        
-        virtual CameraPtr operator[](unsigned int index) = 0;
-        virtual unsigned int GetSize() const = 0;
-        virtual CameraPtr GetByIndex(unsigned int index) const = 0;
-        virtual CameraPtr GetBySerial(std::string serialNumber) const = 0;
-        virtual void Clear() = 0;
-        virtual void RemoveBySerial(std::string serialNumber) = 0;
-        virtual void RemoveByIndex(unsigned int index) = 0;
-        virtual void Append(CameraList & otherList) = 0;
+/**
+ * @brief Used to hold a list of camera objects.
+ */
+class SPINNAKER_API ICameraList {
+public:
+  virtual ~ICameraList(){};
 
-    protected:
-        friend class InterfaceImpl;
-        friend class CameraListImpl;
-        struct CameraListData; // Forward declaration
-        CameraListData* m_pCameraListData;
+  virtual CameraPtr operator[](unsigned int index) = 0;
+  virtual unsigned int GetSize() const = 0;
+  virtual CameraPtr GetByIndex(unsigned int index) const = 0;
+  virtual CameraPtr GetBySerial(std::string serialNumber) const = 0;
+  virtual void Clear() = 0;
+  virtual void RemoveBySerial(std::string serialNumber) = 0;
+  virtual void RemoveByIndex(unsigned int index) = 0;
+  virtual void Append(CameraList &otherList) = 0;
 
-        ICameraList() {};
-        ICameraList(const ICameraList &) {};
-        ICameraList& operator=(const ICameraList&);
-    };
-    
-    /*@}*/
+protected:
+  friend class InterfaceImpl;
+  friend class CameraListImpl;
+  struct CameraListData; // Forward declaration
+  CameraListData *m_pCameraListData;
 
-    /*@}*/
+  ICameraList(){};
+  ICameraList(const ICameraList &){};
+  ICameraList &operator=(const ICameraList &);
+};
 
-}
+/*@}*/
+
+/*@}*/
+
+} // namespace Spinnaker
 
 #endif

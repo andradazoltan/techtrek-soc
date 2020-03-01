@@ -10,9 +10,8 @@
 
 // A data type to hold a point/coordinate
 typedef struct {
-    int x, y;
+  int x, y;
 } Point;
-
 
 // Function Definitions
 void InitTouch(void);

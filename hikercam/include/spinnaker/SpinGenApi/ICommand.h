@@ -18,67 +18,66 @@
 #ifndef SPINNAKER_GENAPI_ICOMMAND_H
 #define SPINNAKER_GENAPI_ICOMMAND_H
 
+#include "IValue.h"
 #include "SpinnakerPlatform.h"
 #include "Types.h"
-#include "IValue.h"
 
 #ifdef _WIN32
-#pragma warning ( push )
-#pragma warning ( disable : 4251 ) // XXX needs to have dll-interface to be used by clients of class YYY
+#pragma warning(push)
+#pragma warning(disable : 4251) // XXX needs to have dll-interface to be used by
+                                // clients of class YYY
 #endif
 
-namespace Spinnaker
-{
-    namespace GenApi
-    {
-        /**
-        *  @defgroup SpinnakerGenApiInterfaces Spinnaker GenApi Interfaces
-        */
-        /*@{*/
+namespace Spinnaker {
+namespace GenApi {
+/**
+ *  @defgroup SpinnakerGenApiInterfaces Spinnaker GenApi Interfaces
+ */
+/*@{*/
 
-        /**
-        *  @defgroup ICommand_h ICommand Interface
-        */
-        /*@{*/
+/**
+ *  @defgroup ICommand_h ICommand Interface
+ */
+/*@{*/
 
-        //*************************************************************
-        // ICommand interface
-        //*************************************************************
+//*************************************************************
+// ICommand interface
+//*************************************************************
 
-        /**
-        * Interface for command like  properties
-        */
-        interface SPINNAKER_API_ABSTRACT ICommand : virtual public IValue
-        {
-        public:
-            /**
-            * Execute the command
-            *
-            * @param Verify Enables AccessMode and Range verification (default = true)
-            */
-            virtual void Execute(bool Verify = true) = 0;
+/**
+ * Interface for command like  properties
+ */
+interface SPINNAKER_API_ABSTRACT ICommand : virtual public IValue {
+public:
+  /**
+   * Execute the command
+   *
+   * @param Verify Enables AccessMode and Range verification (default = true)
+   */
+  virtual void Execute(bool Verify = true) = 0;
 
-            /**
-            * Execute the command
-            */
-            virtual void operator()() = 0;
+  /**
+   * Execute the command
+   */
+  virtual void operator()() = 0;
 
-            /**
-            * Query whether the command is executed
-            *
-            * @param Verify Enables Range verification (default = false). The AccessMode is always checked
-            * @return True if the Execute command has finished; false otherwise
-            */
-            virtual bool IsDone(bool Verify = true) = 0;
-        };
+  /**
+   * Query whether the command is executed
+   *
+   * @param Verify Enables Range verification (default = false). The AccessMode
+   * is always checked
+   * @return True if the Execute command has finished; false otherwise
+   */
+  virtual bool IsDone(bool Verify = true) = 0;
+};
 
-        /*@}*/
-        /*@}*/
-    }
-}
+/*@}*/
+/*@}*/
+} // namespace GenApi
+} // namespace Spinnaker
 
 #ifdef _WIN32
-#pragma warning ( pop )
+#pragma warning(pop)
 #endif
 
 #endif // ifndef SPINNAKER_GENAPI_ICOMMAND_H

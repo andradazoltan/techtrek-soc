@@ -19,8 +19,8 @@
 #define PGR_SPINNAKER_H
 
 /**
-*  @defgroup SpinnakerHeaders Spinnaker Headers
-*/
+ *  @defgroup SpinnakerHeaders Spinnaker Headers
+ */
 
 /*@{*/
 
@@ -49,9 +49,9 @@
  */
 #include "SpinnakerDefs.h"
 
-/** 
-*  Spinnaker GenICam Wrapper Includes
-*/
+/**
+ *  Spinnaker GenICam Wrapper Includes
+ */
 #include "SpinGenApi/GCBase.h"
 
 #include "SpinGenApi/SpinnakerGenApi.h"
@@ -59,31 +59,31 @@
 /**
  * Spinnaker Class Includes
  */
-#include "System.h"
-#include "SystemPtr.h"
-#include "Exception.h"
-#include "Interface.h"
-#include "InterfaceList.h"
-#include "InterfacePtr.h"
+#include "Camera.h"
 #include "CameraBase.h"
 #include "CameraList.h"
-#include "Camera.h"
 #include "CameraPtr.h"
+#include "Exception.h"
 #include "Image.h"
 #include "ImagePtr.h"
 #include "ImageStatistics.h"
+#include "Interface.h"
+#include "InterfaceList.h"
+#include "InterfacePtr.h"
+#include "System.h"
+#include "SystemPtr.h"
 
 /**
  * Spinnaker Event Class Includes
  */
-#include "Event.h"
-#include "InterfaceEvent.h"
 #include "ArrivalEvent.h"
-#include "RemovalEvent.h"
 #include "DeviceEvent.h"
+#include "Event.h"
 #include "ImageEvent.h"
+#include "InterfaceEvent.h"
 #include "LoggingEvent.h"
 #include "LoggingEventDataPtr.h"
+#include "RemovalEvent.h"
 
 /*@}*/
 

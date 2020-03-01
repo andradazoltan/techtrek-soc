@@ -18,66 +18,65 @@
 #ifndef SPINNAKER_GENAPI_STRINGREGNODE_H
 #define SPINNAKER_GENAPI_STRINGREGNODE_H
 
-#include "SpinnakerPlatform.h"
-#include "Types.h"
 #include "Base.h"
 #include "GCString.h"
-#include "ISelector.h"
 #include "INode.h"
-#include "ValueNode.h"
-#include "StringNode.h"
+#include "ISelector.h"
 #include "RegisterNode.h"
+#include "SpinnakerPlatform.h"
+#include "StringNode.h"
+#include "Types.h"
+#include "ValueNode.h"
 
 //#include <assert.h>
 
 #ifdef _WIN32
-#pragma warning ( push )
-#pragma warning( disable : 4250 ) // C4250 - 'class1' : inherits 'class2::member' via dominance
-#pragma warning ( disable : 4251 ) // XXX needs to have dll-interface to be used by clients of class YYY
-#pragma warning( disable: 4275 ) // non dll-interface structXXX used as base
+#pragma warning(push)
+#pragma warning(disable : 4250) // C4250 - 'class1' : inherits 'class2::member'
+                                // via dominance
+#pragma warning(disable : 4251) // XXX needs to have dll-interface to be used by
+                                // clients of class YYY
+#pragma warning(disable : 4275) // non dll-interface structXXX used as base
 #endif
 
-namespace Spinnaker
-{
-    namespace GenApi
-    {
-        /**
-        *  @defgroup SpinnakerGenApiClasses Spinnaker GenApi Classes
-        */
-        /*@{*/
+namespace Spinnaker {
+namespace GenApi {
+/**
+ *  @defgroup SpinnakerGenApiClasses Spinnaker GenApi Classes
+ */
+/*@{*/
 
-        /**
-        *  @defgroup StringRegNode_h StringRegNode Class
-        */
-        /*@{*/
+/**
+ *  @defgroup StringRegNode_h StringRegNode Class
+ */
+/*@{*/
 
-        /**
-        * @brief Interface for string properties
-        */
-        class SPINNAKER_API StringRegNode : virtual public StringNode, virtual public RegisterNode
-        {
-        public:
-            struct NodeImpl;
-            StringRegNode();
+/**
+ * @brief Interface for string properties
+ */
+class SPINNAKER_API StringRegNode : virtual public StringNode,
+                                    virtual public RegisterNode {
+public:
+  struct NodeImpl;
+  StringRegNode();
 
-            StringRegNode(std::shared_ptr<Node::NodeImpl> pString);
+  StringRegNode(std::shared_ptr<Node::NodeImpl> pString);
 
-            virtual ~StringRegNode();
+  virtual ~StringRegNode();
 
-            /**
-            * overload SetReference for Value
-            */
-            virtual void SetReference(INode* pBase);
+  /**
+   * overload SetReference for Value
+   */
+  virtual void SetReference(INode *pBase);
+};
 
-        };
-
-        /*@}*/
-        /*@}*/
-    }
-}
+/*@}*/
+/*@}*/
+} // namespace GenApi
+} // namespace Spinnaker
 
 #ifdef _WIN32
-#pragma warning ( pop )
+#pragma warning(pop)
 #endif
 
 #endif // SPINNAKER_GENAPI_STRINGREGNODE_H

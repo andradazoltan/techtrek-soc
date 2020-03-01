@@ -20,51 +20,49 @@
 
 #include "Interface/IArrivalEvent.h"
 
-namespace Spinnaker
-{
-	/**
-	 *  @defgroup SpinnakerEventClasses Spinnaker Event Classes
-	 */
+namespace Spinnaker {
+/**
+ *  @defgroup SpinnakerEventClasses Spinnaker Event Classes
+ */
 
-	/*@{*/
+/*@{*/
 
-	/**
-	 *  @defgroup ArrivalEvent_h ArrivalEvent Class
-	 */
+/**
+ *  @defgroup ArrivalEvent_h ArrivalEvent Class
+ */
 
-	/*@{*/
-	
-	/**
-	 * @brief An event handler for capturing the device arrival event.
-	 */
-	class SPINNAKER_API  ArrivalEvent : public IArrivalEvent
-	{
-	public:
-		/**
-		* Default constructor.
-		*/
-		ArrivalEvent();
+/*@{*/
 
-		/**
-		* Virtual destructor.
-		*/
-		virtual ~ArrivalEvent();
+/**
+ * @brief An event handler for capturing the device arrival event.
+ */
+class SPINNAKER_API ArrivalEvent : public IArrivalEvent {
+public:
+  /**
+   * Default constructor.
+   */
+  ArrivalEvent();
 
-		/**
-		* Callback to the device arrival event.		
-		*/
-		virtual void OnDeviceArrival(uint64_t serialNumber) = 0;
+  /**
+   * Virtual destructor.
+   */
+  virtual ~ArrivalEvent();
 
-	protected:
-		/**
-		* Assignment operator.
-		*/
-		ArrivalEvent& operator=( const ArrivalEvent& );
-	};
+  /**
+   * Callback to the device arrival event.
+   */
+  virtual void OnDeviceArrival(uint64_t serialNumber) = 0;
 
-	/*@}*/
+protected:
+  /**
+   * Assignment operator.
+   */
+  ArrivalEvent &operator=(const ArrivalEvent &);
+};
 
-	/*@}*/
-}
+/*@}*/
+
+/*@}*/
+} // namespace Spinnaker
 
 #endif // PGR_SPINNAKER_ARRIVALEVENT_H

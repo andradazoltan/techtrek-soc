@@ -18,58 +18,55 @@
 #ifndef SPINNAKER_GENAPI_ICATEGORY_H
 #define SPINNAKER_GENAPI_ICATEGORY_H
 
+#include "Container.h"
+#include "GCString.h"
+#include "IValue.h"
 #include "SpinnakerPlatform.h"
 #include "Types.h"
-#include "IValue.h"
-#include "GCString.h"
-#include "Container.h"
 
 //#include <assert.h>
 
 #ifdef _WIN32
-#pragma warning ( push )
-#pragma warning ( disable : 4251 ) // XXX needs to have dll-interface to be used by clients of class YYY
+#pragma warning(push)
+#pragma warning(disable : 4251) // XXX needs to have dll-interface to be used by
+                                // clients of class YYY
 #endif
 
+namespace Spinnaker {
+namespace GenApi {
+/**
+ *  @defgroup SpinnakerGenApiInterfaces Spinnaker GenApi Interfaces
+ */
+/*@{*/
 
-namespace Spinnaker
-{
-    namespace GenApi
-    {
-        /**
-        *  @defgroup SpinnakerGenApiInterfaces Spinnaker GenApi Interfaces
-        */
-        /*@{*/
+/**
+ *  @defgroup ICategory_h ICategory Interfaces
+ */
+/*@{*/
 
-        /**
-        *  @defgroup ICategory_h ICategory Interfaces
-        */
-        /*@{*/
+interface INode;
 
-        interface INode;
+//*************************************************************
+// ICategory interface
+//*************************************************************
 
-        //*************************************************************
-        // ICategory interface
-        //*************************************************************
+/**
+ * @brief Gives access to a category node
+ */
+interface SPINNAKER_API_ABSTRACT ICategory : virtual public IValue {
+  /**
+   * @brief Get all features of the category (including sub-categories)
+   */
+  virtual void GetFeatures(FeatureList_t & Features) const = 0;
+};
 
-        /**
-        * @brief Gives access to a category node
-        */
-        interface SPINNAKER_API_ABSTRACT ICategory : virtual public IValue
-        {
-            /**
-            * @brief Get all features of the category (including sub-categories)
-            */
-            virtual void GetFeatures(FeatureList_t &Features) const = 0;
-        };
-
-        /*@}*/
-        /*@}*/
-    }
-}
+/*@}*/
+/*@}*/
+} // namespace GenApi
+} // namespace Spinnaker
 
 #ifdef _WIN32
-#pragma warning ( pop )
+#pragma warning(pop)
 #endif
 
 #endif // ifndef SPINNAKER_GENAPI_ICATEGORY_H

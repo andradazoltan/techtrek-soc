@@ -14,7 +14,7 @@
 // SUFFERED BY LICENSEE AS A RESULT OF USING, MODIFYING OR DISTRIBUTING
 // THIS SOFTWARE OR ITS DERIVATIVES.
 //=============================================================================
-   
+
 /* Auto-generated file. Do not modify. */
 
 #include "QuickSpinC.h"
@@ -22,16 +22,15 @@
 #ifndef FLIR_SPINNAKERC_TLSYSTEM_H
 #define FLIR_SPINNAKERC_TLSYSTEM_H
 
-/**	
-* @defgroup TLSystemC_h TLSystem Structures
-* @ingroup CQuickSpin
-*/
+/**
+ * @defgroup TLSystemC_h TLSystem Structures
+ * @ingroup CQuickSpin
+ */
 /*@{*/
 
-typedef struct _quickSpinTLSystem
-{
-	quickSpinBooleanNode EnumerateGEVInterfaces;
-	quickSpinCommandNode AutoForceIP;
+typedef struct _quickSpinTLSystem {
+  quickSpinBooleanNode EnumerateGEVInterfaces;
+  quickSpinCommandNode AutoForceIP;
 } quickSpinTLSystem;
 
 /*@}*/

@@ -18,9 +18,9 @@
 #ifndef SPINNAKER_GENICAM_GCBASE_H
 #define SPINNAKER_GENICAM_GCBASE_H
 
-#include "GCTypes.h"
 #include "GCString.h"
 #include "GCStringVector.h"
+#include "GCTypes.h"
 #include "GCUtilities.h"
 
 #endif // SPINNAKER_GENICAM_GCBASE_H

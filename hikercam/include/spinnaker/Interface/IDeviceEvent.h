@@ -21,21 +21,19 @@
 #include "Event.h"
 #include "SpinnakerPlatform.h"
 
-namespace Spinnaker
-{
-    class IDeviceEvent : public virtual Event
-    {
-    public:
-        virtual ~IDeviceEvent() {};
-        virtual void OnDeviceEvent(Spinnaker::GenICam::gcstring eventName) = 0;
-        virtual uint64_t GetDeviceEventId() const = 0;
-        virtual GenICam::gcstring GetDeviceEventName() const = 0;
+namespace Spinnaker {
+class IDeviceEvent : public virtual Event {
+public:
+  virtual ~IDeviceEvent(){};
+  virtual void OnDeviceEvent(Spinnaker::GenICam::gcstring eventName) = 0;
+  virtual uint64_t GetDeviceEventId() const = 0;
+  virtual GenICam::gcstring GetDeviceEventName() const = 0;
 
-    protected:
-        IDeviceEvent() {};
-        IDeviceEvent(const IDeviceEvent&) {};
-        IDeviceEvent& operator=(const IDeviceEvent&);
-    };
-}
+protected:
+  IDeviceEvent(){};
+  IDeviceEvent(const IDeviceEvent &){};
+  IDeviceEvent &operator=(const IDeviceEvent &);
+};
+} // namespace Spinnaker
 
 #endif /* PGR_SPINNAKER_IDEVICEEVENT_H */

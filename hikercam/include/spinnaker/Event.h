@@ -18,79 +18,76 @@
 #ifndef PGR_SPINNAKER_EVENT_H
 #define PGR_SPINNAKER_EVENT_H
 
+#include "SpinGenApi/GCString.h"
 #include "SpinnakerDefs.h"
 #include "SpinnakerPlatform.h"
-#include "SpinGenApi/GCString.h"
 
-namespace Spinnaker
-{
-	/**
-	 *  @defgroup SpinnakerEventClasses Spinnaker Event Classes
-	 */
-	/*@{*/
+namespace Spinnaker {
+/**
+ *  @defgroup SpinnakerEventClasses Spinnaker Event Classes
+ */
+/*@{*/
 
-	/**
-	 *  @defgroup Event_h Event Class
-	 */
-	 /*@{*/
+/**
+ *  @defgroup Event_h Event Class
+ */
+/*@{*/
 
-    /**
-    * @brief The base class for all event types.
-    */
+/**
+ * @brief The base class for all event types.
+ */
 
-	class SPINNAKER_API Event
-	{
-	public:
+class SPINNAKER_API Event {
+public:
+  /**
+   * Virtual Destructor
+   */
+  virtual ~Event();
 
-		/**
-		* Virtual Destructor
-		*/
-		virtual ~Event();
+  /**
+   * Sets the event type
+   *
+   * @param eventType The event type
+   *
+   */
+  void SetEventType(EventType eventType);
 
-		/**
-		* Sets the event type
-		*
-		* @param eventType The event type
-		*
-		*/
-		void SetEventType(EventType eventType);
+  /**
+   * Gets the event type
+   *
+   * @return The event type
+   *
+   */
+  EventType GetEventType();
 
-		/**
-		* Gets the event type
-		*
-		* @return The event type
-		*
-		*/
-		EventType GetEventType();
+  /**
+   * Gets the event payload data
+   *
+   * @return The event payload data
+   */
+  const uint8_t *GetEventPayloadData();
 
-		/**
-		* Gets the event payload data
-		*
-		* @return The event payload data
-		*/
-		const uint8_t* GetEventPayloadData();
+  /**
+   * Gets the event payload data size
+   *
+   * @return The event payload data size
+   */
+  const size_t GetEventPayloadDataSize();
 
-		/**
-		* Gets the event payload data size
-		*
-		* @return The event payload data size
-		*/
-		const size_t GetEventPayloadDataSize();
+protected:
+  Event();
+  Event &operator=(const Event &);
+  friend class EventProcessor;
+  friend class IDataStream;
+  friend class Stream;
+  struct EventData;
+  EventData *m_pEventData;
+  void SetEventPayload(uint8_t *offset, size_t length);
+};
 
-	protected:
-		Event();
-		Event& operator=( const Event& );
-		friend class EventProcessor;
-		friend class IDataStream;
-		friend class Stream;
-		struct EventData;
-		EventData* m_pEventData;
-		void SetEventPayload(uint8_t* offset, size_t length);
-	};
+/*@}*/
 
-	/*@}*/
-
-	/*@}*/
-}
+/*@}*/
+} // namespace Spinnaker
 
 #endif // PGR_SPINNAKER_EVENT_H

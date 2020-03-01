@@ -21,19 +21,17 @@
 #include "Event.h"
 #include "SpinnakerPlatform.h"
 
-namespace Spinnaker
-{
-    class IArrivalEvent : public virtual Event
-    {
-    public:
-        virtual ~IArrivalEvent() {};
-        virtual void OnDeviceArrival(uint64_t serialNumber) = 0;
+namespace Spinnaker {
+class IArrivalEvent : public virtual Event {
+public:
+  virtual ~IArrivalEvent(){};
+  virtual void OnDeviceArrival(uint64_t serialNumber) = 0;
 
-    protected:
-        IArrivalEvent() {};
-        IArrivalEvent(const IArrivalEvent&) {};     
-        IArrivalEvent& operator=(const IArrivalEvent&);
-    };
-}
+protected:
+  IArrivalEvent(){};
+  IArrivalEvent(const IArrivalEvent &){};
+  IArrivalEvent &operator=(const IArrivalEvent &);
+};
+} // namespace Spinnaker
 
 #endif /* FLIR_SPINNAKER_IARRIVALEVENT_H */

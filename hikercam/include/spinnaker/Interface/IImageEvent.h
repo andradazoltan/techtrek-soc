@@ -22,19 +22,17 @@
 #include "Spinnaker.h"
 #include "SpinnakerPlatform.h"
 
-namespace Spinnaker
-{
-    class IImageEvent : public virtual Event
-    {
-    public:
-        virtual ~IImageEvent() {};
-        virtual void OnImageEvent(ImagePtr image) = 0;
+namespace Spinnaker {
+class IImageEvent : public virtual Event {
+public:
+  virtual ~IImageEvent(){};
+  virtual void OnImageEvent(ImagePtr image) = 0;
 
-    protected:
-        IImageEvent() {};
-        IImageEvent(const IImageEvent&) {};
-        IImageEvent& operator=(const IImageEvent&);
-    };
-}
+protected:
+  IImageEvent(){};
+  IImageEvent(const IImageEvent &){};
+  IImageEvent &operator=(const IImageEvent &);
+};
+} // namespace Spinnaker
 
 #endif /* PGR_SPINNAKER_IIMAGEEVENT_H */

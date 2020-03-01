@@ -18,67 +18,66 @@
 #ifndef FLIR_SPINNAKER_IMAGE_PTR_H
 #define FLIR_SPINNAKER_IMAGE_PTR_H
 
-#include "SpinnakerPlatform.h"
 #include "BasePtr.h"
 #include "Interface/IImage.h"
- 
-namespace Spinnaker
-{
-    /**
-    *  @defgroup SpinnakerClasses Spinnaker Classes
-    */
+#include "SpinnakerPlatform.h"
 
-    /*@{*/
+namespace Spinnaker {
+/**
+ *  @defgroup SpinnakerClasses Spinnaker Classes
+ */
 
-    /**
-    *  @defgroup ImagePtr_h ImagePtr Class
-    *
-    */
+/*@{*/
 
-    /*@{*/
+/**
+ *  @defgroup ImagePtr_h ImagePtr Class
+ *
+ */
 
-    /**
-    * @brief A reference tracked pointer to an image object.  When the ImagePtr goes out of scope, 
-    *        it will trigger an auto release of the image from the stream.
-    */
+/*@{*/
 
-    class SPINNAKER_API ImagePtr : public BasePtr<IImage>
-    {	
-    public:    
-        /**
-        * Default constructor.
-        */
-        ImagePtr();
+/**
+ * @brief A reference tracked pointer to an image object.  When the ImagePtr
+ * goes out of scope, it will trigger an auto release of the image from the
+ * stream.
+ */
 
-        /**
-        * Default constructor with argument.
-        */
-        ImagePtr(const int /*nMustBeNull*/);
+class SPINNAKER_API ImagePtr : public BasePtr<IImage> {
+public:
+  /**
+   * Default constructor.
+   */
+  ImagePtr();
 
-        /**
-        * Default constructor with argument.
-        */
-        ImagePtr(const long /*nMustBeNull*/);
+  /**
+   * Default constructor with argument.
+   */
+  ImagePtr(const int /*nMustBeNull*/);
 
-        /**
-         * Default constructor with argument.
-         */
-        ImagePtr(const std::nullptr_t /*nullPtr*/);
+  /**
+   * Default constructor with argument.
+   */
+  ImagePtr(const long /*nMustBeNull*/);
 
-        /**
-        * Virtual destructor.
-        */
-        virtual ~ImagePtr(void);
+  /**
+   * Default constructor with argument.
+   */
+  ImagePtr(const std::nullptr_t /*nullPtr*/);
 
-        /**
-        * Assignment operator.
-        */
-        virtual ImagePtr& operator=(const ImagePtr&);
-    };
+  /**
+   * Virtual destructor.
+   */
+  virtual ~ImagePtr(void);
 
-    /*@}*/
+  /**
+   * Assignment operator.
+   */
+  virtual ImagePtr &operator=(const ImagePtr &);
+};
 
-    /*@}*/
-}
+/*@}*/
+
+/*@}*/
+} // namespace Spinnaker
 
 #endif // FLIR_SPINNAKER_IMAGE_PTR_H

@@ -20,54 +20,52 @@
 
 #include "Interface/IImageEvent.h"
 
-namespace Spinnaker
-{
-	/**
-	 *  @defgroup SpinnakerEventClasses Spinnaker Event Classes
-	 */
+namespace Spinnaker {
+/**
+ *  @defgroup SpinnakerEventClasses Spinnaker Event Classes
+ */
 
-	/*@{*/
+/*@{*/
 
-	/**
-	 *  @defgroup ImageEvent_h ImageEvent Class
-	 */
+/**
+ *  @defgroup ImageEvent_h ImageEvent Class
+ */
 
-	/*@{*/
+/*@{*/
 
-    /**
-    * @brief A handler for capturing image arrival events.
-    */
+/**
+ * @brief A handler for capturing image arrival events.
+ */
 
-	class SPINNAKER_API ImageEvent : public IImageEvent
-	{
-	public:
-		/**
-		* Default Constructor
-		*/
-		ImageEvent();
+class SPINNAKER_API ImageEvent : public IImageEvent {
+public:
+  /**
+   * Default Constructor
+   */
+  ImageEvent();
 
-		/**
-		* Virtual Destructor
-		*/
-		virtual ~ImageEvent();
+  /**
+   * Virtual Destructor
+   */
+  virtual ~ImageEvent();
 
-		/**
-		* Image event callback
-		*
-		* @param image The ImagePtr object
-		*/
-		virtual void OnImageEvent(ImagePtr image) = 0;
+  /**
+   * Image event callback
+   *
+   * @param image The ImagePtr object
+   */
+  virtual void OnImageEvent(ImagePtr image) = 0;
 
-	protected:
-		/**
-		* Assignment operator.
-		*/
-		ImageEvent& operator=( const ImageEvent& );
-	};
+protected:
+  /**
+   * Assignment operator.
+   */
+  ImageEvent &operator=(const ImageEvent &);
+};
 
-	/*@}*/
+/*@}*/
 
-	/*@}*/
-}
+/*@}*/
+} // namespace Spinnaker
 
 #endif // PGR_SPINNAKER_IMAGEEVENT_H

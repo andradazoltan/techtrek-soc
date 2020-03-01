@@ -11,21 +11,24 @@
 #include "Colours.h"
 
 // Screen resolution
-#define XRES 800    // column pixel count
-#define YRES 480    // row pixel count
+#define XRES 800 // column pixel count
+#define YRES 480 // row pixel count
 
-// This macro pauses until the graphics chip status register indicates that it is idle
-#define WAIT_FOR_GRAPHICS       while((GraphicsStatusReg & 0x0001) != 0x0001);
+// This macro pauses until the graphics chip status register indicates that it
+// is idle
+#define WAIT_FOR_GRAPHICS                                                      \
+  while ((GraphicsStatusReg & 0x0001) != 0x0001)                               \
+    ;
 
 // Commands to the Graphics Modules
-#define DrawHLine               1
-#define DrawVLine               2
-#define DrawLine                3
-#define DrawCircle              4
-#define FScreen                 5
-#define PutAPixel               0xA
-#define GetAPixel               0xB
-#define ProgramPaletteColour    0x10
+#define DrawHLine 1
+#define DrawVLine 2
+#define DrawLine 3
+#define DrawCircle 4
+#define FScreen 5
+#define PutAPixel 0xA
+#define GetAPixel 0xB
+#define ProgramPaletteColour 0x10
 
 // Function Definitions;
 void FillScreen(int Colour);
@@ -44,7 +47,9 @@ void Circle(int x1, int y1, int radius, int Colour);
 void FillCircle(int x1, int y1, int radius, int Colour);
 
 // Fill.cpp Definitions
-typedef struct { int x,y;} XYPixel ;    // data structure to store a coordinate
+typedef struct {
+  int x, y;
+} XYPixel; // data structure to store a coordinate
 
 int PushPixel(XYPixel p1);
 int PopPixel(XYPixel *theXYPixel);
@@ -53,8 +58,8 @@ void Fill(int _x, int _y, int _FillColour, int _BoundaryColour);
 
 // GraphData.c Definitions
 void barGraphHor(int topLeftX, int topLeftY, int botRightX, int botRightY,
-                    int dataColour, int bgColour, int percent);
+                 int dataColour, int bgColour, int percent);
 void barGraphVert(int topLeftX, int topLeftY, int botRightX, int botRightY,
-                    int dataColour, int bgColour, int percent);
-                    
+                  int dataColour, int bgColour, int percent);
+
 #endif /* GRAPHICS_H_ */

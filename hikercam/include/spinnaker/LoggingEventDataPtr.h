@@ -21,64 +21,52 @@
 #include "BasePtr.h"
 #include "LoggingEventData.h"
 
-namespace Spinnaker
-{
-    class LoggingEventData;
+namespace Spinnaker {
+class LoggingEventData;
 
-    /**
-     *  @defgroup SpinnakerEventClasses Spinnaker Event Classes
-     */
-     /*@{*/
+/**
+ *  @defgroup SpinnakerEventClasses Spinnaker Event Classes
+ */
+/*@{*/
 
-     /**
-      *  @defgroup LoggingEventDataPtr_h LoggingEventDataPtr Class
-      */
-      /*@{*/
+/**
+ *  @defgroup LoggingEventDataPtr_h LoggingEventDataPtr Class
+ */
+/*@{*/
 
-      /**
-       * @brief A reference tracked pointer to the LoggingEvent object.
-       */
+/**
+ * @brief A reference tracked pointer to the LoggingEvent object.
+ */
 
-    class SPINNAKER_API LoggingEventDataPtr : public BasePtr<LoggingEventData>
-    {
+class SPINNAKER_API LoggingEventDataPtr : public BasePtr<LoggingEventData> {
 
-    public:
-        /**
-        * Default Constructor
-        */
-        LoggingEventDataPtr() throw()
-            : BasePtr<LoggingEventData>()
-        {
-        }
+public:
+  /**
+   * Default Constructor
+   */
+  LoggingEventDataPtr() throw() : BasePtr<LoggingEventData>() {}
 
-        /**
-        * Default Constructor with argument
-        */
-        LoggingEventDataPtr(const int /*nMustBeNull*/) throw()
-            : BasePtr<LoggingEventData>()
-        {
-        }
+  /**
+   * Default Constructor with argument
+   */
+  LoggingEventDataPtr(const int /*nMustBeNull*/) throw()
+      : BasePtr<LoggingEventData>() {}
 
-        /**
-        * Default Constructor with argument
-        */
-        LoggingEventDataPtr(const long /*nMustBeNull*/) throw()
-            : BasePtr<LoggingEventData>()
-        {
-        }
+  /**
+   * Default Constructor with argument
+   */
+  LoggingEventDataPtr(const long /*nMustBeNull*/) throw()
+      : BasePtr<LoggingEventData>() {}
 
-        /**
-        * Default Constructor with argument
-        */
-        LoggingEventDataPtr(const std::nullptr_t /*nullPtr*/) throw()
-            : BasePtr<LoggingEventData>()
-        {
-        }
+  /**
+   * Default Constructor with argument
+   */
+  LoggingEventDataPtr(const std::nullptr_t /*nullPtr*/) throw()
+      : BasePtr<LoggingEventData>() {}
+};
+/*@}*/
 
-    };
-    /*@}*/
+/*@}*/
+} // namespace Spinnaker
 
-    /*@}*/
-}
-
-#endif //PGR_LOGGINGEVENTDATAPTR_H
+#endif // PGR_LOGGINGEVENTDATAPTR_H

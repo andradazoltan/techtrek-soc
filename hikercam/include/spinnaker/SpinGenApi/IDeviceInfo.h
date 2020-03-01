@@ -18,92 +18,91 @@
 #ifndef SPINNAKER_GENAPI_DEVICEINFO_H
 #define SPINNAKER_GENAPI_DEVICEINFO_H
 
-#include "SpinnakerPlatform.h"
-#include "Types.h"
 #include "GCString.h"
 #include "GCTypes.h"
+#include "SpinnakerPlatform.h"
+#include "Types.h"
 
 #ifdef _WIN32
-#pragma warning ( push )
-#pragma warning ( disable : 4251 ) // XXX needs to have dll-interface to be used by clients of class YYY
+#pragma warning(push)
+#pragma warning(disable : 4251) // XXX needs to have dll-interface to be used by
+                                // clients of class YYY
 #endif
 
-namespace Spinnaker
-{
-    namespace GenApi
-    {
-        /**
-        *  @defgroup SpinnakerGenApiInterfaces Spinnaker GenApi Interfaces
-        */
-        /*@{*/
+namespace Spinnaker {
+namespace GenApi {
+/**
+ *  @defgroup SpinnakerGenApiInterfaces Spinnaker GenApi Interfaces
+ */
+/*@{*/
 
-        /**
-        *  @defgroup IDeviceInfo_h IDeviceInfo Interface
-        */
-        /*@{*/
+/**
+ *  @defgroup IDeviceInfo_h IDeviceInfo Interface
+ */
+/*@{*/
 
-        //*************************************************************
-        // IDeviceInfo interface
-        //*************************************************************
+//*************************************************************
+// IDeviceInfo interface
+//*************************************************************
 
-        /**
-        * @brief Interface to get information about the device (= nodemap)
-        */
-        interface SPINNAKER_API_ABSTRACT IDeviceInfo
-        {
-            /**
-            * Get the model name
-            */
-            virtual GenICam::gcstring GetModelName() = 0;
+/**
+ * @brief Interface to get information about the device (= nodemap)
+ */
+interface SPINNAKER_API_ABSTRACT IDeviceInfo {
+  /**
+   * Get the model name
+   */
+  virtual GenICam::gcstring GetModelName() = 0;
 
-            /**
-            * Get the vendor name
-            */
-            virtual GenICam::gcstring GetVendorName() = 0;
+  /**
+   * Get the vendor name
+   */
+  virtual GenICam::gcstring GetVendorName() = 0;
 
-            /**
-            * Get tool tip
-            */
-            virtual GenICam::gcstring GetToolTip() = 0;
+  /**
+   * Get tool tip
+   */
+  virtual GenICam::gcstring GetToolTip() = 0;
 
-            /**
-            * Get the standard name space
-            */
-            virtual GenICam::gcstring GetStandardNameSpace() = 0;
+  /**
+   * Get the standard name space
+   */
+  virtual GenICam::gcstring GetStandardNameSpace() = 0;
 
-            /**
-            * Get the version of the DLL's GenApi implementation
-            */
-            virtual void GetGenApiVersion(GenICam::Version_t &Version, uint16_t &Build) = 0;
+  /**
+   * Get the version of the DLL's GenApi implementation
+   */
+  virtual void GetGenApiVersion(GenICam::Version_t & Version,
+                                uint16_t & Build) = 0;
 
-            /**
-            * Get the schema version number
-            */
-            virtual void GetSchemaVersion(GenICam::Version_t &Version) = 0;
+  /**
+   * Get the schema version number
+   */
+  virtual void GetSchemaVersion(GenICam::Version_t & Version) = 0;
 
-            /**
-            * Get the version of the device description file
-            */
-            virtual void GetDeviceVersion(GenICam::Version_t &Version) = 0;
+  /**
+   * Get the version of the device description file
+   */
+  virtual void GetDeviceVersion(GenICam::Version_t & Version) = 0;
 
-            /**
-            * Get the Guid describing the product
-            */
-            virtual GenICam::gcstring GetProductGuid() = 0;
+  /**
+   * Get the Guid describing the product
+   */
+  virtual GenICam::gcstring GetProductGuid() = 0;
 
-            /**
-            * Get the Guid describing the product version
-            */
-            virtual GenICam::gcstring GetVersionGuid() = 0;
-        };
+  /**
+   * Get the Guid describing the product version
+   */
+  virtual GenICam::gcstring GetVersionGuid() = 0;
+};
 
-        /*@}*/
-        /*@}*/
-    }
-}
+/*@}*/
+/*@}*/
+} // namespace GenApi
+} // namespace Spinnaker
 
 #ifdef _WIN32
-#pragma warning ( pop )
+#pragma warning(pop)
 #endif
 
 #endif // ifndef SPINNAKER_GENAPI_IDEVICEINFO_H

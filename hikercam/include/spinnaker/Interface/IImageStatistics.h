@@ -20,63 +20,60 @@
 
 #include "Image.h"
 
-namespace Spinnaker
-{
-    /**
-    * @defgroup SpinnakerClasses Spinnaker Classes
-    */
+namespace Spinnaker {
+/**
+ * @defgroup SpinnakerClasses Spinnaker Classes
+ */
 
-    /*@{*/
+/*@{*/
 
-    /**
-    * @defgroup IImageStatistics_h IImageStatistics Class
-    */
+/**
+ * @defgroup IImageStatistics_h IImageStatistics Class
+ */
 
-    /*@{*/
+/*@{*/
 
-    /**
-    * @brief The interface file for image statistics.
-    */
+/**
+ * @brief The interface file for image statistics.
+ */
 
-    class  SPINNAKER_API IImageStatistics
-    {
-    public:
+class SPINNAKER_API IImageStatistics {
+public:
+  virtual ~IImageStatistics(){};
 
-        virtual ~IImageStatistics() {};
+  virtual void EnableAll() = 0;
+  virtual void DisableAll() = 0;
+  virtual void EnableGreyOnly() = 0;
+  virtual void EnableRGBOnly() = 0;
+  virtual void EnableHSLOnly() = 0;
+  virtual void GetChannelStatus(StatisticsChannel channel,
+                                bool *pEnabled) const = 0;
+  virtual void SetChannelStatus(StatisticsChannel channel, bool enabled) = 0;
+  virtual void GetRange(StatisticsChannel channel, unsigned int *pMin,
+                        unsigned int *pMax) const = 0;
+  virtual void GetPixelValueRange(StatisticsChannel channel,
+                                  unsigned int *pPixelValueMin,
+                                  unsigned int *pPixelValueMax) const = 0;
+  virtual void GetNumPixelValues(StatisticsChannel channel,
+                                 unsigned int *pNumPixelValues) const = 0;
+  virtual void GetMean(StatisticsChannel channel,
+                       float *pPixelValueMean) const = 0;
+  virtual void GetHistogram(StatisticsChannel channel,
+                            int **ppHistogram) const = 0;
+  virtual void GetStatistics(
+      StatisticsChannel channel, unsigned int *pRangeMin = NULL,
+      unsigned int *pRangeMax = NULL, unsigned int *pPixelValueMin = NULL,
+      unsigned int *pPixelValueMax = NULL, unsigned int *pNumPixelValues = NULL,
+      float *pPixelValueMean = NULL, int **ppHistogram = NULL) const = 0;
 
-        virtual void EnableAll() = 0;
-        virtual void DisableAll() = 0;
-        virtual void EnableGreyOnly() = 0;
-        virtual void EnableRGBOnly() = 0;
-        virtual void EnableHSLOnly() = 0;
-        virtual void GetChannelStatus(StatisticsChannel channel, bool* pEnabled) const = 0;
-        virtual void SetChannelStatus(StatisticsChannel channel, bool enabled) = 0;
-        virtual void GetRange(StatisticsChannel channel, unsigned int* pMin, unsigned int* pMax) const = 0;
-        virtual void GetPixelValueRange(
-            StatisticsChannel channel, 
-            unsigned int* pPixelValueMin, 
-            unsigned int* pPixelValueMax) const = 0;
-        virtual void GetNumPixelValues(StatisticsChannel channel, unsigned int* pNumPixelValues) const = 0;
-        virtual void GetMean(StatisticsChannel channel, float* pPixelValueMean) const = 0;
-        virtual void GetHistogram(StatisticsChannel channel, int** ppHistogram) const = 0;
-        virtual void GetStatistics(
-            StatisticsChannel channel,
-            unsigned int* pRangeMin = NULL,
-            unsigned int* pRangeMax = NULL,
-            unsigned int* pPixelValueMin = NULL,
-            unsigned int* pPixelValueMax = NULL,
-            unsigned int* pNumPixelValues = NULL,
-            float* pPixelValueMean = NULL,
-            int** ppHistogram = NULL) const = 0;
+protected:
+  IImageStatistics(){};
+  IImageStatistics(const IImageStatistics &){};
+};
 
-    protected:
-        IImageStatistics() {};
-        IImageStatistics(const IImageStatistics&) {};
-    };
+/*@}*/
 
-    /*@}*/
-
-    /*@}*/
-}
+/*@}*/
+} // namespace Spinnaker
 
 #endif // FLIR_SPINNAKER_IIMAGESTATISTICS_H

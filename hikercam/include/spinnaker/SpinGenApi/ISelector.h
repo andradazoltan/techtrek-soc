@@ -17,62 +17,60 @@
 #ifndef SPINNAKER_GENAPI_ISELECTOR_H
 #define SPINNAKER_GENAPI_ISELECTOR_H
 
-#if defined (_MSC_VER) && (_MSC_VER > 1200)
+#if defined(_MSC_VER) && (_MSC_VER > 1200)
 #pragma once
 #endif // _MSC_VER > 1200
 
-#include "SpinnakerPlatform.h"
-#include "Types.h"
 #include "Base.h"
 #include "Container.h"
+#include "SpinnakerPlatform.h"
+#include "Types.h"
 
 #ifdef _WIN32
-#pragma warning ( push )
-#pragma warning ( disable : 4251 ) // XXX needs to have dll-interface to be used by clients of class YYY
+#pragma warning(push)
+#pragma warning(disable : 4251) // XXX needs to have dll-interface to be used by
+                                // clients of class YYY
 #endif
 
-namespace Spinnaker
-{
-    namespace GenApi
-    {
-        /**
-        *  @defgroup SpinnakerGenApiInterfaces Spinnaker GenApi Interfaces
-        */
-        /*@{*/
+namespace Spinnaker {
+namespace GenApi {
+/**
+ *  @defgroup SpinnakerGenApiInterfaces Spinnaker GenApi Interfaces
+ */
+/*@{*/
 
-        /**
-        *  @defgroup ISelector_h ISelector Interface
-        */
-        /*@{*/
+/**
+ *  @defgroup ISelector_h ISelector Interface
+ */
+/*@{*/
 
-        /**
-        * @brief Interface for groups of features selected by a single one
-        */
-        interface SPINNAKER_API_ABSTRACT ISelector : virtual public IBase
-        {
-            /**
-            * true if this feature selects a group of features
-            */
-            virtual bool IsSelector() const = 0;
+/**
+ * @brief Interface for groups of features selected by a single one
+ */
+interface SPINNAKER_API_ABSTRACT ISelector : virtual public IBase {
+  /**
+   * true if this feature selects a group of features
+   */
+  virtual bool IsSelector() const = 0;
 
-            /**
-            * retrieve the group of selected features
-            */
-            virtual void GetSelectedFeatures(FeatureList_t&) const = 0;
+  /**
+   * retrieve the group of selected features
+   */
+  virtual void GetSelectedFeatures(FeatureList_t &) const = 0;
 
-            /**
-            * retrieve the group of features selecting this node
-            */
-            virtual void GetSelectingFeatures(FeatureList_t&) const = 0;
-        };
+  /**
+   * retrieve the group of features selecting this node
+   */
+  virtual void GetSelectingFeatures(FeatureList_t &) const = 0;
+};
 
-        /*@}*/
-        /*@}*/
-    }
-}
+/*@}*/
+/*@}*/
+} // namespace GenApi
+} // namespace Spinnaker
 
 #ifdef _WIN32
-#pragma warning ( pop )
+#pragma warning(pop)
 #endif
 
 #endif // SPINNAKER_GENAPI_ISELECTOR_H

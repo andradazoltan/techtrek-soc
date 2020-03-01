@@ -18,62 +18,48 @@
 #ifndef FLIR_SPINNAKER_INTERFACE_PTR_H
 #define FLIR_SPINNAKER_INTERFACE_PTR_H
 
-#include "SpinnakerPlatform.h"
 #include "BasePtr.h"
 #include "Interface.h"
+#include "SpinnakerPlatform.h"
 
-namespace Spinnaker
-{
-    /**
-    *  @defgroup SpinnakerClasses Spinnaker Classes
-    */
+namespace Spinnaker {
+/**
+ *  @defgroup SpinnakerClasses Spinnaker Classes
+ */
 
-    /*@{*/
+/*@{*/
 
-    /**
-    *  @defgroup InterfacePtr_h InterfacePtr Class
-    */
+/**
+ *  @defgroup InterfacePtr_h InterfacePtr Class
+ */
 
-    /*@{*/
+/*@{*/
 
-    /**
-    * @brief A reference tracked pointer to the interface object.
-    */
+/**
+ * @brief A reference tracked pointer to the interface object.
+ */
 
-    class SPINNAKER_API InterfacePtr : public BasePtr<IInterface>
-    {
-    public:
-        /**
-        * Default Constructor
-        */
-        InterfacePtr() throw()
-            : BasePtr<IInterface>()
-        {
-        }
+class SPINNAKER_API InterfacePtr : public BasePtr<IInterface> {
+public:
+  /**
+   * Default Constructor
+   */
+  InterfacePtr() throw() : BasePtr<IInterface>() {}
 
-        /**
-        * Default Constructor with argument
-        */
-        InterfacePtr(const int /*nMustBeNull*/) throw()
-            : BasePtr<IInterface>()
-        {
-        }
+  /**
+   * Default Constructor with argument
+   */
+  InterfacePtr(const int /*nMustBeNull*/) throw() : BasePtr<IInterface>() {}
 
-        InterfacePtr(const long /*nMustBeNull*/) throw()
-            : BasePtr<IInterface>()
-        {
-        }
+  InterfacePtr(const long /*nMustBeNull*/) throw() : BasePtr<IInterface>() {}
 
-        InterfacePtr(const std::nullptr_t /*nullPtr*/) throw()
-            : BasePtr<IInterface>()
-        {
-        }
-        
-    };
+  InterfacePtr(const std::nullptr_t /*nullPtr*/) throw()
+      : BasePtr<IInterface>() {}
+};
 
-    /*@}*/
+/*@}*/
 
-    /*@}*/
-}
+/*@}*/
+} // namespace Spinnaker
 
-#endif //FLIR_SPINNAKER_INTERFACE_PTR_H
+#endif // FLIR_SPINNAKER_INTERFACE_PTR_H

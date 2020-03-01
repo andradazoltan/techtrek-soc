@@ -18,63 +18,62 @@
 #ifndef FLIR_SPINNAKER_IINTERFACE_H
 #define FLIR_SPINNAKER_IINTERFACE_H
 
-#include "SpinnakerPlatform.h"
-#include "SpinnakerDefs.h"
 #include "CameraList.h"
 #include "Event.h"
+#include "SpinnakerDefs.h"
+#include "SpinnakerPlatform.h"
 #include "TransportLayerInterface.h"
 
-namespace Spinnaker
-{
-    /**
-    * @defgroup SpinnakerClasses Spinnaker Classes
-    */
-    /*@{*/
+namespace Spinnaker {
+/**
+ * @defgroup SpinnakerClasses Spinnaker Classes
+ */
+/*@{*/
 
-    /**
-    * @defgroup IInterface_h IInterface Class
-    */
-    /*@{*/
+/**
+ * @defgroup IInterface_h IInterface Class
+ */
+/*@{*/
 
-    /**
-    * @brief The interface file for Interface.
-    */
+/**
+ * @brief The interface file for Interface.
+ */
 
-    class SPINNAKER_API IInterface
-    {
-    public:
+class SPINNAKER_API IInterface {
+public:
+  virtual ~IInterface(){};
 
-        virtual ~IInterface() {};
+  virtual CameraList GetCameras(bool updateCameras = true) const = 0;
+  virtual bool UpdateCameras() = 0;
+  virtual GenApi::INodeMap &GetTLNodeMap() const = 0;
+  virtual void RegisterEvent(Event &evtToRegister) = 0;
+  virtual void UnregisterEvent(Event &evtToUnregister) = 0;
+  virtual bool IsInUse() const = 0;
+  virtual void
+  SendActionCommand(unsigned int deviceKey, unsigned int groupKey,
+                    unsigned int groupMask, unsigned long long actionTime = 0,
+                    unsigned int *pResultSize = 0,
+                    ActionCommandResult results[] = NULL) const = 0;
 
-        virtual CameraList GetCameras(bool updateCameras = true) const = 0;
-        virtual bool UpdateCameras() = 0;
-        virtual GenApi::INodeMap & GetTLNodeMap() const = 0;
-        virtual void RegisterEvent(Event & evtToRegister) = 0;
-        virtual void UnregisterEvent(Event & evtToUnregister) = 0;
-        virtual bool IsInUse() const = 0;
-        virtual void SendActionCommand(unsigned int deviceKey, unsigned int groupKey, 
-            unsigned int groupMask, unsigned long long actionTime = 0, unsigned int* pResultSize = 0, 
-            ActionCommandResult results[] = NULL) const = 0;
+  /*
+   * Gets vital interface information without connecting to the XML through
+   * transport layer specific bootstrap registers.
+   */
+  TransportLayerInterface TLInterface;
 
-        /*
-        * Gets vital interface information without connecting to the XML through
-        * transport layer specific bootstrap registers.
-        */
-        TransportLayerInterface TLInterface;
+protected:
+  friend class InterfaceInternal;
+  struct InterfaceData; // Forward declaration
+  InterfaceData *m_pInterfaceData;
 
-    protected:
-        friend class InterfaceInternal;
-        struct InterfaceData; // Forward declaration
-        InterfaceData* m_pInterfaceData;
+  IInterface(){};
+  IInterface(const IInterface &){};
+  IInterface &operator=(const IInterface &);
+};
 
-        IInterface() {};
-        IInterface(const IInterface&) {};
-        IInterface& operator=(const IInterface&);
-    };
+/*@}*/
 
-    /*@}*/
+/*@}*/
+} // namespace Spinnaker
 
-    /*@}*/
-}
-
-#endif //FLIR_SPINNAKER_IINTERFACE_H
+#endif // FLIR_SPINNAKER_IINTERFACE_H

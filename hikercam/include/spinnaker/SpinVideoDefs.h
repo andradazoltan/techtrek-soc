@@ -21,89 +21,81 @@
 #include <memory.h>
 #include <stdint.h>
 
-namespace Spinnaker
-{
-    namespace Video
-    {
-        /**
-        *  @defgroup SpinnakerHeaders Spinnaker Headers
-        */
+namespace Spinnaker {
+namespace Video {
+/**
+ *  @defgroup SpinnakerHeaders Spinnaker Headers
+ */
 
-        /*@{*/
+/*@{*/
 
-        /**
-        * @defgroup SpinVideoDefs Spinnaker Video Definitions
-        *
-        * Definitions file for Spinnaker video recorder.
-        */
+/**
+ * @defgroup SpinVideoDefs Spinnaker Video Definitions
+ *
+ * Definitions file for Spinnaker video recorder.
+ */
 
-        /** Options for saving MJPG files. */
-        struct MJPGOption
-        {
-            /** Frame rate of the stream */
-            float frameRate;
+/** Options for saving MJPG files. */
+struct MJPGOption {
+  /** Frame rate of the stream */
+  float frameRate;
 
-            /** Image quality (1-100) */
-            unsigned int quality;
+  /** Image quality (1-100) */
+  unsigned int quality;
 
-            unsigned int reserved[256];
+  unsigned int reserved[256];
 
-            MJPGOption()
-            {
-                frameRate = 15.0;
-                quality = 75;
-                memset(reserved, 0, sizeof(reserved));
-            }
-        };
+  MJPGOption() {
+    frameRate = 15.0;
+    quality = 75;
+    memset(reserved, 0, sizeof(reserved));
+  }
+};
 
-        /** Options for saving H264 files. */
-        struct H264Option
-        {
-            /** Frame rate of the stream */
-            float frameRate;
+/** Options for saving H264 files. */
+struct H264Option {
+  /** Frame rate of the stream */
+  float frameRate;
 
-            /** Width of source image */
-            unsigned int width;
+  /** Width of source image */
+  unsigned int width;
 
-            /** Height of source image */
-            unsigned int height;
+  /** Height of source image */
+  unsigned int height;
 
-            /** Bit-rate to encode at */
-            unsigned int bitrate;
+  /** Bit-rate to encode at */
+  unsigned int bitrate;
 
-            /** Reserved for future use */
-            unsigned int reserved[256];
+  /** Reserved for future use */
+  unsigned int reserved[256];
 
-            H264Option()
-            {
-                frameRate = 15.0;
-                width = 0;
-                height = 0;
-                bitrate = 1000000;
-                memset(reserved, 0, sizeof(reserved));
-            }
-        };
+  H264Option() {
+    frameRate = 15.0;
+    width = 0;
+    height = 0;
+    bitrate = 1000000;
+    memset(reserved, 0, sizeof(reserved));
+  }
+};
 
-        /** Options for saving AVI files. */
-        struct AVIOption
-        {
-            /** Frame rate of the stream */
-            float frameRate;
+/** Options for saving AVI files. */
+struct AVIOption {
+  /** Frame rate of the stream */
+  float frameRate;
 
-            /** Reserved for future use */
-            unsigned int reserved[256];
+  /** Reserved for future use */
+  unsigned int reserved[256];
 
-            AVIOption()
-            {
-                frameRate = 15.0;
-                memset(reserved, 0, sizeof(reserved));
-            }
-        };
+  AVIOption() {
+    frameRate = 15.0;
+    memset(reserved, 0, sizeof(reserved));
+  }
+};
 
-        /*@}*/
+/*@}*/
 
-        /*@}*/
-    }
-}
+/*@}*/
+} // namespace Video
+} // namespace Spinnaker
 
 #endif // FLIR_SPIN_VIDEO_DEFS_H

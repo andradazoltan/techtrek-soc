@@ -20,47 +20,46 @@
 
 #include "EventAdapter.h"
 
-namespace Spinnaker
-{
-    namespace GenApi
-    {
-        /**
-        *  @defgroup SpinnakerGenApiClasses Spinnaker GenApi Classes
-        */
-        /*@{*/
+namespace Spinnaker {
+namespace GenApi {
+/**
+ *  @defgroup SpinnakerGenApiClasses Spinnaker GenApi Classes
+ */
+/*@{*/
 
-        /**
-        *  @defgroup EventAdapterGeneric_h EventAdapterGeneric Class
-        */
-        /*@{*/
+/**
+ *  @defgroup EventAdapterGeneric_h EventAdapterGeneric Class
+ */
+/*@{*/
 
-        /**
-        * @brief Connects a generic event to a node map
-        */
-        class SPINNAKER_API CEventAdapterGeneric : public  CEventAdapter
-        {
-        public:
-            /**
-            * Constructor
-            */
-            CEventAdapterGeneric(INodeMap* pNodeMap = NULL);
+/**
+ * @brief Connects a generic event to a node map
+ */
+class SPINNAKER_API CEventAdapterGeneric : public CEventAdapter {
+public:
+  /**
+   * Constructor
+   */
+  CEventAdapterGeneric(INodeMap *pNodeMap = NULL);
 
-            /**
-            * Destructor
-            */
-            virtual ~CEventAdapterGeneric();
+  /**
+   * Destructor
+   */
+  virtual ~CEventAdapterGeneric();
 
-            // Does not have implementation, use the version with EventID
-            virtual void DeliverMessage(const uint8_t msg[], uint32_t numBytes);
+  // Does not have implementation, use the version with EventID
+  virtual void DeliverMessage(const uint8_t msg[], uint32_t numBytes);
 
-            virtual void DeliverMessage(const uint8_t msg[], uint32_t numBytes, const GenICam::gcstring& EventID);
+  virtual void DeliverMessage(const uint8_t msg[], uint32_t numBytes,
+                              const GenICam::gcstring &EventID);
 
-            virtual void DeliverMessage(const uint8_t msg[], uint32_t numBytes, uint64_t EventID);
-        };
+  virtual void DeliverMessage(const uint8_t msg[], uint32_t numBytes,
+                              uint64_t EventID);
+};
 
-        /*@}*/
-        /*@}*/
-    }
-}
+/*@}*/
+/*@}*/
+} // namespace GenApi
+} // namespace Spinnaker
 
 #endif // SPINNAKER_GENAPI_EVENTADAPTERGENERIC_H

@@ -18,101 +18,102 @@
 #ifndef SPINNAKER_GENAPI_REGISTERPORTIMPL_H
 #define SPINNAKER_GENAPI_REGISTERPORTIMPL_H
 
-#include "PortImpl.h"
-#include "Log.h"
 #include "Compatibility.h"
+#include "Log.h"
+#include "PortImpl.h"
 
-namespace Spinnaker
-{
-    namespace GenApi
-    {
-        /**
-        *  @defgroup SpinnakerGenApiClasses Spinnaker GenApi Classes
-        */
-        /*@{*/
+namespace Spinnaker {
+namespace GenApi {
+/**
+ *  @defgroup SpinnakerGenApiClasses Spinnaker GenApi Classes
+ */
+/*@{*/
 
-        /**
-        *  @defgroup RegisterPortImpl_h RegisterPortImpl Class
-        */
-        /*@{*/
+/**
+ *  @defgroup RegisterPortImpl_h RegisterPortImpl Class
+ */
+/*@{*/
 
-        //*************************************************************
-        // CRegisterPortImpl class
-        //*************************************************************
+//*************************************************************
+// CRegisterPortImpl class
+//*************************************************************
 
-        /**
-        * @brief Standard implementation for a port using a register based transport layer
-        */
-        class CRegisterPortImpl : public CPortImpl
-        {
-        public:
-            /**
-            * Constructor
-            */
-            CRegisterPortImpl(int MaxNumQuadlets = 1, bool TransportLayerSwapsEndianess = false){};
+/**
+ * @brief Standard implementation for a port using a register based transport
+ * layer
+ */
+class CRegisterPortImpl : public CPortImpl {
+public:
+  /**
+   * Constructor
+   */
+  CRegisterPortImpl(int MaxNumQuadlets = 1,
+                    bool TransportLayerSwapsEndianess = false){};
 
-            /**
-            * Destructor
-            */
-            virtual ~CRegisterPortImpl(){};
+  /**
+   * Destructor
+   */
+  virtual ~CRegisterPortImpl(){};
 
-            //---------------------------------------------------------------
-            // IBase ==> You need to override this method
-            //---------------------------------------------------------------
+  //---------------------------------------------------------------
+  // IBase ==> You need to override this method
+  //---------------------------------------------------------------
 
-            /**
-            * Get the access mode of the node
-            */
-            /*!
-            * Driver closed => NI, Driver open => RW, analyzing a struct, RO
-            */
-            virtual EAccessMode GetAccessMode() const = 0;
+  /**
+   * Get the access mode of the node
+   */
+  /*!
+   * Driver closed => NI, Driver open => RW, analyzing a struct, RO
+   */
+  virtual EAccessMode GetAccessMode() const = 0;
 
-            //---------------------------------------------------------------
-            // IRegisterPort ==> You need to override these methods
-            //---------------------------------------------------------------
+  //---------------------------------------------------------------
+  // IRegisterPort ==> You need to override these methods
+  //---------------------------------------------------------------
 
-            /**
-            * Reads an array of quadlets from the port
-            */
-            virtual void ReadRegister(uint32_t *pRegisters, int64_t Address, int64_t Length) = 0;
+  /**
+   * Reads an array of quadlets from the port
+   */
+  virtual void ReadRegister(uint32_t *pRegisters, int64_t Address,
+                            int64_t Length) = 0;
 
-            /**
-            * Writes an array of quadlets to the port
-            */
-            virtual void WriteRegister(const uint32_t *pRegisters, int64_t Address, int64_t Length) = 0;
+  /**
+   * Writes an array of quadlets to the port
+   */
+  virtual void WriteRegister(const uint32_t *pRegisters, int64_t Address,
+                             int64_t Length) = 0;
 
-            //---------------------------------------------------------------
-            // IPort
-            //---------------------------------------------------------------
+  //---------------------------------------------------------------
+  // IPort
+  //---------------------------------------------------------------
 
-            /**
-            * Reads a chunk of bytes from the port
-            */
-            virtual void Read(void *pBuffer, int64_t Address, int64_t Length){};
+  /**
+   * Reads a chunk of bytes from the port
+   */
+  virtual void Read(void *pBuffer, int64_t Address, int64_t Length){};
 
-            /**
-            * Writes a chunk of bytes to the port
-            */
-            virtual void Write(const void *pBuffer, int64_t Address, int64_t Length){};
+  /**
+   * Writes a chunk of bytes to the port
+   */
+  virtual void Write(const void *pBuffer, int64_t Address, int64_t Length){};
 
-            //---------------------------------------------------------------
-            // IPortConstruct implementation (without IPort & IBase)
-            //---------------------------------------------------------------
+  //---------------------------------------------------------------
+  // IPortConstruct implementation (without IPort & IBase)
+  //---------------------------------------------------------------
 
-            /**
-            * Sets pointer the real port implementation; this function may called only once
-            */
-            virtual void SetPortImpl(IPort* pPort)
-            {
-                m_ptrPort = pPort;
-                assert(m_ptrPort.IsValid());
-            };
-        };
+  /**
+   * Sets pointer the real port implementation; this function may called only
+   * once
+   */
+  virtual void SetPortImpl(IPort *pPort) {
+    m_ptrPort = pPort;
+    assert(m_ptrPort.IsValid());
+  };
+};
 
-        /*@}*/
-        /*@}*/
-    }
-}
+/*@}*/
+/*@}*/
+} // namespace GenApi
+} // namespace Spinnaker
 
 #endif // ifndef SPINNAKER_GENAPI_REGISTERPORTIMPL_H

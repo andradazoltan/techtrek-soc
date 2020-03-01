@@ -21,46 +21,44 @@
 #include "SpinnakerPlatform.h"
 
 #ifdef _WIN32
-#pragma warning ( push )
-#pragma warning ( disable : 4251 ) // XXX needs to have dll-interface to be used by clients of class YYY
+#pragma warning(push)
+#pragma warning(disable : 4251) // XXX needs to have dll-interface to be used by
+                                // clients of class YYY
 #endif
 
-namespace Spinnaker
-{
-    namespace GenApi
-    {
-        /**
-        *  @defgroup SpinnakerGenApiInterfaces Spinnaker GenApi Interfaces
-        */
-        /*@{*/
+namespace Spinnaker {
+namespace GenApi {
+/**
+ *  @defgroup SpinnakerGenApiInterfaces Spinnaker GenApi Interfaces
+ */
+/*@{*/
 
-        /**
-        *  @defgroup IDestroy_h IDestroy Interface
-        */
-        /*@{*/
+/**
+ *  @defgroup IDestroy_h IDestroy Interface
+ */
+/*@{*/
 
-        //*************************************************************
-        // IDestroy interface
-        //*************************************************************
+//*************************************************************
+// IDestroy interface
+//*************************************************************
 
-        /**
-        * @brief Interface to destroy an object
-        */
-        interface SPINNAKER_API_ABSTRACT IDestroy
-        {
-            /**
-            * Makes the object to destro itself
-            */
-            virtual void Destroy() = 0;
-        };
+/**
+ * @brief Interface to destroy an object
+ */
+interface SPINNAKER_API_ABSTRACT IDestroy {
+  /**
+   * Makes the object to destro itself
+   */
+  virtual void Destroy() = 0;
+};
 
-        /*@}*/
-        /*@}*/
-    }
-}
+/*@}*/
+/*@}*/
+} // namespace GenApi
+} // namespace Spinnaker
 
 #ifdef _WIN32
-#pragma warning ( pop )
+#pragma warning(pop)
 #endif
 
 #endif // SPINNAKER_GENAPI_IDESTROY_H

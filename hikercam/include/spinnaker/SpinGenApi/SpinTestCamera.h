@@ -20,29 +20,26 @@
 
 #include "NodeMap.h"
 
-namespace Spinnaker
-{
-    namespace GenApi
-    {
-        /**
-        *  @defgroup SpinnakerGenApiClasses Spinnaker GenApi Classes
-        */
-        /*@{*/
+namespace Spinnaker {
+namespace GenApi {
+/**
+ *  @defgroup SpinnakerGenApiClasses Spinnaker GenApi Classes
+ */
+/*@{*/
 
-        /**
-        *  @defgroup SpinTestCamera_h SpinTestCamera Class
-        */
-        /*@{*/
+/**
+ *  @defgroup SpinTestCamera_h SpinTestCamera Class
+ */
+/*@{*/
 
-        class SPINNAKER_API SpinTestCamera : virtual public NodeMap
-        {
-            // Overload Constructor
-            SpinTestCamera(::GenApi::CNodeMapRef nodeMapRef);
-        };
+class SPINNAKER_API SpinTestCamera : virtual public NodeMap {
+  // Overload Constructor
+  SpinTestCamera(::GenApi::CNodeMapRef nodeMapRef);
+};
 
-        /*@}*/
-        /*@}*/
-    }
-}
+/*@}*/
+/*@}*/
+} // namespace GenApi
+} // namespace Spinnaker
 
 #endif // ifndef SPINNAKER_GENAPI_SPINTESTCAMERA_H

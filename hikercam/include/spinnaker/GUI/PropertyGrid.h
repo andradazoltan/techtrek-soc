@@ -18,115 +18,101 @@
 #pragma once
 #include "Spinnaker.h"
 
-namespace Spinnaker
-{
-	namespace GUI_GTKmm
-	{
-		/**
-		 * @defgroup SpinnakerGUIGTKmm Spinnaker GUI GTKmm Factory Class
-		 */
+namespace Spinnaker {
+namespace GUI_GTKmm {
+/**
+ * @defgroup SpinnakerGUIGTKmm Spinnaker GUI GTKmm Factory Class
+ */
 
-		/*@{*/
+/*@{*/
 
-		/**
-		 * @defgroup PropertyGrid_h Spinnaker GUI GTKmm Property Grid Class
-		 */
+/**
+ * @defgroup PropertyGrid_h Spinnaker GUI GTKmm Property Grid Class
+ */
 
-		/*@{*/
+/*@{*/
 
-		class PropertyGridWidget;
-		class SPINNAKER_API PropertyGrid
-		{
-			public:
+class PropertyGridWidget;
+class SPINNAKER_API PropertyGrid {
+public:
+  /**
+   * Default constructor.
+   */
+  PropertyGrid(void);
 
-				/**
-				* Default constructor.
-				*/
-				PropertyGrid(void);
+  /**
+   * Default destructor.
+   */
+  ~PropertyGrid(void);
 
+  /**
+   * Connect the PropertyGridWindow to a NodeMap object.
+   *
+   * @return boolean indicating whether the operation was successful
+   */
+  bool Connect(Spinnaker::CameraPtr camera);
 
-				/**
-				* Default destructor.
-				*/
-				~PropertyGrid(void);
+  /**
+   * Disconnect the PropertyGridWindow from associated
+   * nodemap object.
+   *
+   */
+  void Disconnect();
 
+  /**
+   * Get a boolean indicating whether PropertyGridWindow is connected to a
+   * camera object.
+   *
+   * @return boolean indicating connection status.
+   */
+  bool IsConnected();
 
-				/**
-				 * Connect the PropertyGridWindow to a NodeMap object.
-				 *
-				 * @return boolean indicating whether the operation was successful
-				 */
-				bool Connect(Spinnaker::CameraPtr camera);
+  /**
+   * Immediately refresh all features listed in PropertyGrid.
+   *
+   */
+  void Refresh();
 
+  /**
+   *Get a new PropertyGrid widget
 
-				/**
-				 * Disconnect the PropertyGridWindow from associated
-				 * nodemap object.
-				 *
-				 */
-				void Disconnect();
+   *@return a Gtk::Widget* pointer for PropertyGrid
+   */
+  PropertyGridWidget *GetWidget();
 
+  /**
+   * Get the window title.
+   *
+   * @return string representing the title.
+   */
+  Glib::ustring GetID();
 
-				/**
-				 * Get a boolean indicating whether PropertyGridWindow is connected to a camera object.
-				 *
-				 * @return boolean indicating connection status.
-				 */
-				bool IsConnected();
+  /**
+   * Set the window title.
+   *
+   * @param string representing the title.
+   */
+  void SetID(Glib::ustring id);
 
+  /**
+   * Show the PropertyGridWindow.
+   *
+   */
+  void Open();
 
-				/**
-				 * Immediately refresh all features listed in PropertyGrid.
-				 *
-				 */
-				void Refresh();
+  /**
+   * Hide the PropertyGridWindow.
+   *
+   */
+  void Close();
 
+protected:
+  struct PropertyGridData;
+  PropertyGridData *m_pPropertyGridData;
+};
 
+/*@}*/
 
-				/**
-				 *Get a new PropertyGrid widget
-
-				 *@return a Gtk::Widget* pointer for PropertyGrid
-				 */
-				PropertyGridWidget* GetWidget();
-
-
-				/**
-				 * Get the window title.
-				 *
-				 * @return string representing the title.
-				 */
-				Glib::ustring GetID();
-
-
-				/**
-				 * Set the window title.
-				 *
-				 * @param string representing the title.
-				 */
-				void SetID(Glib::ustring id);
-
-
-				/**
-				 * Show the PropertyGridWindow.
-				 *
-				 */
-				void Open();
-
-
-				/**
-				 * Hide the PropertyGridWindow.
-				 *
-				 */
-				void Close();
-
-			protected:
-				struct PropertyGridData;
-				PropertyGridData* m_pPropertyGridData;
-		};
-
-		/*@}*/
-
-		/*@}*/
-	}
-}
+/*@}*/
+} // namespace GUI_GTKmm
+} // namespace Spinnaker

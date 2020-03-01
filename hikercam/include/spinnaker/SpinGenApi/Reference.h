@@ -18,71 +18,67 @@
 #ifndef SPINNAKER_GENAPI_REFERENCE_H
 #define SPINNAKER_GENAPI_REFERENCE_H
 
-#include "Types.h"
-#include "SpinnakerPlatform.h"
 #include "GCString.h"
+#include "SpinnakerPlatform.h"
+#include "Types.h"
 
-namespace Spinnaker
-{
-    namespace GenApi
-    {
-        /**
-        *  @defgroup SpinnakerGenApiInterfaces Spinnaker GenApi Interfaces
-        */
-        /*@{*/
+namespace Spinnaker {
+namespace GenApi {
+/**
+ *  @defgroup SpinnakerGenApiInterfaces Spinnaker GenApi Interfaces
+ */
+/*@{*/
 
-        interface IBase;
+interface IBase;
 
-        /**
-        *  @defgroup Reference_h Reference Interfaces
-        */
-        /*@{*/
+/**
+ *  @defgroup Reference_h Reference Interfaces
+ */
+/*@{*/
 
-        //*************************************************************
-        // IReference interface
-        //*************************************************************
+//*************************************************************
+// IReference interface
+//*************************************************************
 
-        /**
-        * @brief Interface to construct a reference
-        */
-        interface SPINNAKER_API_ABSTRACT IReference
-        {
-            /**
-            * sets the implementation to a reference
-            */
-            virtual void SetReference(INode* pBase) = 0;
-        };
+/**
+ * @brief Interface to construct a reference
+ */
+interface SPINNAKER_API_ABSTRACT IReference {
+  /**
+   * sets the implementation to a reference
+   */
+  virtual void SetReference(INode * pBase) = 0;
+};
 
-        /*@}*/
+/*@}*/
 
-        /**
-        *  @defgroup Reference_h Reference Interfaces
-        */
-        /*@{*/
+/**
+ *  @defgroup Reference_h Reference Interfaces
+ */
+/*@{*/
 
-        //*************************************************************
-        // IEnumReference interface
-        //*************************************************************
+//*************************************************************
+// IEnumReference interface
+//*************************************************************
 
-        /**
-        * @brief Interface to construct an enum reference
-        */
-        interface SPINNAKER_API_ABSTRACT IEnumReference
-        {
-            /**
-            * sets the Enum value corresponding to a value
-            */
-            virtual void SetEnumReference(int Index, GenICam::gcstring Name) = 0;
+/**
+ * @brief Interface to construct an enum reference
+ */
+interface SPINNAKER_API_ABSTRACT IEnumReference {
+  /**
+   * sets the Enum value corresponding to a value
+   */
+  virtual void SetEnumReference(int Index, GenICam::gcstring Name) = 0;
 
-            /**
-            * sets the number of enum values
-            */
-            virtual void SetNumEnums(int NumEnums) = 0;
-        };
+  /**
+   * sets the number of enum values
+   */
+  virtual void SetNumEnums(int NumEnums) = 0;
+};
 
-        /*@}*/
-        /*@}*/
-    }
-}
+/*@}*/
+/*@}*/
+} // namespace GenApi
+} // namespace Spinnaker
 
 #endif // ifndef SPINNAKER_GENAPI_REFERENCE_H

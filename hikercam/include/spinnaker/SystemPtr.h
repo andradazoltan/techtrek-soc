@@ -18,51 +18,48 @@
 #ifndef FLIR_SPINNAKER_SYSTEM_PTR_H
 #define FLIR_SPINNAKER_SYSTEM_PTR_H
 
-#include "SpinnakerPlatform.h"
 #include "BasePtr.h"
+#include "SpinnakerPlatform.h"
 #include "System.h"
 
-namespace Spinnaker
-{
-    class ISystem;
+namespace Spinnaker {
+class ISystem;
 
-    /**
-    *  @defgroup SpinnakerClasses Spinnaker Classes
-    */
-    /*@{*/
+/**
+ *  @defgroup SpinnakerClasses Spinnaker Classes
+ */
+/*@{*/
 
-    /**
-    *  @defgroup SystemPtr_h SystemPtr Class
-    */
-    /*@{*/
+/**
+ *  @defgroup SystemPtr_h SystemPtr Class
+ */
+/*@{*/
 
-    /**
-    * @brief A reference tracked pointer to a system object.
-    */
+/**
+ * @brief A reference tracked pointer to a system object.
+ */
 
-    class SPINNAKER_API SystemPtr : public BasePtr<ISystem>
-    {
-    public:
+class SPINNAKER_API SystemPtr : public BasePtr<ISystem> {
+public:
+  //! Default constructor
+  SystemPtr();
 
-        //! Default constructor 
-        SystemPtr();
+  //! Copy constructor
+  SystemPtr(const int /*nMustBeNull*/);
 
-        //! Copy constructor 
-        SystemPtr(const int /*nMustBeNull*/);
+  //! Copy constructor
+  SystemPtr(const long /*nMustBeNull*/);
 
-        //! Copy constructor 
-        SystemPtr(const long /*nMustBeNull*/);
+  //! Copy constructor
+  SystemPtr(const std::nullptr_t /*nullPtr*/);
 
-        //! Copy constructor
-        SystemPtr(const std::nullptr_t /*nullPtr*/);
+  //! Virtual destructor
+  virtual ~SystemPtr(void);
+};
 
-        //! Virtual destructor 
-        virtual ~SystemPtr(void);
-    };
+/*@}*/
 
-    /*@}*/
+/*@}*/
+} // namespace Spinnaker
 
-    /*@}*/
-}
-
-#endif //FLIR_SPINNAKER_SYSTEM_PTR_H
+#endif // FLIR_SPINNAKER_SYSTEM_PTR_H

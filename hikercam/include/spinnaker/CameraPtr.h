@@ -18,57 +18,44 @@
 #ifndef FLIR_SPINNAKER_CAMERA_PTR_H
 #define FLIR_SPINNAKER_CAMERA_PTR_H
 
-#include "SpinnakerPlatform.h"
 #include "BasePtr.h"
 #include "Camera.h"
+#include "SpinnakerPlatform.h"
 
+namespace Spinnaker {
+/**
+ *  @defgroup SpinnakerClasses Spinnaker Classes
+ */
 
-namespace Spinnaker
-{
-    /**
-    *  @defgroup SpinnakerClasses Spinnaker Classes
-    */
+/*@{*/
 
-    /*@{*/
+/**
+ *  @defgroup CameraPtr_h CameraPtr Class
+ */
 
-    /**
-    *  @defgroup CameraPtr_h CameraPtr Class
-    */
+/*@{*/
 
-    /*@{*/
+/**
+ * @brief A reference tracked pointer to a camera object.
+ */
 
-    /**
-    * @brief A reference tracked pointer to a camera object. 
-    */
+class SPINNAKER_API CameraPtr : public BasePtr<Camera, ICameraBase> {
 
-    class SPINNAKER_API CameraPtr : public BasePtr<Camera, ICameraBase>
-    {
+public:
+  //! Default constructor.
+  CameraPtr() throw() : BasePtr<Camera, ICameraBase>() {}
 
-    public:
-        //! Default constructor.
-        CameraPtr() throw()
-            : BasePtr<Camera, ICameraBase>()
-        {
-        }
+  //! Default constructor.
+  CameraPtr(const int /*nMustBeNull*/) throw()
+      : BasePtr<Camera, ICameraBase>() {}
 
-        //! Default constructor.
-        CameraPtr(const int /*nMustBeNull*/) throw()
-            : BasePtr<Camera, ICameraBase>()
-        {
-        }
+  //! Default constructor with argument.
+  CameraPtr(const long /*nMustBeNull*/) throw()
+      : BasePtr<Camera, ICameraBase>() {}
 
-        //! Default constructor with argument.
-        CameraPtr(const long /*nMustBeNull*/) throw()
-            : BasePtr<Camera, ICameraBase>()
-        {
-        }
-
-        CameraPtr(const std::nullptr_t /*nullPtr*/) throw()
-            : BasePtr<Camera, ICameraBase>()
-        {
-        }
-        
-    };
-}
+  CameraPtr(const std::nullptr_t /*nullPtr*/) throw()
+      : BasePtr<Camera, ICameraBase>() {}
+};
+} // namespace Spinnaker
 
 #endif // FLIR_SPINNAKER_CAMERA_PTR_H

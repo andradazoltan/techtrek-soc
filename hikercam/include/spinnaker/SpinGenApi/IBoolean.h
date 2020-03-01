@@ -18,74 +18,75 @@
 #ifndef SPINNAKER_GENAPI_IBOOLEAN_H
 #define SPINNAKER_GENAPI_IBOOLEAN_H
 
+#include "IValue.h"
 #include "SpinnakerPlatform.h"
 #include "Types.h"
-#include "IValue.h"
 
 #ifdef _WIN32
-#pragma warning ( push )
-#pragma warning ( disable : 4251 ) // XXX needs to have dll-interface to be used by clients of class YYY
+#pragma warning(push)
+#pragma warning(disable : 4251) // XXX needs to have dll-interface to be used by
+                                // clients of class YYY
 #endif
 
-namespace Spinnaker
-{
-    namespace GenApi
-    {
-        /**
-        *  @defgroup SpinnakerGenApiInterfaces Spinnaker GenApi Interfaces
-        */
-        /*@{*/
+namespace Spinnaker {
+namespace GenApi {
+/**
+ *  @defgroup SpinnakerGenApiInterfaces Spinnaker GenApi Interfaces
+ */
+/*@{*/
 
-        /**
-        *  @defgroup IBoolean_h IBoolean Interface
-        */
-        /*@{*/
+/**
+ *  @defgroup IBoolean_h IBoolean Interface
+ */
+/*@{*/
 
-        //*************************************************************
-        // IBoolean interface
-        //*************************************************************
+//*************************************************************
+// IBoolean interface
+//*************************************************************
 
-        /**
-        * @brief Interface for Boolean  properties
-        */
-        interface SPINNAKER_API_ABSTRACT IBoolean : virtual public IValue
-        {
-        public:
-            /**
-            * Set node value
-            *
-            * @param Value The value to set
-            * @param Verify Enables AccessMode and Range verification (default = true)
-            */
-            virtual void SetValue(bool Value, bool Verify = true) = 0;
+/**
+ * @brief Interface for Boolean  properties
+ */
+interface SPINNAKER_API_ABSTRACT IBoolean : virtual public IValue {
+public:
+  /**
+   * Set node value
+   *
+   * @param Value The value to set
+   * @param Verify Enables AccessMode and Range verification (default = true)
+   */
+  virtual void SetValue(bool Value, bool Verify = true) = 0;
 
-            /**
-            * Set node value
-            */
-            virtual void operator=(bool Value){ SetValue(Value); }
+  /**
+   * Set node value
+   */
+  virtual void operator=(bool Value) { SetValue(Value); }
 
-            /**
-            * Get node value
-            *
-            * @param Verify Enables Range verification (default = false). The AccessMode is always checked
-            * @param IgnoreCache If true the value is read ignoring any caches (default = false)
-            * @return The value read
-            */
-            virtual bool GetValue(bool Verify = false, bool IgnoreCache = false) const = 0;
+  /**
+   * Get node value
+   *
+   * @param Verify Enables Range verification (default = false). The AccessMode
+   * is always checked
+   * @param IgnoreCache If true the value is read ignoring any caches (default =
+   * false)
+   * @return The value read
+   */
+  virtual bool GetValue(bool Verify = false, bool IgnoreCache = false)
+      const = 0;
 
-            /**
-            * Get node value
-            */
-            virtual bool operator()() const { return GetValue(); }
-        };
+  /**
+   * Get node value
+   */
+  virtual bool operator()() const { return GetValue(); }
+};
 
-        /*@}*/
-        /*@}*/
-    }
-}
+/*@}*/
+/*@}*/
+} // namespace GenApi
+} // namespace Spinnaker
 
 #ifdef _WIN32
-#pragma warning ( pop )
+#pragma warning(pop)
 #endif
 
 #endif // ifndef SPINNAKER_GENAPI_IBOOLEAN_H

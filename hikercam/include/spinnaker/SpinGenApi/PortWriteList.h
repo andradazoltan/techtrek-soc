@@ -22,79 +22,77 @@
 #include "PortWriteList.h"
 
 #ifdef _WIN32
-#pragma warning ( push )
-#pragma warning ( disable : 4251 ) // XXX needs to have dll-interface to be used by clients of class YYY
+#pragma warning(push)
+#pragma warning(disable : 4251) // XXX needs to have dll-interface to be used by
+                                // clients of class YYY
 #endif
 
-namespace Spinnaker
-{
-    namespace GenApi
-    {
-        /**
-        *  @defgroup SpinnakerGenApiClasses Spinnaker GenApi Classes
-        */
-        /*@{*/
+namespace Spinnaker {
+namespace GenApi {
+/**
+ *  @defgroup SpinnakerGenApiClasses Spinnaker GenApi Classes
+ */
+/*@{*/
 
-        /**
-        *  @defgroup PortWriteList_h PortWriteList Class
-        */
-        /*@{*/
+/**
+ *  @defgroup PortWriteList_h PortWriteList Class
+ */
+/*@{*/
 
-        /**
-        * Container holding a list of port write commands
-        */
-        class SPINNAKER_API CPortWriteList : virtual public IPortWriteList
-        {
-        public:
-            /**
-            * Constructor
-            */
-            CPortWriteList();
+/**
+ * Container holding a list of port write commands
+ */
+class SPINNAKER_API CPortWriteList : virtual public IPortWriteList {
+public:
+  /**
+   * Constructor
+   */
+  CPortWriteList();
 
-            /**
-            * Destructor
-            */
-            ~CPortWriteList();
+  /**
+   * Destructor
+   */
+  ~CPortWriteList();
 
-            //---------------------------------------------------------------
-            // IPortWriteList
-            //---------------------------------------------------------------
+  //---------------------------------------------------------------
+  // IPortWriteList
+  //---------------------------------------------------------------
 
-            /**
-            * Writes a chunk of bytes to the port
-            */
-            virtual void Write(const void *pBuffer, int64_t Address, int64_t Length);
+  /**
+   * Writes a chunk of bytes to the port
+   */
+  virtual void Write(const void *pBuffer, int64_t Address, int64_t Length);
 
-            /**
-            * Replays the write command to the given port interface
-            */
-            virtual void Replay(IPort* pPort);
+  /**
+   * Replays the write command to the given port interface
+   */
+  virtual void Replay(IPort *pPort);
 
-            /**
-            * Sets a cookie in case the port implementation want to cache a command list
-            */
-            // Default = -1
-            virtual void SetCookie(const int64_t Value);
+  /**
+   * Sets a cookie in case the port implementation want to cache a command list
+   */
+  // Default = -1
+  virtual void SetCookie(const int64_t Value);
 
-            /**
-            * Gets the cookie a port implementation may have set for caching a command list
-            */
-            virtual int64_t GetCookie();
+  /**
+   * Gets the cookie a port implementation may have set for caching a command
+   * list
+   */
+  virtual int64_t GetCookie();
 
-            void* GetPortWriteListHandle();
+  void *GetPortWriteListHandle();
 
-        protected:
+protected:
+  void *m_pWriteList;
+};
 
-            void* m_pWriteList;
-        };
-
-        /*@}*/
-        /*@}*/
-    }
-}
+/*@}*/
+/*@}*/
+} // namespace GenApi
+} // namespace Spinnaker
 
 #ifdef _WIN32
-#pragma warning ( pop )
+#pragma warning(pop)
 #endif
 
 #endif // ifndef SPINNAKER_GENAPI_PORTWRITELIST_H

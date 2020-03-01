@@ -21,19 +21,17 @@
 #include "Event.h"
 #include "SpinnakerPlatform.h"
 
-namespace Spinnaker
-{
-    class IRemovalEvent : public virtual Event
-    {
-    public:
-        virtual ~IRemovalEvent() {};
-        virtual void OnDeviceRemoval(uint64_t serialNumber) = 0;
+namespace Spinnaker {
+class IRemovalEvent : public virtual Event {
+public:
+  virtual ~IRemovalEvent(){};
+  virtual void OnDeviceRemoval(uint64_t serialNumber) = 0;
 
-    protected:
-        IRemovalEvent() {};
-        IRemovalEvent(const IRemovalEvent&) {};
-        IRemovalEvent& operator=(const IRemovalEvent&);
-    };
-}
+protected:
+  IRemovalEvent(){};
+  IRemovalEvent(const IRemovalEvent &){};
+  IRemovalEvent &operator=(const IRemovalEvent &);
+};
+} // namespace Spinnaker
 
 #endif /* PGR_SPINNAKER_IREMOVALEVENT_H */

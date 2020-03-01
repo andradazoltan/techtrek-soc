@@ -18,64 +18,63 @@
 #ifndef SPINNAKER_GENAPI_FLOATREGNODE_H
 #define SPINNAKER_GENAPI_FLOATREGNODE_H
 
+#include "Base.h"
+#include "FloatNode.h"
+#include "GCString.h"
+#include "INode.h"
+#include "ISelector.h"
+#include "RegisterNode.h"
 #include "SpinnakerPlatform.h"
 #include "Types.h"
-#include "Base.h"
-#include "GCString.h"
-#include "ISelector.h"
-#include "INode.h"
 #include "ValueNode.h"
-#include "FloatNode.h"
-#include "RegisterNode.h"
 
 #ifdef _WIN32
-#pragma warning ( push )
-#pragma warning( disable : 4250 ) // C4250 - 'class1' : inherits 'class2::member' via dominance
-#pragma warning ( disable : 4251 ) // XXX needs to have dll-interface to be used by clients of class YYY
-#pragma warning( disable: 4275 ) // non dll-interface structXXX used as base
+#pragma warning(push)
+#pragma warning(disable : 4250) // C4250 - 'class1' : inherits 'class2::member'
+                                // via dominance
+#pragma warning(disable : 4251) // XXX needs to have dll-interface to be used by
+                                // clients of class YYY
+#pragma warning(disable : 4275) // non dll-interface structXXX used as base
 #endif
 
-namespace Spinnaker
-{
-    namespace GenApi
-    {
-        /**
-        *  @defgroup SpinnakerGenApiClasses Spinnaker GenApi Classes
-        */
-        /*@{*/
+namespace Spinnaker {
+namespace GenApi {
+/**
+ *  @defgroup SpinnakerGenApiClasses Spinnaker GenApi Classes
+ */
+/*@{*/
 
-        /**
-        *  @defgroup FloatRegNode_h FloatRegNode Class
-        */
-        /*@{*/
+/**
+ *  @defgroup FloatRegNode_h FloatRegNode Class
+ */
+/*@{*/
 
-        /**
-        * @brief Interface for string properties
-        */
-        class SPINNAKER_API FloatRegNode : virtual public FloatNode, virtual public RegisterNode
-        {
-        public:
-            struct NodeImpl;
-            FloatRegNode();
+/**
+ * @brief Interface for string properties
+ */
+class SPINNAKER_API FloatRegNode : virtual public FloatNode,
+                                   virtual public RegisterNode {
+public:
+  struct NodeImpl;
+  FloatRegNode();
 
-            FloatRegNode(std::shared_ptr<Node::NodeImpl> pFloat);
+  FloatRegNode(std::shared_ptr<Node::NodeImpl> pFloat);
 
-            virtual ~FloatRegNode();
+  virtual ~FloatRegNode();
 
-            /**
-            * overload SetReference for Value
-            */
-            virtual void SetReference(INode* pBase);
+  /**
+   * overload SetReference for Value
+   */
+  virtual void SetReference(INode *pBase);
+};
 
-        };
-
-        /*@}*/
-        /*@}*/
-    }
-}
+/*@}*/
+/*@}*/
+} // namespace GenApi
+} // namespace Spinnaker
 
 #ifdef _WIN32
-#pragma warning ( pop )
+#pragma warning(pop)
 #endif
 
 #endif // SPINNAKER_GENAPI_FLOATREGNODE_H

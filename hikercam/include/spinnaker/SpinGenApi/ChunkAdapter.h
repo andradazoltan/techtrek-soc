@@ -18,106 +18,102 @@
 #ifndef SPINNAKER_GENAPI_CHUNKADAPTER_H
 #define SPINNAKER_GENAPI_CHUNKADAPTER_H
 
-#include "Types.h"
 #include "INodeMap.h"
+#include "Types.h"
 
-namespace Spinnaker
-{
-    namespace GenApi
-    {
-        /**
-        * @brief Delivers information about the attached chunks and nodes.
-        */
-        typedef struct AttachStatistics_t
-        {
-            /**
-            * Number of chunk ports found in the node map.
-            */
-            int NumChunkPorts;
+namespace Spinnaker {
+namespace GenApi {
+/**
+ * @brief Delivers information about the attached chunks and nodes.
+ */
+typedef struct AttachStatistics_t {
+  /**
+   * Number of chunk ports found in the node map.
+   */
+  int NumChunkPorts;
 
-            /**
-            * Number of chunks found in the buffer.
-            */
-            int NumChunks;
+  /**
+   * Number of chunks found in the buffer.
+   */
+  int NumChunks;
 
-            /**
-            * Number of chunks from the buffer attached to a chunk port.
-            */
-            int NumAttachedChunks;
-        } AttachStatistics_t;
+  /**
+   * Number of chunks from the buffer attached to a chunk port.
+   */
+  int NumAttachedChunks;
+} AttachStatistics_t;
 
-        /**
-        *  @defgroup SpinnakerGenApiClasses Spinnaker GenApi Classes
-        */
-        /*@{*/
+/**
+ *  @defgroup SpinnakerGenApiClasses Spinnaker GenApi Classes
+ */
+/*@{*/
 
-        /**
-        *  @defgroup ChunkAdapter_h ChunkAdapter Class
-        */
-        /*@{*/
+/**
+ *  @defgroup ChunkAdapter_h ChunkAdapter Class
+ */
+/*@{*/
 
-        /**
-        * @brief Connects a chunked buffer to a node map
-        */
-        class SPINNAKER_API CChunkAdapter
-        {
+/**
+ * @brief Connects a chunked buffer to a node map
+ */
+class SPINNAKER_API CChunkAdapter {
 
-        public:
-            /**
-            * Destructor.
-            */
-            virtual ~CChunkAdapter();
+public:
+  /**
+   * Destructor.
+   */
+  virtual ~CChunkAdapter();
 
-            /**
-            * Attaches to a node map and retrieves the chunk ports.
-            */
-            void AttachNodeMap(INodeMap* pNodeMap);
+  /**
+   * Attaches to a node map and retrieves the chunk ports.
+   */
+  void AttachNodeMap(INodeMap *pNodeMap);
 
-            /**
-            * Detaches from the node map.
-            */
-            void DetachNodeMap();
+  /**
+   * Detaches from the node map.
+   */
+  void DetachNodeMap();
 
-            /**
-            * Checks if a buffer contains chunks in a known format.
-            */
-            // Implement that for a specific buffer layout
-            virtual bool CheckBufferLayout(uint8_t *pBuffer, int64_t BufferLength) = 0;
+  /**
+   * Checks if a buffer contains chunks in a known format.
+   */
+  // Implement that for a specific buffer layout
+  virtual bool CheckBufferLayout(uint8_t *pBuffer, int64_t BufferLength) = 0;
 
-            /**
-            * Attaches a buffer to the matching ChunkPort.
-            */
-            // Implement that for a specific buffer layout
-            virtual void AttachBuffer(uint8_t *pBuffer, int64_t BufferLength, AttachStatistics_t *pAttachStatistics = NULL) = 0;
+  /**
+   * Attaches a buffer to the matching ChunkPort.
+   */
+  // Implement that for a specific buffer layout
+  virtual void AttachBuffer(uint8_t *pBuffer, int64_t BufferLength,
+                            AttachStatistics_t *pAttachStatistics = NULL) = 0;
 
-            /**
-            * Detaches a buffer.
-            */
-            void DetachBuffer();
+  /**
+   * Detaches a buffer.
+   */
+  void DetachBuffer();
 
-            /**
-            * Updates the base address of the buffer.
-            */
-            void UpdateBuffer(uint8_t *pBaseAddress);
+  /**
+   * Updates the base address of the buffer.
+   */
+  void UpdateBuffer(uint8_t *pBaseAddress);
 
-            /**
-            * Clears the chunk caches.
-            */
-            void ClearCaches();
+  /**
+   * Clears the chunk caches.
+   */
+  void ClearCaches();
 
-        protected:
+protected:
+  /**
+   * Serves as default constructor.
+   */
+  CChunkAdapter(INodeMap *pNodeMap = NULL, int64_t MaxChunkCacheSize = -1);
 
-            /**
-            * Serves as default constructor.
-            */
-            CChunkAdapter(INodeMap* pNodeMap = NULL, int64_t MaxChunkCacheSize = -1);
+  void *m_pChunkAdapter;
+};
 
-            void* m_pChunkAdapter;
-        };
-
-        /*@}*/
-        /*@}*/
-    }
-}
+/*@}*/
+/*@}*/
+} // namespace GenApi
+} // namespace Spinnaker
 
 #endif // SPINNAKER_GENAPI_CHUNKADAPTER_H

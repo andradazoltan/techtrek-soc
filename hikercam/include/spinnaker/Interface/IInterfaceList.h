@@ -20,45 +20,43 @@
 
 #include "InterfacePtr.h"
 
-namespace Spinnaker
-{
-    /**
-    * @defgroup SpinnakerClasses Spinnaker Classes
-    */
+namespace Spinnaker {
+/**
+ * @defgroup SpinnakerClasses Spinnaker Classes
+ */
 
-    /*@{*/
+/*@{*/
 
-    /**
-    * @defgroup IInterfaceList_h IInterfaceList Class
-    */
+/**
+ * @defgroup IInterfaceList_h IInterfaceList Class
+ */
 
-    /*@{*/
+/*@{*/
 
-    /**
-    * @brief The interface file for InterfaceList class.
-    */
+/**
+ * @brief The interface file for InterfaceList class.
+ */
 
-    class SPINNAKER_API IInterfaceList
-    {
-    public:
-        virtual ~IInterfaceList(void) {};
-        virtual InterfacePtr operator[](unsigned int index) = 0;
-        virtual unsigned int GetSize() const = 0;
-        virtual InterfacePtr GetByIndex(unsigned int index) const = 0;
-        virtual void Clear() = 0;
+class SPINNAKER_API IInterfaceList {
+public:
+  virtual ~IInterfaceList(void){};
+  virtual InterfacePtr operator[](unsigned int index) = 0;
+  virtual unsigned int GetSize() const = 0;
+  virtual InterfacePtr GetByIndex(unsigned int index) const = 0;
+  virtual void Clear() = 0;
 
-    protected:
-        struct InterfaceListData; // Forward declaration
-        InterfaceListData* m_pInterfaceListData;
+protected:
+  struct InterfaceListData; // Forward declaration
+  InterfaceListData *m_pInterfaceListData;
 
-        IInterfaceList(void) {};
-        IInterfaceList(const IInterfaceList &) {};
-        IInterfaceList&	operator=(const IInterfaceList&);
-    };
+  IInterfaceList(void){};
+  IInterfaceList(const IInterfaceList &){};
+  IInterfaceList &operator=(const IInterfaceList &);
+};
 
-    /*@}*/
+/*@}*/
 
-    /*@}*/
-}
+/*@}*/
+} // namespace Spinnaker
 
 #endif // FLIR_SPINNAKER_IINTERFACELIST_H

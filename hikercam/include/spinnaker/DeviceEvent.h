@@ -20,65 +20,63 @@
 
 #include "Interface/IDeviceEvent.h"
 
-namespace Spinnaker
-{
-    /**
-     *  @defgroup SpinnakerEventClasses Spinnaker Event Classes
-     */
-     /*@{*/
+namespace Spinnaker {
+/**
+ *  @defgroup SpinnakerEventClasses Spinnaker Event Classes
+ */
+/*@{*/
 
-     /**
-     *  @defgroup DeviceEvent_h DeviceEvent Class
-     */
-     /*@{*/
+/**
+ *  @defgroup DeviceEvent_h DeviceEvent Class
+ */
+/*@{*/
 
-    /**
-    * @brief A handler to device events.
-    */
+/**
+ * @brief A handler to device events.
+ */
 
-    class SPINNAKER_API DeviceEvent : public IDeviceEvent
-    {
-    public:
-        /**
-        * Default constructor.
-        */
-        DeviceEvent();
+class SPINNAKER_API DeviceEvent : public IDeviceEvent {
+public:
+  /**
+   * Default constructor.
+   */
+  DeviceEvent();
 
-        /**
-        * Virtual destructor.
-        */
-        virtual ~DeviceEvent();
+  /**
+   * Virtual destructor.
+   */
+  virtual ~DeviceEvent();
 
-        /**
-        * Device event callback.
-        *
-        * @param eventName The name of the event
-        */
-        virtual void OnDeviceEvent(Spinnaker::GenICam::gcstring eventName) = 0;
+  /**
+   * Device event callback.
+   *
+   * @param eventName The name of the event
+   */
+  virtual void OnDeviceEvent(Spinnaker::GenICam::gcstring eventName) = 0;
 
-        /**
-        * Get the ID of the device event.
-        *
-        * @return The device event ID
-        */
-        uint64_t GetDeviceEventId() const;
+  /**
+   * Get the ID of the device event.
+   *
+   * @return The device event ID
+   */
+  uint64_t GetDeviceEventId() const;
 
-        /**
-        * Get the name of the device event.
-        *
-        * @return The device event name
-        */
-        GenICam::gcstring GetDeviceEventName() const;
+  /**
+   * Get the name of the device event.
+   *
+   * @return The device event name
+   */
+  GenICam::gcstring GetDeviceEventName() const;
 
-    protected:
-        /**
-        * Assignment operator.
-        */
-        DeviceEvent& operator=( const DeviceEvent& );
-    };
-    /*@}*/
+protected:
+  /**
+   * Assignment operator.
+   */
+  DeviceEvent &operator=(const DeviceEvent &);
+};
+/*@}*/
 
-    /*@}*/
-}
+/*@}*/
+} // namespace Spinnaker
 
 #endif // PGR_SPINNAKER_DEVICEEVENT_H
