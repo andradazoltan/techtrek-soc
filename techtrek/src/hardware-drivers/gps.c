@@ -1,8 +1,13 @@
 /*
+ * gps.c
+ *
  * C File for driving UART GPS
  *
  * This currently does not support data-logging functionality. It only
  * parses GGA strings.
+ *
+ * Created on: Feb 23, 2020
+ * Author: Jacob Grossbard
  */
 
 #include "gps.h"
@@ -136,68 +141,10 @@ void read_gga(struct gga *sentence) {
 
 int gga_fix_is_valid(struct gga sentence) {
   if (sentence.gga_fix > 0 && sentence.gga_fix < 6) {
-    return TRUE;
+    return 1;
   }
 
-  return FALSE;
-}
-
-void display(long long digits) {
-  *HEX0_1 = digits & 0xFFFF;
-  *HEX2_3 = (digits >> 8) & 0xFFFF;
-  *HEX4_5 = (digits >> 16) & 0xFFFF;
-}
-
-void displayf(float num) {
-  char buf[100];
-  long long digits = 0;
-
-  sprintf(buf, "%f", fabs(num));
-
-  if (num < 0) {
-    *LEDS |= 0x1 << 9;
-  } else {
-    *LEDS = 0;
-  }
-
-  int offset = 0;
-  for (int i = 0; i < 6; i++) {
-    if (buf[i] == '.') {
-      offset = 1;
-    }
-    if (buf[i] == '\0') {
-      break;
-    }
-
-    digits <<= 4;
-    digits += buf[i + offset] - '0';
-  }
-
-  display(digits);
-}
-
-void displayd(int num) {
-  char buf[100];
-  long long digits = 0;
-
-  sprintf(buf, "%d", abs(num));
-
-  if (num < 0) {
-    *LEDS = 0x1 << 9;
-  } else {
-    *LEDS = 0;
-  }
-
-  for (int i = 0; i < 6; i++) {
-    if (buf[i] == '\0') {
-      break;
-    }
-
-    digits <<= 4;
-    digits += buf[i] - '0';
-  }
-
-  display(digits);
+  return 0;
 }
 
 void gps_uart_init(void) {
@@ -244,9 +191,9 @@ int gps_uart_getchar(void) {
 // to see if one is available to read from the FIFO
 int gps_uart_data_available(void) {
   if ((GPS_LineStatusReg & 0x1) == 0x1) {
-    return TRUE;
+    return 1;
   } else {
-    return FALSE;
+    return 0;
   }
   // if RS232_LineStatusReg bit 0 is set to 1
   // return TRUE, otherwise return FALSE

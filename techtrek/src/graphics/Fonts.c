@@ -1,4 +1,7 @@
-//
+/*
+ * Fonts.c
+ */
+
 // This file contains data for five different fonts
 // The first 2 represent a simple 5x7 and 10x14 font
 // the files OutGraphicsCharFont1.c and OutGraphicsCharFont2.c allow you to draw

@@ -1,8 +1,10 @@
 /*
  * RegisterDefs.h
  *
+ * Holds addresses of all memory mapped registers in the system.
+ *
  *  Created on: Feb 6, 2020
- *      Author: Andrada Zoltan
+ *  Author: Andrada Zoltan
  */
 
 #ifndef REGISTERDEFS_H_

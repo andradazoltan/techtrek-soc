@@ -1,6 +1,9 @@
 /*
  *  HikerCam.cpp
  *
+ *  Initializes and streams images from the camera, saving
+ *  bounding box data of people in the frame.
+ *
  *  Created on: Feb 4, 2020
  *  Author: Andrada Zoltan
  */
@@ -235,6 +238,3 @@ int HikerCam::EnableInference(INodeMap& nodeMap) {
 
     return 0;
 }
-
-
-

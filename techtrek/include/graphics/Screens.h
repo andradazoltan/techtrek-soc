@@ -14,11 +14,6 @@
 #include "Fonts.h"
 #include "images.h"
 
-// Extern Declarations
-extern int people_count;
-extern BMP techtrek;
-extern BMP parkmap;
-
 /*
  * List of screens
  */
@@ -90,6 +85,10 @@ extern object_t warningsScreen[1]; // Warnings Screen Objects
 
 extern char warnings[5][42];
 extern int currWarning;
+
+extern int people_count;
+extern BMP techtrek;
+extern BMP parkmap;
 
 // Function Definitions
 void initColours(void);

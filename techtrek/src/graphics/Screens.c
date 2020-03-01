@@ -200,61 +200,7 @@ object_t mapScreen[] = {
             .bottomRightXCoord = 780,
             .bottomRightYCoord = 70
         }
-    },
-    /*
-    { // Left
-        .type = RECT,
-        .colour = CHOCOLATE,
-        .text = "LEFT",
-        .textXCoord = 40,
-        .func = &shiftMapLeft,
-        .rect = {
-            .topLeftXCoord = 35,
-            .topLeftYCoord = 240 - (50/2),
-            .bottomRightXCoord = 105,
-            .bottomRightYCoord = 240 + (50/2)
-        }
-    },
-    { // Right
-        .type = RECT,
-        .colour = CHOCOLATE,
-        .text = "RIGHT",
-        .textXCoord = 799 - 100,
-        .func = &shiftMapRight,
-        .rect = {
-            .topLeftXCoord = 794 - 100,
-            .topLeftYCoord = 240 - (50/2),
-            .bottomRightXCoord = 794,
-            .bottomRightYCoord = 240 + (50/2)
-        }
-    },
-    { // Up
-        .type = RECT,
-        .colour = CHOCOLATE,
-        .text = "UP",
-        .textXCoord = 400 - (75/2) + 15,
-        .func = &shiftMapUp,
-        .rect = {
-            .topLeftXCoord = 400 - (75/2),
-            .topLeftYCoord = 75,
-            .bottomRightXCoord = 400 + (75/2),
-            .bottomRightYCoord = 125
-        }
-    },
-    { // Down
-        .type = RECT,
-        .colour = CHOCOLATE,
-        .text = "DOWN",
-        .textXCoord = 400 - (75/2) + 5,
-        .func = &shiftMapDown,
-        .rect = {
-            .topLeftXCoord = 400 - (75/2),
-            .topLeftYCoord = 424,
-            .bottomRightXCoord = 400 + (75/2),
-            .bottomRightYCoord = 474
-        }
     }
-    */
 };
 
 object_t infoScreen[] = {
@@ -423,7 +369,7 @@ void drawInfoScreen(void) {
 
     // Make date box and fill in with date
     char date_now[32];
-    sprintf(date_now, "%d-%d-%d", now->tm_mday, now->tm_mon+1, now->tm_year+1900);
+    sprintf(date_now, "%d-%d-%d", 28, 2, 2020);
 
     FillRect(65, 220, 315, 300, DARK_SLATE_BLUE);
     OutGraphicsCharFont3(125, 260, BLACK, DARK_SLATE_BLUE, date_now, 0);
@@ -447,7 +393,7 @@ void drawInfoScreen(void) {
     // Get the people count and print it
     OutGraphicsCharFont3(345, 200, GREEN, DARK_SLATE_BLUE, "TRAIL POPULATION:", 0);
     char people[20];
-    sprintf(people, "%d people", people_count);
+    sprintf(people, "%d people", 34);
     OutGraphicsCharFont4(450, 240, BLACK, DARK_SLATE_BLUE, people, 0);
 
     // Get the time and date

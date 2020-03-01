@@ -1,8 +1,10 @@
 /*
  * main.cpp
  *
- *  Created on: Feb 4, 2020
- *      Author: Andrada Zoltan
+ * Main application for the camera
+ *
+ * Created on: Feb 4, 2020
+ * Author: Andrada Zoltan
  */
 
 #include "PeopleTracker.h"
@@ -18,8 +20,10 @@ using std::vector;
 int main(void) {
     int err = 0;
 
+    // Open the named pipe
     FILE *fp = fopen("/tmp/pipe", "r+");
 
+    // Create a new people tracker and initalize it
     PeopleTracker* tracker = new PeopleTracker();
 
     err = tracker->InitTracker();
@@ -28,9 +32,10 @@ int main(void) {
         return -1;
     }
 
-    // Create acquisition thread.
+    // Create people tracking thread
     thread acqThread(&PeopleTracker::StartTracking, tracker);
 
+    // Continuously read the people count and print it to the named pipe
     int peopleCount = 0;
     while (1) {
         int tmp = tracker->GetPeopleCount();

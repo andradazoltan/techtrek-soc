@@ -76,14 +76,14 @@ int main (void) {
     initColours();
     drawMainScreen();
 
+    // Get GPS coordinates
     struct gga sentence;
-  //  do {
+    do {
         read_gga(&sentence);
-  //  } while (!gga_fix_is_valid(sentence));
+    } while (!gga_fix_is_valid(sentence));
 
-   // printf("Location: %f %f\n", sentence.gga_lat, sentence.gga_lon);
-   // lua_postGPS(sentence.gga_lat, sentence.gga_lon);
-    lua_postGPS(49.261976, -123.249864);
+    printf("Location: %f %f\n", sentence.gga_lat, sentence.gga_lon);
+    lua_postGPS(sentence.gga_lat, sentence.gga_lon);
 
     // Kick off threads
     pthread_t touch_screen_thread;
@@ -92,10 +92,13 @@ int main (void) {
     pthread_create(&people_count_thread, NULL, (void *)&getPeopleCount, fd_fifo);
 
     pthread_join(touch_screen_thread, NULL);
+    pthread_join(people_count_thread, NULL);
 
     // When finished, unmap the virtual space and close the memory "device"
     if (munmap( virtual_base, HW_REGS_SPAN ) != 0) {
         printf("ERROR: munmap() failed...\n");
+        freeImage(&techtrek);
+        freeImage(&parkmap);
         close(fd);
         close(fd_fifo);
         return 1;
@@ -124,6 +127,8 @@ void getPeopleCount(int fd) {
         // Note that read will block until the FIFO is not empty
         if (read(fd, buf, 8) > 0) {
             people_count = atoi(buf);
+
+            // If on the info screen, update the displayed people count
             if (currScreen == INFO_SCREEN) {
                 FillRect(335, 190, 755, 300, DARK_SLATE_BLUE);
                 OutGraphicsCharFont3(345, 200, GREEN, DARK_SLATE_BLUE, "TRAIL POPULATION:", 0);

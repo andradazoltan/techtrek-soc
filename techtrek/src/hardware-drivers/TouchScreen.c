@@ -1,5 +1,5 @@
 /*
- *  TouchScreen.cpp
+ *  TouchScreen.c
  *  Drives UART Touchscreen
  *
  *  Created on: Jan 28, 2020

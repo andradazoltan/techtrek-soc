@@ -1,6 +1,8 @@
 /*
  *  KeyBoard.c
  *
+ *  Interactive GUI keyboard for users to use to report a hazard.
+ *
  *  Created on: Feb 16, 2020
  *  Author: Andrada Zoltan
  */
@@ -142,6 +144,9 @@ void drawKeyboard(int x, int y) {
     keyboardYStart = y;
 }
 
+/*
+ * Draw the textbox that displays what the user has typed
+ */
 void drawTextBox(int x1, int y1, int x2, int y2) {
     // Draw the text box
     FillRect(x1, y1, x2, y2, BLACK);

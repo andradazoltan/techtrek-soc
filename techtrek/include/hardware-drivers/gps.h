@@ -1,17 +1,14 @@
+/*
+ *  gps.h
+ *
+ *  Created on: Feb 24, 2020
+ *  Author: Jacob Grossbard
+ */
 
 #ifndef GPS_H_
 #define GPS_H_
 
 #include "RegisterDefs.h"
-
-#define HEX0_1 (volatile unsigned int *)(0xFF200030)
-#define HEX2_3 (volatile unsigned int *)(0xFF200040)
-#define HEX4_5 (volatile unsigned int *)(0xFF200050)
-#define SW (volatile unsigned int *)(0xFF200000)
-#define LEDS (volatile unsigned int *)(0xFF200020)
-
-#define TRUE 1
-#define FALSE 0
 
 #define SENTENCE_TYPE_GGA 1
 #define SENTENCE_TYPE_INVALID -1

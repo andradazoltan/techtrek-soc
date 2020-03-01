@@ -1,5 +1,5 @@
 /*
- *  Data.c
+ *  GraphData.c
  *
  *  Created on: Feb 12, 2020
  *  Author: Elijah Hewer

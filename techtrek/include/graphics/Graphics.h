@@ -49,7 +49,6 @@ typedef struct { int x,y;} XYPixel ;    // data structure to store a coordinate
 int PushPixel(XYPixel p1);
 int PopPixel(XYPixel *theXYPixel);
 int IsStackEmpty(void);
-
 void Fill(int _x, int _y, int _FillColour, int _BoundaryColour);
 
 // GraphData.c Definitions
